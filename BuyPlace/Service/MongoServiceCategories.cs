@@ -11,12 +11,13 @@ namespace BuyPlace.Data
         private MongoClient _mongoClient = null;
         private IMongoCollection<Categories> _categorieTable=null;
 
+
         /// <summary>
         /// Constructeur
         /// </summary>
         public MongoServiceCategories()
         {
-            _mongoClient = new MongoClient("mongodb://localhost:27017");
+            _mongoClient = new MongoClient("mongodb+srv://BuyPlace:4onRFgKYRV1pt6ow@cluster0.xw7danz.mongodb.net/");
             _database = _mongoClient.GetDatabase("BuyPlace");
             _categorieTable = _database.GetCollection<Categories>("Categories");
         }
