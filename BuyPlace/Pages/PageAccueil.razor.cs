@@ -9,7 +9,6 @@ namespace BuyPlace.Pages
         private List<Categories> categories;
         private MongoServiceCategories mongoService=new MongoServiceCategories();
         private System.Timers.Timer timer;
-
         protected override async Task OnInitializedAsync()
         {
             categories = mongoService.GetCategories();

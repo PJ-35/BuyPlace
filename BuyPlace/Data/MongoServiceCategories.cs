@@ -11,6 +11,9 @@ namespace BuyPlace.Data
         private MongoClient _mongoClient = null;
         private IMongoCollection<Categories> _categorieTable=null;
 
+        /// <summary>
+        /// Constructeur
+        /// </summary>
         public MongoServiceCategories()
         {
             _mongoClient = new MongoClient("mongodb://localhost:27017");
@@ -18,29 +21,79 @@ namespace BuyPlace.Data
             _categorieTable = _database.GetCollection<Categories>("Categories");
         }
 
+        /// <summary>
+        /// Retourne une liste de catégories
+        /// </summary>
+        /// <returns>la liste de catégories</returns>
         public List<Categories> GetCategories()
         {
             return _categorieTable.Find(FilterDefinition<Categories>.Empty).ToList();
         }
 
-        public void AddCategorie(Categories categories)
+        /// <summary>
+        /// Ajoute une catégorie dans la bd
+        /// </summary>
+        /// <param name="categories">la catégorie a ajouoté</param>
+        /// <returns>un bool représentant l'état si jamais il y'avait déjà une catégorie de même nom</returns>
+        public bool AddCategorie(Categories categories)
         {
-            _categorieTable.InsertOne(categories);
+            var obj=_categorieTable.Find(u => u.nom == categories.nom).FirstOrDefault();
+            if (obj is null)
+            {
+                _categorieTable.InsertOne(categories);
+                return true;
+            }
+            else
+                return false;
         }
 
-        public Categories GetCategorie(string id)
+        /// <summary>
+        /// Obtient une catégorie avec le nom
+        /// </summary>
+        /// <param name="nom">Le nom d'une catégorie</param>
+        /// <returns>Une catégorie</returns>
+        public Categories GetCategorie(string nom)
         {
-            return _categorieTable.Find(u => u.Id == id).SingleOrDefault();
+            return _categorieTable.Find(u => u.nom == nom).SingleOrDefault();
         }
 
-        public void UpdateUser(Categories categories)
+        
+        /// <summary>
+        /// Met à jour une catégorie
+        /// </summary>
+        /// <param name="anciennom">Son ancien nom</param>
+        /// <param name="nouveaunom">Son nouveau nom</param>
+        /// <returns>retourne un état</returns>
+        public bool UpdateCategorie(string anciennom,string nouveaunom)
         {
-            _categorieTable.ReplaceOne(u => u.Id == categories.Id, categories);
+            Categories cat=GetCategorie(anciennom);
+            if(cat != null)
+            {
+                Categories newcategorie= new Categories();
+                newcategorie.nom = nouveaunom;
+                newcategorie.Id = cat.Id;
+                _categorieTable.ReplaceOne(u => u.Id == cat.Id, newcategorie);
+                return true;
+            }
+            return false;
         }
 
-        public void DeleteCategorie(string id)
+
+
+        /// <summary>
+        /// Supprime une catégorie
+        /// </summary>
+        /// <param name="nom">nom de la catégorie</param>
+        /// <returns>Retourne un état</returns>
+        public bool DeleteCategorie(string nom)
         {
-            _categorieTable.DeleteOne(u => u.Id ==id);
+            Categories cat =GetCategorie(nom);
+            if (cat != null)
+            {
+                _categorieTable.DeleteOne(u => u.nom == nom);
+                return true;
+            }
+            return false;
         }
     }
 }

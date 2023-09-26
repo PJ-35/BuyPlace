@@ -6,7 +6,7 @@ namespace BuyPlace.Model
     public class Categories
     {
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }=MongoDB.Bson.ObjectId.GenerateNewId().ToString();
-        public string nom { get; set; } = "";
+        public ObjectId Id { get; set; }
+        public string nom { get; set; }
     }
 }
