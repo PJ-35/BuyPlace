@@ -1,64 +1,53 @@
 ﻿@page "/"
 
+
+
 <PageTitle>Accueil</PageTitle>
 <div id="carouselExampleControls" class="carousel slide h-auto mb-3" data-bs-ride="carousel">
         <div class="carousel-inner text-white">
-            <div class="carousel-item bg-primary p-5 active" id="caroussel1">
-                <h2 class="text-center text-decoration-underline fw-bold">Chaussure</h2>
-                <p class="text-center">Nouvelle collection <br><br> <a href="#" class="btn btn-danger rounded-pill">Acheter</a></p>
-            </div>
-        <div class="carousel-item bg-danger p-5" id="caroussel2">
-            <h2 class="text-center text-decoration-underline fw-bold">Lunette</h2>
-            <p class="text-center">Nouvelle collection <br><br> <a href="#" class="btn btn-danger rounded-pill">Acheter</a></p>
+        @for (int i=0;i<categories.Count;i++)
+        {
+            string image = categories[i].nom + "2.jpg";
+            @if (i == 0)
+            {
+                <div class="carousel-item p-5 active" style="background-image:url(../images_Accueil/@image)">
+                    <h2 class="text-center text-decoration-underline fw-bold">@categories[i].nom</h2>
+                    <p class="text-center">Nouvelle collection <br><br> <a href="#" class="btn btn-danger rounded-pill">Acheter</a></p>
+                </div>
+            }
+            else
+            {
+                <div class="carousel-item p-5" style="background-image:url(../images_Accueil/@image)">
+                    <h2 class="text-center text-decoration-underline fw-bold">@categories[i].nom</h2>
+                    <p class="text-center">Nouvelle collection <br><br> <a href="#" class="btn btn-danger rounded-pill">Acheter</a></p>
+                </div>
+            }
+        }
 
-         </div>
-        <div class="carousel-item bg-info p-5" id="caroussel3">
-            <h2 class="text-center text-decoration-underline fw-bold">Montre</h2>
-            <p class="text-center">Nouvelle collection <br><br> <a href="#" class="btn btn-danger rounded-pill">Acheter</a></p>
-
-            </div>
-        <div class="carousel-item bg-black p-5" id="caroussel4">
-            <h2 class="text-center text-decoration-underline fw-bold">Sac</h2>
-            <p class="text-center">Nouvelle collection <br><br> <a href="#" class="btn btn-danger rounded-pill">Acheter</a></p>
-
-           </div>
         </div>
         <button class="carousel-control-prev text-black" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
+            <span class="visually-hidden">Précedent</span>
         </button>
         <button class="carousel-control-next text-black" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+            <span class="visually-hidden">Suivant</span>
         </button>
     </div>
     <div class="container d-flex justify-content-between mb-5 pb-5 flex-wrap">
-    <div class="card" style="width:20%">
-        <img src="images_Accueil/chaussure.jpg" class="card-img-top" alt="...">
-        <div class="card-body bg-light text-center">
-            <h5 class="card-title ">Chaussure</h5>
-            
-        </div>
-    </div>
-    <div class="card" style="width:20%">
-        <img src="images_Accueil/lunette.jpg" class="card-img-top" alt="...">
-        <div class="card-body bg-light text-center">
-            <h5 class="card-title">Lunette</h5>
-         
-        </div>
-    </div>
-    <div class="card" style="width:20%">
-        <img src="images_Accueil/montre.jpg" class="card-img-top" alt="...">
-        <div class="card-body bg-light text-center">
-            <h5 class="card-title ">Montre</h5>
-        </div>
-    </div>
-    <div class="card" style="width:20%">
-        <img src="images_Accueil/sac.jpg" class="card-img-top" alt="...">
-        <div class="card-body bg-light text-center">
-            <h5 class="card-title ">Sac</h5>
-        </div>
-    </div>
+
+    @foreach (var categorie in categories)
+    {
+        string image = categorie.nom + ".jpg";
+        <div class="card" style="width:20%">
+            <img src="images_Accueil/@image" class="card-img-top" alt="@categorie.nom">
+            <div class="card-body bg-light text-center">
+                <h5 class="card-title ">@categorie.nom</h5>
+
+            </div>
+           </div>
+    }   
+
 
     </div>
 

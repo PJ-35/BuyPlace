@@ -10,21 +10,6 @@ header a:hover {
     text-decoration:underline;
 }
 
-#caroussel1{
-    background-image:url(../images_Accueil/chaussure2.jpg)
-}
-
-#caroussel2 {
-    background-image: url(../images_Accueil/lunette2.jpg)
-}
-
-#caroussel3 {
-    background-image: url(../images_Accueil/montre2.jpg)
-}
-
-#caroussel4 {
-    background-image: url(../images_Accueil/sac2.jpg)
-}
 
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
