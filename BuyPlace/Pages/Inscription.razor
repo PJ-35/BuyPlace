@@ -1,7 +1,67 @@
 ﻿@page "/inscription"
+@using BuyPlace.Data
+@inject BuyPlace.IService.IUsersService userService
+@inject NavigationManager NavManager
+@* @inject Blazored.SessionStorage.ISessionStorageService sessionService
+ *@
+
+
+
+<div class="container-fluid pb-5 logRegis ">
+    <EditForm Model="@user" OnValidSubmit="@RegisterUser" class="mx-auto align-content-center">
+
+        <div class="py-5">
+            <h3 style="font-weight:bold; color:purple">BuyPlace Inscription</h3>
+        </div>
+
+        <div class="form-group col-4">
+            <label for="Courriel">Courriel</label>
+            <InputText @bind-Value=user.Courriel type="email" class="form-control" id="Courriel)" />
+          
+        </div>
+
+        <div class="form-group col-4">
+            <label for="mdp">Mdp</label>
+            <InputText @bind-Value=user.Mdp type="password" class="form-control" id="mdp" />
+        </div>
+
+        <div class="form-group col-4">
+            <label for="cMdp">CMdp</label>
+            <InputText @bind-Value=cMdp type="password" class="form-control" id="cMdp" />
+        </div>
+
+        <br />
+        <div class="col-4 row">
+            <span class="col-12"></span>
+            <input type="submit" class="form-control col-6 btn btn-primary" value="Login" />
+            <a href="/signup" class="col-3">Sign up</a>
+        </div>
+        <br />
+        <div class="col-12 row" style="text-align:left; font-weight:bold">
+            <span class="col-12">@LoginMesssage</span>
+        </div>
+    </EditForm>
+</div>
 
 @code {
+    private User user = new User();
+    private string cMdp = "";
+    public string LoginMesssage { get; set; }
 
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     GetUsers();
+    // }
 
+    private void RegisterUser()
+    {
+        var userobj = user;
 
+        userService.Save(user);
+
+        NavManager.NavigateTo("/");
+    
+
+        
+    }
 }
