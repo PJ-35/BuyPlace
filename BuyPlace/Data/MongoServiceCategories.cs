@@ -5,13 +5,13 @@ using MongoDB.Driver;
 
 namespace BuyPlace.Data
 {
-    public class MongoService
+    public class MongoServiceCategories
     {
         private IMongoDatabase _database=null;
         private MongoClient _mongoClient = null;
         private IMongoCollection<Categories> _categorieTable=null;
 
-        public MongoService()
+        public MongoServiceCategories()
         {
             _mongoClient = new MongoClient("mongodb://localhost:27017");
             _database = _mongoClient.GetDatabase("BuyPlace");
