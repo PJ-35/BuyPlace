@@ -55,6 +55,8 @@ namespace BuyPlace.Data
 
         public bool IsAdmin { get; set; }
 
+        public bool IsCompleted { get; set; }
+
 
 
 

@@ -1,0 +1,120 @@
+﻿@page "/inscriptionNext"
+@using BuyPlace.Data
+@inject BuyPlace.IService.IUsersService userService
+@inject NavigationManager NavManager
+@using System;
+@using System.Text.RegularExpressions;
+@* @inject Blazored.SessionStorage.ISessionStorageService sessionService
+ *@
+
+
+
+<div class="login-card-container logRegis d-flex align-items-center justify-content-center ">
+
+    <div class="login-card">
+
+       @*  <div class="login-card-logo">
+            <img src="C:\Users\rtato\Desktop\Session4\TP\Projet\BuyPlace\BuyPlace\BuyPlace\wwwroot\image_auth_log\cadenas.png" alt="logo" />
+
+        </div> *@
+
+        <div class=" login-card-header mb-2">
+            <h3 style="font-weight:bold; color:purple" class="fs-2 fw-bold mb-1">BuyPlace Inscription</h3>
+            <div style="font-size:calc(1rem*.8); opacity:.8;">Compléter Votre profile</div>
+        </div>
+
+
+        <EditForm Model="@user" OnValidSubmit="@RegisterUser" class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
+
+
+
+            <div class="form-item ">
+                <span class="form-item-icon material-symbols-rounded">person</span>
+                <InputText @bind-Value=user.Nom class="" id="Nom)" placeholder="" required />
+                <ValidationMessage For="@(() => user.UserName)" />
+
+            </div>
+
+            <div class="form-item ">
+                <span class="form-item-icon material-symbols-rounded">person</span>
+                <InputText @bind-Value=user.Prenom  class="" id="Prenom" placeholder="Entrer Votre prenom" required />
+                <ValidationMessage For="@(() => user.Courriel)" />
+
+            </div>
+
+            <div class="form-item">
+                <span class="form-item-icon material-symbols-rounded">lock</span>
+                <InputText @bind-Value=user.Mdp type="password" class="" placeholder="Entrer le mot de passe" id="mdp" required />
+                <ValidationMessage For="@(() => user.Mdp)" />
+            </div>
+
+          
+          
+            <button type="submit" class="btn-primary btn_log" >S'inscrire</button>
+            
+            <br />
+            <div class="col-12 row" style="text-align:left; font-weight:bold">
+                <span class="col-12">@LoginMesssage</span>
+            </div>
+        </EditForm>
+        <div class="login-card-footer">
+            Vous avez un compte? <a href="/signup" class="col-3">Connexion</a>
+
+        </div>
+
+        
+
+    </div>
+
+ 
+
+    
+
+
+  
+</div>
+
+@code {
+    public string LoginMesssage { get; set; }
+    private User user=new User();
+    private string courriel;
+
+     [Inject]
+    private NavigationManager NavigationManager { get; set; } 
+
+
+    protected override void OnInitialized()
+    {
+
+        // var uri = new Uri(NavigationManager.Uri);
+        // var courrielParam = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("Courriel");
+        // courriel = courrielParam;
+        //user = userService.GetUserByCourriel(courriel);
+    }
+
+    
+
+    private void RegisterUser()
+    {
+        var userobj = user;
+        // userService.Save(user);
+
+        // NavManager.NavigateTo("/");
+
+        var editContext = new EditContext(user); 
+        var isValid = editContext.Validate(); 
+
+        if (isValid)
+        {
+          
+        }
+        else
+        {
+            // Les données ne sont pas valides, affichez un message d'erreur
+            LoginMesssage = "Veuillez corriger les erreurs du formulaire.";
+        }
+    
+
+        
+    }
+}

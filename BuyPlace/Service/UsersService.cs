@@ -1,6 +1,8 @@
 ﻿using BuyPlace.Data;
 using BuyPlace.IService;
 using MongoDB.Driver;
+using System.Text.RegularExpressions;
+
 
 namespace BuyPlace.Service
 {
@@ -13,7 +15,7 @@ namespace BuyPlace.Service
 
         public UsersService()
         {
-                _mongoClient = new MongoClient("mongodb://localhost:27017");
+                _mongoClient = new MongoClient("mongodb+srv://BuyPlace:4onRFgKYRV1pt6ow@cluster0.xw7danz.mongodb.net/");
             _database = _mongoClient.GetDatabase("BuyPlace");
             _userTable=_database.GetCollection<User>("Users");
 
