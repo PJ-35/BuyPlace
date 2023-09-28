@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Components.Forms;
 using System.Text.RegularExpressions;
 using BuyPlace.Service;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuyPlace.Pages
 {
+
     public partial class Inscription
     {
 

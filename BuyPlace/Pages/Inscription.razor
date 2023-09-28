@@ -12,7 +12,7 @@
 
 <div class="login-card-container logRegis d-flex align-items-center justify-content-center ">
 
-    <div class="login-card">
+    <div class="login-card my-4">
 
        @*  <div class="login-card-logo">
             <img src="C:\Users\rtato\Desktop\Session4\TP\Projet\BuyPlace\BuyPlace\BuyPlace\wwwroot\image_auth_log\cadenas.png" alt="logo" />
@@ -30,7 +30,7 @@
         {
             <div class="login-card-social mx-auto py-4">
 
-                <div class="log-card-social-btn d-flex justify-content-around">
+                <div class="log-card-social-btn d-flex">
                     <div>
                         <a href="#">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -69,27 +69,27 @@
 
                 <div class="form-item ">
                     <span class="form-item-icon material-symbols-rounded">person</span>
-                    <InputText @bind-Value=user.UserName class="" id="Courriel)" placeholder="Entrer un nom d'utilisateur" required />
+                    <InputText @bind-Value=user.UserName class="input" id="Courriel)" placeholder="Entrer un nom d'utilisateur" required />
                     <ValidationMessage For="@(() => user.UserName)" />
 
                 </div>
 
                 <div class="form-item ">
                     <span class="form-item-icon material-symbols-rounded">mail</span>
-                    <InputText @bind-Value=user.Courriel type="email" class="" id="Courriel)" placeholder="Entrer courriel" required />
+                    <InputText @bind-Value=user.Courriel type="email" class="input" id="Courriel)" placeholder="Entrer courriel" required />
                     <ValidationMessage For="@(() => user.Courriel)" />
 
                 </div>
 
                 <div class="form-item">
                     <span class="form-item-icon material-symbols-rounded">lock</span>
-                    <InputText @bind-Value=user.Mdp type="password" class="" placeholder="Entrer le mot de passe" id="mdp" required />
+                    <InputText @bind-Value=user.Mdp type="password" class="input" placeholder="Entrer le mot de passe" id="mdp" required />
                     <ValidationMessage For="@(() => user.Mdp)" />
                 </div>
 
                 <div class="form-item">
                     <span class="form-item-icon material-symbols-rounded">lock</span>
-                    <InputText @bind-Value=cMdp class="" id="cMdp" placeholder="Confirmer le mot de passe" required />
+                    <InputText @bind-Value=cMdp class="input" id="cMdp" placeholder="Confirmer le mot de passe" required />
                     <ValidationMessage For="@(() => cMdp)" />
                 </div>
 
@@ -114,21 +114,21 @@
 
                 <div class="form-item ">
                     <span class="form-item-icon material-symbols-rounded">person</span>
-                    <InputText @bind-Value=user.Nom class="" id="Nom)" placeholder="" required />
+                    <InputText @bind-Value=user.Nom class="input" id="Nom)" placeholder="" required />
                     <ValidationMessage For="@(() => user.UserName)" />
 
                 </div>
 
                 <div class="form-item ">
                     <span class="form-item-icon material-symbols-rounded">person</span>
-                    <InputText @bind-Value=user.Prenom class="" id="Prenom" placeholder="Entrer Votre prenom" required />
+                    <InputText @bind-Value=user.Prenom class="input" id="Prenom" placeholder="Entrer Votre prenom" required />
                     <ValidationMessage For="@(() => user.Courriel)" />
 
                 </div>
 
                 <div class="form-item">
                     <span class="form-item-icon material-symbols-rounded">lock</span>
-                    <InputText @bind-Value=user.Mdp type="password" class="" placeholder="Entrer le mot de passe" id="mdp" required />
+                    <InputText @bind-Value=user.Mdp type="password" class="input" placeholder="Entrer le mot de passe" id="mdp" required />
                     <ValidationMessage For="@(() => user.Mdp)" />
                 </div>
 
