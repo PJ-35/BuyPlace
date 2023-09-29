@@ -148,9 +148,13 @@ header a:hover {
     transition:background .5s;
 }
 
-.ou{
-    height:0px;
-}
+    input[type="file"] {
+       
+    }
+
+    .ou {
+        height: 0px;
+    }
 
 .login-card .input:focus{
     background:white;

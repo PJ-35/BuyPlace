@@ -63,7 +63,7 @@
                 <span class="w-50 border border-1 "></span>
             </div>
 
-            <EditForm Model="@user" OnValidSubmit="@RegisterUser" class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
+            <EditForm Model="@user" OnValidSubmit="@SignInUser" class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
 
 
 
@@ -89,7 +89,7 @@
 
                 <div class="form-item">
                     <span class="form-item-icon material-symbols-rounded">lock</span>
-                    <InputText @bind-Value=cMdp class="input" id="cMdp" placeholder="Confirmer le mot de passe" required />
+                    <InputText @bind-Value=cMdp class="input" id="cMdp" type="password" placeholder="Confirmer le mot de passe" required />
                     <ValidationMessage For="@(() => cMdp)" />
                 </div>
 
@@ -106,15 +106,31 @@
 
             </div>
         }
-        else
+        else if (url == "next" )
         {
-            <EditForm Model="@user" OnValidSubmit="@RegisterUser" class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
+            <EditForm Model="@user" OnValidSubmit="@SignInUser" class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
+
+                <div class="form-item">
+                    <span class="form-item-icon material-symbols-rounded ">imagesmode</span>
+                    <InputFile  id="mdp" OnChange="@LoadFiles" multiple class="form-control" />
+
+                </div>
+
+                @if (error.Count > 0)
+                {
+                    <ul class="text-danger">
+                        @foreach(var err in error)
+                        {
+                            <li>@err</li>
+                        }
+                    </ul>
+                }
 
 
 
                 <div class="form-item ">
                     <span class="form-item-icon material-symbols-rounded">person</span>
-                    <InputText @bind-Value=user.Nom class="input" id="Nom)" placeholder="" required />
+                    <InputText @bind-Value=user.Nom  class="input" id="Nom)" placeholder="@user.Courriel" required />
                     <ValidationMessage For="@(() => user.UserName)" />
 
                 </div>
@@ -126,11 +142,16 @@
 
                 </div>
 
-                <div class="form-item">
-                    <span class="form-item-icon material-symbols-rounded">lock</span>
-                    <InputText @bind-Value=user.Mdp type="password" class="input" placeholder="Entrer le mot de passe" id="mdp" required />
-                    <ValidationMessage For="@(() => user.Mdp)" />
-                </div>
+              
+
+                @* <div class="form-item">
+                    <div class="img-area">
+                        <div class="material-symbols-rounded">  imagesmode</div>
+                        <h3>Choisir une image</h3>
+
+                    </div>
+
+                </div> *@
 
 
 
