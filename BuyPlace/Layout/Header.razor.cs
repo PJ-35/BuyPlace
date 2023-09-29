@@ -12,5 +12,17 @@
         {
             collapseNavMenu = !collapseNavMenu;
         }
+
+
+        private class FormData
+        {
+            public string recherche { get; set; }
+        }
+
+        private FormData formData = new FormData();
+        private async Task SubmitForm()
+        {
+
+        }
     }
 }

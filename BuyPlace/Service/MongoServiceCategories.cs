@@ -82,7 +82,7 @@ namespace BuyPlace.Data
 
 
         /// <summary>
-        /// Supprime une catégorie
+        /// Supprime une catégorie si il en reste plus de un
         /// </summary>
         /// <param name="nom">nom de la catégorie</param>
         /// <returns>Retourne un état</returns>
@@ -91,8 +91,13 @@ namespace BuyPlace.Data
             Categories cat =GetCategorie(nom);
             if (cat != null)
             {
-                _categorieTable.DeleteOne(u => u.nom == nom);
-                return true;
+                List<Categories> lstCategorie = GetCategories();
+                if (lstCategorie.Count != 1)
+                {
+                    _categorieTable.DeleteOne(u => u.nom == nom);
+                    return true;
+                }
+                    
             }
             return false;
         }

@@ -1,7 +1,7 @@
 using MongoDB.Driver;
 using BuyPlace.Data;
-
-
+using BuyPlace;
+using BuyPlace.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,17 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<MongoServiceCategories>();
+builder.Services.AddScoped<FormDataService>();
 
-//// Configure MongoDB connection
-//builder.Services.AddScoped(sp =>
-//{
-//    var mongoClient = new MongoClient("mongodb://localhost:27017"); // Remplacez l'URL par celle de votre serveur MongoDB
-//    return mongoClient.GetDatabase("Categories");
-//});
-
-//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
-//await builder.Build().RunAsync();
 
 var app = builder.Build();
 

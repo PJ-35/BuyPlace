@@ -39,13 +39,15 @@
     @foreach (var categorie in categories)
     {
         string image = categorie.nom + ".jpg";
-        <div class="card mb-3" style="width:22%">
+        <a href="#" class="d-block card mb-3" style="width:22%">
+        <div>
             <img src="images_Accueil/@image" class="card-img-top" alt="@categorie.nom">
             <div class="card-body bg-light text-center">
                 <h5 class="card-title ">@categorie.nom</h5>
 
             </div>
            </div>
+        </a>
     }   
 
 
