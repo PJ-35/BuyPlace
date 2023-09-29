@@ -4,13 +4,29 @@
 @inject FormDataService FormDataService
 
 <PageTitle>Magasiner</PageTitle>
+
+ <div class="container">
+     <div class="row flex-nowrap mb-5 pb-5">
+
+    <Sidebar/>
+        <div class="col py-3">
+            <div class="d-flex justify-content-center mb-3">
+                <form class="w-50" @onsubmit="SubmitForm" role="search">
+                    <div class="input-group">
+                        <input class="form-control" type="search" @bind="formData.recherche" placeholder="Rechercher " aria-label="Search" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
 @if (lstArticles is null)
 {
 
-    <div class="container">
-        <div class="row flex-nowrap mb-5 pb-5">
 
-    <Sidebar/>
             @if (FormDataService.MinChange && FormDataService.MaxChange)
             {
                 <p class="text-center col">Nous n'avons aucun article dont le prix est plus grand que @FormDataService.Min $ et plus petit que @FormDataService.Max $</p>
@@ -23,21 +39,29 @@
             {
                 <p class="text-center col">Nous n'avons aucun article dont le prix est inférieur ou égale@FormDataService.Max $</p>
             }
-            else{
+            else if(FormDataService.boolRecherche){
+                <p class="text-center col">Aucun article trouvé </p>}
+                else{
             <p class="text-center col">Nous n'avons trouvé aucun article de cette catégorie</p>
-            }
-     </div>
-     </div>
-}else if(lstArticles.Count==0){
-    <p class="text-center p-5">Le marché est vide pour l'instant...</p>
+                }
+}
+else if(lstArticles.Count==0){
+                @if (FormDataService.boolRecherche)
+                {
+                    <p class="text-center">Chargement ...</p>
+                }
+                else
+                {
+                    <p class="text-center p-5">Le marché est vide pour l'instant...</p>
+
+                }
 }
 else{
 
-    <div class="container">
+@*    <div class="container">
         <div class="row flex-nowrap mb-5 pb-5">
 
-    <Sidebar/>
-     <div class="col py-3">
+    <Sidebar/>*@
     <div class=" row">
     @foreach(var article in lstArticles){
             string image = article.Id + ".jpg";
@@ -52,11 +76,11 @@ else{
         </a>
     }
     </div>
-    </div>
-    </div>
-    </div>
+
+
 }
+                </div>
+            </div>
 
-
-
+            </div>
 

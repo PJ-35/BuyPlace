@@ -14,15 +14,15 @@
         }
 
 
-        private class FormData
-        {
-            public string recherche { get; set; }
-        }
+        //private class FormData
+        //{
+        //    public string recherche { get; set; }
+        //}
 
-        private FormData formData = new FormData();
-        private async Task SubmitForm()
-        {
-
-        }
+        //private FormData formData = new FormData();
+        //private async Task SubmitForm()
+        //{
+        //    formDataService.recherche=formData.recherche;
+        //}
     }
 }

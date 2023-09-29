@@ -20,21 +20,48 @@ namespace BuyPlace.Pages
         private MongoServiceArticle mongoService = new MongoServiceArticle();
         private System.Timers.Timer timer;
 
+        private class FormData
+        {
+            public string recherche { get; set; }
+        }
+
+        private FormData formData = new FormData();
+
         protected override async Task OnInitializedAsync()
         {
             chargement();
-            timer = new System.Timers.Timer(2000);
-            timer.Elapsed += async (sender, e) =>
+            if (!FormDataService.boolRecherche)
             {
-                chargement();
-                InvokeAsync(StateHasChanged);
-            };
-            timer.Start();
+                timer = new System.Timers.Timer(2000);
+                timer.Elapsed += async (sender, e) =>
+                {
+                    chargement();
+                    InvokeAsync(StateHasChanged);
+                };
+                timer.Start();
+            }
         }
 
         protected override void OnParametersSet()
         {
             chargement();
+        }
+
+        private async Task SubmitForm()
+        {
+            FormDataService.recherche = formData.recherche;
+            Recherche();
+        }
+
+        private void Recherche()
+        {
+            if (lstArticles is not null && !string.IsNullOrWhiteSpace(FormDataService.recherche))
+            {
+                lstArticles = lstArticles.Where(x => x.nom.IndexOf(FormDataService.recherche) != -1).ToList();
+                FormDataService.boolRecherche = true;
+            }
+            else if (string.IsNullOrWhiteSpace(FormDataService.recherche))
+                FormDataService.boolRecherche = false;
         }
 
         private void chargement()
@@ -67,6 +94,11 @@ namespace BuyPlace.Pages
                 }
             }
 
+            if (FormDataService.boolRecherche)
+            {
+                Recherche();
+                lstArticles = lstArticles.Count == 0 ? null : lstArticles;
+            }
 
         }
         public void Dispose()
