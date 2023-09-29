@@ -30,8 +30,8 @@ namespace BuyPlace.Pages
         protected override async Task OnInitializedAsync()
         {
             chargement();
-            if (!FormDataService.boolRecherche)
-            {
+            //if (!FormDataService.boolRecherche)
+            //{
                 timer = new System.Timers.Timer(2000);
                 timer.Elapsed += async (sender, e) =>
                 {
@@ -39,7 +39,7 @@ namespace BuyPlace.Pages
                     InvokeAsync(StateHasChanged);
                 };
                 timer.Start();
-            }
+            //}
         }
 
         protected override void OnParametersSet()
@@ -97,7 +97,9 @@ namespace BuyPlace.Pages
             if (FormDataService.boolRecherche)
             {
                 Recherche();
-                lstArticles = lstArticles.Count == 0 ? null : lstArticles;
+                if (lstArticles is not null)
+                    lstArticles = lstArticles.Count == 0 ? null : lstArticles;
+
             }
 
         }
