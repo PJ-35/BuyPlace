@@ -12,7 +12,7 @@
 
 <div class="login-card-container logRegis d-flex align-items-center justify-content-center ">
 
-    <div class="login-card my-4">
+    <div class="login-card my-4 align-content-center">
 
        @*  <div class="login-card-logo">
             <img src="C:\Users\rtato\Desktop\Session4\TP\Projet\BuyPlace\BuyPlace\BuyPlace\wwwroot\image_auth_log\cadenas.png" alt="logo" />
@@ -28,7 +28,7 @@
 
         @if (url == "inscription")
         {
-            <div class="login-card-social mx-auto py-4">
+            <div class="login-card-social mx-auto py-4 align-content-center">
 
                 <div class="log-card-social-btn d-flex">
                     <div>
@@ -63,13 +63,13 @@
                 <span class="w-50 border border-1 "></span>
             </div>
 
-            <EditForm Model="@user" OnValidSubmit="@SignInUser" class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
-
+            <EditForm Model="@user" OnSubmit="@SignInUser" novalidate class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
+                <DataAnnotationsValidator />
 
 
                 <div class="form-item ">
                     <span class="form-item-icon material-symbols-rounded">person</span>
-                    <InputText @bind-Value=user.UserName class="input" id="Courriel)" placeholder="Entrer un nom d'utilisateur" required />
+                    <InputText @bind-Value=user.UserName class="input" id="username" placeholder="Entrer un nom d'utilisateur" required />
                     <ValidationMessage For="@(() => user.UserName)" />
 
                 </div>
@@ -97,7 +97,7 @@
                 <button type="submit" class="btn-primary btn_log">Suivant</button>
 
                 <br />
-                <div class="col-12 row" style="text-align:left; font-weight:bold">
+                <div class="col-12 row text-danger" style="text-align:left; font-weight:bold">
                     <span class="col-12">@LoginMesssage</span>
                 </div>
             </EditForm>
@@ -108,7 +108,8 @@
         }
         else if (url == "next" )
         {
-            <EditForm Model="@user" OnValidSubmit="@SignInUser" class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
+            <EditForm Model="@user" OnSubmit="@SignInUser" novalidate class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
+                <DataAnnotationsValidator />
 
                 <div class="form-item">
                     <span class="form-item-icon material-symbols-rounded ">imagesmode</span>
@@ -126,8 +127,6 @@
                     </ul>
                 }
 
-
-
                 <div class="form-item ">
                     <span class="form-item-icon material-symbols-rounded">person</span>
                     <InputText @bind-Value=user.Nom  class="input" id="Nom)" placeholder="@user.Courriel" required />
@@ -141,26 +140,12 @@
                     <ValidationMessage For="@(() => user.Courriel)" />
 
                 </div>
-
-              
-
-                @* <div class="form-item">
-                    <div class="img-area">
-                        <div class="material-symbols-rounded">  imagesmode</div>
-                        <h3>Choisir une image</h3>
-
-                    </div>
-
-                </div> *@
-
-
+                <div class="col-12 row text-danger" style="text-align:left; font-weight:bold">
+                    <span class="col-12">@LoginMesssage</span>
+                </div>
 
                 <button type="submit" class="btn-primary btn_log">S'inscrire</button>
 
-                <br />
-                <div class="col-12 row" style="text-align:left; font-weight:bold">
-                    <span class="col-12">@LoginMesssage</span>
-                </div>
             </EditForm>
             <div class="login-card-footer">
                 Vous avez un compte? <a href="/signup" class="col-3">Connexion</a>
@@ -174,6 +159,7 @@
         
 
     </div>
+@*     <div class="log w-25  h-100"></div> *@
 
  
 

@@ -83,14 +83,22 @@ header a:hover {
         background-position: 0% 50%;
     }
 }*/
+/*
+.log {
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size: cover;
+    background-image: url(../image_auth_log/bg_log.jpg);
+    min-height: 80vh;
+}*/
 
-
-.login-card{
-    width:450px;
-    background:rgba(255,255,255,.5);
-    padding:2rem 4rem 1rem 4rem;
-    border-radius:10px;
-    position:relative;
+.login-card {
+    width: 700px;
+    background: rgba(255,255,255,.5);
+    padding: 2rem 4rem 1rem 4rem;
+    border-radius: 10px;
+    position: relative;
+   
 }
 .login-card::before{
     content:'';
@@ -168,6 +176,7 @@ header a:hover {
     text-transform:uppercase;
     letter-spacing:2px;
     transition:background .5s;
+    
 }
 
 .login-card button:hover {
@@ -214,12 +223,23 @@ header a:hover {
     transform:scale(1.1);
 }
 
-@media(max-width:700px){
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    .login-card {
+        width: 400px;
+        padding: 2rem;
+    }
+}
+
+@media(max-width:600px){
     .logRegis{
         padding:2rem 0;
     }
     .login-card{
-        width:300px;
+        width:90%;
         padding:2rem;
     }
+
+        .login-card input {
+          width:100%;
+        }
 }
