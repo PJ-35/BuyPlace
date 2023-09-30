@@ -12,6 +12,9 @@ namespace BuyPlace.Pages
         [Parameter]
         public string categorie { get;set; }
 
+
+
+
         [Inject]
         NavigationManager navigationManager { get; set; }
 
@@ -47,17 +50,11 @@ namespace BuyPlace.Pages
             chargement();
         }
 
-        private async Task SubmitForm()
-        {
-            FormDataService.recherche = formData.recherche;
-            Recherche();
-        }
-
         private void Recherche()
         {
             if (lstArticles is not null && !string.IsNullOrWhiteSpace(FormDataService.recherche))
             {
-                lstArticles = lstArticles.Where(x => x.nom.IndexOf(FormDataService.recherche) != -1).ToList();
+                lstArticles = lstArticles.Where(x => x.nom.IndexOf(FormDataService.recherche) != -1 || x.description.IndexOf(FormDataService.recherche) != -1).ToList();
                 FormDataService.boolRecherche = true;
             }
             else if (string.IsNullOrWhiteSpace(FormDataService.recherche))
