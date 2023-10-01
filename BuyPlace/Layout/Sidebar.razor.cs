@@ -2,6 +2,7 @@
 using BuyPlace.Model;
 using BuyPlace.Service;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 using MongoDB.Bson.IO;
 using System.Text;
 using System.Text.Json;
@@ -15,7 +16,8 @@ namespace BuyPlace.Layout
         private System.Timers.Timer timer;
         private string validMin = "";
         private string validMax = "";
-
+        [Inject]
+        NavigationManager navigationManager { get; set; }
 
         private class FormData
         {
@@ -70,11 +72,25 @@ namespace BuyPlace.Layout
         {
             chargement();
             categories = mongoService.GetCategories();
+            if (!string.IsNullOrWhiteSpace(formDataService.categorie))
+            {
+                Categories cat=mongoService.GetCategorie(formDataService.categorie);
+                if (cat is null)
+                    navigationManager.NavigateTo("/error404");
+
+            }
             timer = new System.Timers.Timer(2000);
             timer.Elapsed += async (sender, e) =>
             {
                 //chargement();
                 categories = mongoService.GetCategories();
+                if (!string.IsNullOrWhiteSpace(formDataService.categorie))
+                {
+                    Categories cat = mongoService.GetCategorie(formDataService.categorie);
+                    if (cat is null)
+                        navigationManager.NavigateTo("/error404");
+
+                }
                 InvokeAsync(StateHasChanged);
             };
             timer.Start();

@@ -51,11 +51,11 @@ namespace BuyPlace.Data
         /// <summary>
         /// Obtient une catégorie avec le nom
         /// </summary>
-        /// <param name="nom">Le nom d'une catégorie</param>
+        /// <param name="idcategorie">Le nom d'une catégorie</param>
         /// <returns>Une catégorie</returns>
-        public Categories GetCategorie(string nom)
+        public Categories GetCategorie(string idcategorie)
         {
-            return _categorieTable.Find(u => u.nom == nom).SingleOrDefault();
+            return _categorieTable.Find(u => u.Id.ToString() == idcategorie).SingleOrDefault();
         }
 
         

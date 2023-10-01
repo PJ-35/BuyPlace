@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BuyPlace.Data;
+using BuyPlace.Service;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 
 namespace BuyPlace.Layout
@@ -10,6 +12,8 @@ namespace BuyPlace.Layout
         string baseMenuClass = "navbar-collapse d-sm-inline-flex flex-sm-row-reverse";
         string validation = "";
         bool validationRequis=true;
+
+        private MongoServiceArticle mongoService = new MongoServiceArticle();
         string NavMenuCssClass => baseMenuClass + (collapseNavMenu ? " collapse" : "");
         [Inject]
         NavigationManager navigationManager { get; set; }
@@ -37,10 +41,29 @@ namespace BuyPlace.Layout
 
             StateHasChanged();
         }
+        List<string> option=new List<string>();
+        private void HandleInputChange(ChangeEventArgs e)
+        {
+
+            string input = e.Value.ToString();
+
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                List<Article> lst = mongoService.GetArticles().Where(x => x.nom.IndexOf(input) != -1).ToList();
+                option = lst.Select(art => art.nom).Take(5).ToList();
+                lst= mongoService.GetArticles().Where(x => x.description.IndexOf(input) != -1).ToList();
+                option.AddRange(lst.Select(art=>art.description).Take(5).ToList());
+            }
+            else
+                option.Clear();
+        }
 
         private void Redirection()
         {
-            navigationManager.NavigateTo("/magasiner");
+            if (navigationManager.Uri.IndexOf("magasiner") == -1)
+                navigationManager.NavigateTo($"{navigationManager.Uri}magasiner?recherche={FormDataService.recherche}");
+            else
+                navigationManager.NavigateTo($"{navigationManager.Uri}?recherche={FormDataService.recherche}");
             FormDataService.boolRecherche = true;
             validation = "";
         }

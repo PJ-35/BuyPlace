@@ -44,10 +44,33 @@ namespace BuyPlace.Pages
                 timer.Start();
             //}
         }
-
+        private string searchQuery;
         protected override void OnParametersSet()
         {
             chargement();
+            if (navigationManager.Uri.IndexOf('?') != -1)
+            {
+               
+                var uri = new Uri(navigationManager.Uri);
+                searchQuery = uri.Query.TrimStart('?').Split('&')
+                    .Select(p => p.Split('='))
+                    .Where(p => p.Length == 2 && p[0] == "recherche")
+                    .Select(p => Uri.UnescapeDataString(p[1]))
+                    .FirstOrDefault();
+                if (searchQuery is null)
+                {
+                    FormDataService.boolRecherche = false;
+                    navigationManager.NavigateTo("/error404");
+                }
+                else
+                {
+                    FormDataService.recherche = searchQuery;
+                    FormDataService.boolRecherche = true;
+                }
+
+            }
+            else
+                FormDataService.boolRecherche= false;
         }
 
         private void Recherche()
@@ -63,18 +86,19 @@ namespace BuyPlace.Pages
 
         private void chargement()
         {
-            string baseurl = navigationManager.BaseUri + "magasiner/";
-            string url = navigationManager.Uri;
-            string id = url.Replace(baseurl, "");
-            if (id != url)
+            if (!string.IsNullOrWhiteSpace(categorie))
             {
-                lstArticles = mongoService.GetArticles(id);
+                FormDataService.categorie = categorie;
+                lstArticles = mongoService.GetArticles(categorie);
                 lstArticles = lstArticles.Count == 0 ? null : lstArticles;
             }
             else
+            {
                 lstArticles = mongoService.GetArticles();
+                FormDataService.categorie = null;
+            }
 
-            if(lstArticles is not null)
+            if (lstArticles is not null)
             {
                 if (FormDataService.MinChange && FormDataService.MaxChange)
                 {
