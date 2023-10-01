@@ -131,6 +131,26 @@ namespace BuyPlace.Pages
                     LoginMesssage = "";
                 }
 
+                if (userService.GetUserByCourriel(user.Courriel)!=null|| userService.GetUserByUsername(user.UserName) != null && isValid && LoginMesssage=="")
+                {
+
+                    if (userService.GetUserByCourriel(user.Courriel) != null)
+                    {
+                        LoginMesssage = "Ce courriel appartient déjà à un autre utilisateur";
+                    }
+
+                    if (userService.GetUserByUsername(user.UserName) != null)
+                    {
+                        LoginMesssage = "Ce nom d'utilisateur est déjà attribué à un autre compte";
+                    }
+
+                    if (userService.GetUserByCourriel(user.Courriel) != null && userService.GetUserByUsername(user.UserName)!=null)
+                    {
+                        LoginMesssage = "le nom d'utilisateur et le courriel sont déjà attribué à un autre compte. Veuillez choisir un nouveau";
+                    }
+                }
+
+
                 if (isValid && LoginMesssage == "")
                 {
                     url = "next";
@@ -139,38 +159,6 @@ namespace BuyPlace.Pages
                 }
 
 
-                //if (isValid)
-                //{
-                //    if (cMdp == userobj.Mdp)
-                //    {
-                //        //if (Regex.IsMatch(userobj.Mdp, rgxMdp))
-                //        //{
-
-                //        user.IsAdmin = false;
-
-                //        //userService.Save(user);
-
-                //        // NavManager.NavigateTo("/next");
-                //        url = "next";
-
-                //        InvokeAsync(StateHasChanged);
-
-
-                //        //}
-                //        //else
-                //        //    LoginMesssage = "Votre mot de passe doit contenir au moins 8 caractères, une lettre majiscule, au moins une lettre minuscule,au moins un chiffre .";
-                //    }
-                //    else
-                //    {
-                //        LoginMesssage = "Veuillez confirmer votre mot de passe.";
-                //    }
-
-                //}
-                //else 
-                //{
-                //    // Les données ne sont pas valides, affichez un message d'erreur
-                //    LoginMesssage = "Veuillez corriger les erreurs du formulaire.";
-                //}
             }
             else if(url == "next" )
             {
@@ -201,14 +189,7 @@ namespace BuyPlace.Pages
                     NavManager.NavigateTo("/");
                 }
 
-                //string relativePath = await CaptureFiles();
-                //userService.Save(user);
-                //NavManager.NavigateTo("/");
-                //else
-                //{
-                //    // Les données ne sont pas valides, affichez un message d'erreur
-                //    LoginMesssage = "Veuillez corriger les erreurs du formulaire.";
-                //}
+
             }
 
 

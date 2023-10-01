@@ -43,11 +43,12 @@ namespace BuyPlace.Data
         //public string CMdp { get; set; }
 
         //[Required(ErrorMessage = "Le mot de passe est obligatoire.")]
-        [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$", ErrorMessage = "Le mot de passe doit contenir au moins 8 caractères.")]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$", ErrorMessage = "Le mot de passe doit contenir au moins 8 caractères, au moins une majuscule et au moins un chiffre.")]
         public string Mdp { get; set; }
 
 
         //[Required(ErrorMessage = "Le courriel est obligatoire.")]
+        //[UniqueEmail(ErrorMessage = "Cette adresse e-mail est déjà utilisée.")]
         [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Veuillez entrer une adresse de courriel valide.")]
         public string Courriel { get; set; }
 

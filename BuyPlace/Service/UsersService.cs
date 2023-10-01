@@ -36,6 +36,11 @@ namespace BuyPlace.Service
             return _userTable.Find(x => x.Courriel == courriel).FirstOrDefault();
         }
 
+        public User GetUserByUsername(string username)
+        {
+            return _userTable.Find(x => x.UserName == username).FirstOrDefault();
+        }
+
         public void Save(User user)
         {
 

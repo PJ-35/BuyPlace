@@ -20,7 +20,7 @@
         </div> *@
 
         <div class=" login-card-header mb-2">
-            <h3 style="font-weight:bold; color:purple" class="fs-2 fw-bold mb-1">BuyPlace Inscription</h3>
+            <h3 style="font-weight:bold; color:purple" class="fs-2 fw-bold mb-1"> Créer un compte BuyPlace</h3>
             <div style="font-size:calc(1rem*.8); opacity:.8;">Connecte toi pour rejoindre la plateforme</div>
         </div>
 
@@ -66,6 +66,9 @@
             <EditForm Model="@user" OnSubmit="@SignInUser" novalidate class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
                 <DataAnnotationsValidator />
 
+                <div class="col-12 row text-white bg-danger mb-2" style="text-align:center; font-weight:bold">
+                    <span class="col-12">@LoginMesssage</span>
+                </div>
 
                 <div class="form-item ">
                     <span class="form-item-icon material-symbols-rounded">person</span>
@@ -97,9 +100,7 @@
                 <button type="submit" class="btn-primary btn_log">Suivant</button>
 
                 <br />
-                <div class="col-12 row text-danger" style="text-align:left; font-weight:bold">
-                    <span class="col-12">@LoginMesssage</span>
-                </div>
+              
             </EditForm>
             <div class="login-card-footer">
                 Vous avez un compte? <a href="/signup" class="col-3">Connexion</a>
@@ -111,21 +112,11 @@
             <EditForm Model="@user" OnSubmit="@SignInUser" novalidate class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
                 <DataAnnotationsValidator />
 
-                <div class="form-item">
-                    <span class="form-item-icon material-symbols-rounded ">imagesmode</span>
-                    <InputFile  id="mdp" OnChange="@LoadFiles" multiple class="form-control" />
-
+                <div class="col-12 row text-white bg-danger mb-2" style="text-align:center; font-weight:bold">
+                    <span class="col-12">@LoginMesssage</span>
                 </div>
 
-                @if (error.Count > 0)
-                {
-                    <ul class="text-danger">
-                        @foreach(var err in error)
-                        {
-                            <li>@err</li>
-                        }
-                    </ul>
-                }
+                
 
                 <div class="form-item ">
                     <span class="form-item-icon material-symbols-rounded">person</span>
@@ -140,9 +131,23 @@
                     <ValidationMessage For="@(() => user.Courriel)" />
 
                 </div>
-                <div class="col-12 row text-danger" style="text-align:left; font-weight:bold">
-                    <span class="col-12">@LoginMesssage</span>
+
+                <div class="form-item">
+                    <span class="form-item-icon material-symbols-rounded ">imagesmode</span>
+                    <InputFile id="mdp" OnChange="@LoadFiles" class="form-control" />
+
                 </div>
+
+            @*     @if (error.Count > 0)
+                {
+                    <ul class="text-danger">
+                        @foreach (var err in error)
+                        {
+                            <li class="bg-light">@err</li>
+                        }
+                    </ul>
+                } *@
+        
 
                 <button type="submit" class="btn-primary btn_log">S'inscrire</button>
 
