@@ -10,6 +10,7 @@ header a:hover {
     text-decoration:underline;
 }
 
+
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }
