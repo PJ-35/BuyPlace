@@ -3,6 +3,12 @@ using BuyPlace.Data;
 using BuyPlace;
 using BuyPlace.Service;
 
+
+
+
+using BuyPlace.IService;
+using BuyPlace.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +17,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<MongoServiceCategories>();
 builder.Services.AddScoped<FormDataService>();
 
+
+builder.Services.AddScoped<IUsersService, UsersService>();
 
 var app = builder.Build();
 
@@ -30,5 +38,6 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
 
 app.Run();
