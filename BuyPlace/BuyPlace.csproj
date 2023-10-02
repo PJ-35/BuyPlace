@@ -9,9 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\UniqueEmailAttribute.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.22" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="6.0.22" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
     <PackageReference Include="MongoDB.Bson" Version="2.21.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.21.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\NewFolder1\" />
+    <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 
 </Project>
