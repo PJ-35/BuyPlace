@@ -1,5 +1,7 @@
 using MongoDB.Driver;
 using BuyPlace.Data;
+using BuyPlace;
+using BuyPlace.Service;
 
 
 
@@ -12,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddScoped<MongoServiceCategories>();
+builder.Services.AddScoped<FormDataService>();
+
+
 builder.Services.AddScoped<IUsersService, UsersService>();
 
 var app = builder.Build();

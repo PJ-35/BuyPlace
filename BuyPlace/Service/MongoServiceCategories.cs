@@ -51,11 +51,11 @@ namespace BuyPlace.Data
         /// <summary>
         /// Obtient une catégorie avec le nom
         /// </summary>
-        /// <param name="nom">Le nom d'une catégorie</param>
+        /// <param name="idcategorie">Le nom d'une catégorie</param>
         /// <returns>Une catégorie</returns>
-        public Categories GetCategorie(string nom)
+        public Categories GetCategorie(string idcategorie)
         {
-            return _categorieTable.Find(u => u.nom == nom).SingleOrDefault();
+            return _categorieTable.Find(u => u.Id.ToString() == idcategorie).SingleOrDefault();
         }
 
         
@@ -82,7 +82,7 @@ namespace BuyPlace.Data
 
 
         /// <summary>
-        /// Supprime une catégorie
+        /// Supprime une catégorie si il en reste plus de un
         /// </summary>
         /// <param name="nom">nom de la catégorie</param>
         /// <returns>Retourne un état</returns>
@@ -91,8 +91,13 @@ namespace BuyPlace.Data
             Categories cat =GetCategorie(nom);
             if (cat != null)
             {
-                _categorieTable.DeleteOne(u => u.nom == nom);
-                return true;
+                List<Categories> lstCategorie = GetCategories();
+                if (lstCategorie.Count != 1)
+                {
+                    _categorieTable.DeleteOne(u => u.nom == nom);
+                    return true;
+                }
+                    
             }
             return false;
         }
