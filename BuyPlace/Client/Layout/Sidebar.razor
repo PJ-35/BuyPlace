@@ -1,0 +1,52 @@
+﻿@using BuyPlace.Shared;
+@inject FormDataService formDataService
+
+<div class="col-auto col-md-2 col-xl-2 pb-5 bg-black opacity-50">
+    <h2 class="text-center pb-3 mb-md-0 me-md-auto text-white ">
+        <span class="d-none d-md-inline">Filtre </span><span class="d-md-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
+            </svg>
+        </span>
+    </h2>
+            <div class="col-auto d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item pb-3">
+                <div class="dropdown ">
+                    <button class="btn text-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categorie
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><NavLink class="dropdown-item" href="/magasiner" Match="NavLinkMatch.All">Tout</NavLink></li>
+                        @foreach( var categorie in categories){
+                            string lien= "magasiner/"+categorie.Id.ToString();
+                            <li><NavLink class="dropdown-item" Match="NavLinkMatch.All" href="@lien">@categorie.nom</NavLink></li>
+                        }
+                    </ul>
+                </div>
+                    </li>
+                    <li>
+                <a href="#submenu1" data-bs-toggle="collapse" class=" btn text-center dropdown-toggle d-inline-block text-white">
+                            <i class="fs-4 bi-speedometer2"></i> <span>Prix</span>
+                        </a>
+                <form class="collapse nav flex-column ms-1 text-white" novalidate id="submenu1" data-bs-parent="#menu" @onsubmit="SubmitForm" style="width:100px">
+                        <div class="col-auto">
+                            <label for="exampleFormControlInput1" class="form-label">Min</label>
+                        <input type="text" class="form-control @validMin" @bind="formData.Min" id="exampleFormControlInput1" placeholder="$">
+                        <p class="invalid-feedback">Saisir un nombre plus grand ou égale à 0</p>
+                        </div>
+                        <div class="col-auto">
+                            <label for="exampleFormControlInput1" class="form-label">Max</label>
+                        <input type="text" class="form-control @validMax" @bind="formData.Max" pattern="\d+" id="exampleFormControlInput1" placeholder="$">
+                        <p class="invalid-feedback">Saisir un nombre plus grand ou égale 0</p>
+                    </div>
+                        <button type="submit" class="btn btn-success mt-2">Appliquer</button>
+
+                    </form>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\BuyPlace.Client.props" />
+</Project>
