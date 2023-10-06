@@ -200,15 +200,15 @@
       "mscorlib.dll": "sha256-qqpKd+W+AFb6UxudEYEKzrz7ma81p5LrWUwPBVvHV4U=",
       "netstandard.dll": "sha256-OYYuPT3JUknj4LdYIa58zF7kDB3tCnLzjCSuhEjtKXM=",
       "System.Private.CoreLib.dll": "sha256-EVS7zPxPV\/41g2mzPwdXtwiigWxI\/SeAHme1IgyD6tc=",
-      "BuyPlace.Shared.dll": "sha256-Mp\/FjgSRuVcxR+s\/4IIClk5hEJqa236aB9h\/xJj82cw=",
-      "BuyPlace.Client.dll": "sha256-JZniTlVCWqPsN4Px5RnsS0E3sVO\/Uzu355amk7Hb\/VQ="
+      "BuyPlace.Shared.dll": "sha256-Sp\/KK9EafIOykF4NagQj75wNuEcdWlhVk49AGa+Wnk4=",
+      "BuyPlace.Client.dll": "sha256-aL8rbA0Livb7vFdU5ZMJ\/\/Wo\/5NeOEi6Kxs8axFpC3M="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "BuyPlace.Shared.pdb": "sha256-nuEtLYpiySeRKTpuKQT4FszNFkGOCEOF68EMCEqJl2U=",
-      "BuyPlace.Client.pdb": "sha256-se+I\/jtjsbeOOqErZrkgHkZeeWCS\/tccYDNw0rAKkdo="
+      "BuyPlace.Shared.pdb": "sha256-dkjNFNllTw9bhK8mvNSHBrx6403Y5H\/fi2ul\/rimxRM=",
+      "BuyPlace.Client.pdb": "sha256-lhNQeVpmnx+giK2BqnYkwdSSUNL9BzX\/qjzARYXnfTk="
     },
     "runtime": {
       "dotnet.7.0.5.0hipwnn85p.js": "sha256-codB25EodaFEP43MDCfMBuKXU4LqurUKnQrpoMIFnPs=",
