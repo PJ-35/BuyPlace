@@ -1,4 +1,4 @@
-namespace BlazorApp1.Data
+namespace BlazorApp1.Shared
 {
     public class WeatherForecast
     {
@@ -6,8 +6,8 @@ namespace BlazorApp1.Data
 
         public int TemperatureC { get; set; }
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-
         public string? Summary { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 }
