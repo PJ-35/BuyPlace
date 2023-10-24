@@ -1,0 +1,98 @@
+﻿@page "/magasiner"
+@page "/magasiner/{categorie}"
+@using BuyPlace.Shared
+@inject FormDataService FormDataService
+
+<PageTitle>Magasiner</PageTitle>
+
+<div class="container">
+    <div class="row flex-nowrap mb-5 pb-5">
+
+        <Sidebar />
+        <div class="col py-3">
+
+            @if (lstArticles is null)
+            {
+
+                <p class="text-center">Veuillez patienter</p>
+@*                @if (FormDataService.MinChange && FormDataService.MaxChange)
+                {
+                    <p class="text-center col">Nous n'avons aucun article dont le prix est plus grand que @FormDataService.Min $ et plus petit que @FormDataService.Max $</p>
+                }
+                else if (FormDataService.MinChange)
+                {
+                    <p class="text-center col">Nous n'avons aucun article dont le prix est supérieur ou égale à @FormDataService.Min $</p>
+                }
+                else if (FormDataService.MaxChange)
+                {
+                    <p class="text-center col">Nous n'avons aucun article dont le prix est inférieur ou égale@FormDataService.Max $</p>
+                }
+                else if (FormDataService.boolRecherche)
+                {
+                    <p class="text-center col">Aucun article trouvé </p>
+                }
+                else if(!string.IsNullOrWhiteSpace(categorie))
+                {
+                    <p class="text-center col">Nous n'avons trouvé aucun article de cette catégorie</p>
+                }
+                else
+                {
+                    <p class="text-center col">Veuillez patienter...</p>
+
+                }*@
+            }
+            else if (lstArticles.Count == 0)
+            {
+                @if (FormDataService.MinChange && FormDataService.MaxChange)
+                {
+                    <p class="text-center col">Nous n'avons aucun article dont le prix est plus grand que @FormDataService.Min $ et plus petit que @FormDataService.Max $</p>
+                }
+                else if (FormDataService.MinChange)
+                {
+                    <p class="text-center col">Nous n'avons aucun article dont le prix est supérieur ou égale à @FormDataService.Min $</p>
+                }
+                else if (FormDataService.MaxChange)
+                {
+                    <p class="text-center col">Nous n'avons aucun article dont le prix est inférieur ou égale@FormDataService.Max $</p>
+                }
+                else if (FormDataService.boolRecherche)
+                {
+                    <p class="text-center col">Aucun article trouvé </p>
+                }
+                else if (!string.IsNullOrWhiteSpace(categorie))
+                {
+                    <p class="text-center col">Nous n'avons trouvé aucun article de cette catégorie</p>
+                }
+
+                else
+                {
+                    <p class="text-center p-5">Le marché est vide pour l'instant...</p>
+
+                }
+            }
+            else
+            {
+                <div class=" row">
+                    @for(int i=0;i<lstArticles.Count;i++)
+                    {
+                        string image = lstImages[i];
+                        
+                        <a href="#" class="d-block col-lg-3 col-md-4 col-sm-5 mb-2">
+                            <div>
+                                <img src="images_articles/@image" class="card-img-top" height="200px" alt="@lstArticles[i].nom">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">@lstArticles[i].nom </h5>
+                                    <p class="card-text">@lstArticles[i].description <br> @lstArticles[i].prix $</p>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </div>
+
+
+            }
+        </div>
+    </div>
+
+</div>
+

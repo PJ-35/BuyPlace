@@ -1,0 +1,133 @@
+﻿<header class=" pt-1 bg-light  mb-3">
+    <div class="container mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light ">
+    <div class="container">
+                   <a class="navbar-brand h1 fw-bold" href="/">BuyPlace</a>
+        <button class="navbar-toggler" type="button" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+
+
+            <ul class="navbar-nav my-auto menu">
+              <AuthorizeView>
+                  <NotAuthorized>
+                                <li class="nav-item">
+                                    <NavLink class="nav-link text-dark" href="inscription" Match="NavLinkMatch.All">
+                                        Rejoins nous
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item">
+                                    <NavLink class="nav-link text-dark" href="connexion" Match="NavLinkMatch.All">
+                                        <span class="oi oi-account-logout"></span>
+                                        Se connecter
+                                    </NavLink>
+                                </li>
+                  </NotAuthorized>
+                  <Authorized>
+
+                            <li class="nav-item my-auto mt-3">
+                                    <p class="fw-bold">@userSession.UserName</p>
+                            </li>
+                            <li class="nav-item dropdown @show" @onmousedown="MouseOverDropDown">
+                                <NavLink  class="nav-link text-dark dropdown-toggle" id="navbarDropdownProfil" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="@DropDownValue" href="javascript:void(0)">
+                                        @if(userSession.Image is not null)
+                                        {
+                                            <img src="https://robohash.org/@userSession.UserName " style="border-radius:100px; width:40px; height:40px;" class="border border-3" />
+
+                                        }
+                                        else
+                                        {
+                                            <img src="img_users/@userSession.Image" style="border-radius:100px; width:40px; height:40px;" class="img_profile" />
+
+                                        }
+                                </NavLink>
+
+                                    <div class="dropdown-menu @show" aria-labelledby="navbarDropdown" style="border-radius:10px;min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+
+                                    <div class="d-md-flex align-items-lg-start justify-content-start">
+
+                                        <div class="align-items-center mx-auto">
+
+                                                @if (userSession.Image is "")
+                                                {
+                                                    <img src="https://robohash.org/@userSession.UserName " style="border-radius:100px; width:100px; height:100px;" class="border border-3 mx-auto" />
+
+                                                }
+                                                else
+                                                {
+                                                    <img src="img_users/@userSession.Image" style="border-radius:100px; width:100px; height:100px;" class="img_profile" />
+
+                                                }
+                                            <div class="dropdown-header">Mon profile</div>
+
+                                            <a class="dropdown-item" @onclick=Logout> Deconnexion</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                                <li class="nav-item dropdown @show" @onmousedown="MouseOverDropDown">
+                                    <NavLink class="nav-link text-dark dropdown-toggle" id="navbarDropdownPanier" data-toggle="dropdown"
+                                             aria-haspopup="true" aria-expanded="@DropDownValue" href="javascript:void(0)">
+                                      
+                                        <img src="/images_Accueil/panier2.jpg" style="border-radius:100px; width:40px; height:40px;" class="img_profile" /> 
+                                      
+                                    </NavLink>
+
+                                    <div class="dropdown-menu @show" aria-labelledby="navbarDropdown" style="border-radius:10px; min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+
+                                        <div class="d-md-flex align-items-lg-start justify-content-start">
+
+                                            <div class="align-items-center">
+
+                                              
+                                                <div class="dropdown-header">Panier</div>
+
+                                                <a class="dropdown-item" href="#"> Acheter</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                  </Authorized>
+              </AuthorizeView>
+            </ul>
+        </div>
+    </div>
+</nav>
+        <ul class="justify-content-center nav">
+            <li class="nav-item me-4">
+                <NavLink class="nav-link text-dark" href="magasiner" Match="NavLinkMatch.Prefix">
+                    Magasiner
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <div class="d-flex justify-content-center mb-3">
+                    <form class="w-100" @onsubmit="SubmitForm" role="search">
+                        <div class="input-group">
+                            <input class="form-control @validation" list="datalistOptions" @oninput="HandleInputChange" @bind="FormDataService.recherche" type="search" placeholder="Rechercher " aria-label="Search" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg>
+                            </button>
+                            <datalist id="datalistOptions">
+                                @if (option.Count != 0)
+                                {
+                                    for (int i = 0; i < option.Count; i++)
+                                    {
+                                        <option value="@option[i]" />
+                                    }
+                                }
+                            </datalist>
+
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</header>
+
