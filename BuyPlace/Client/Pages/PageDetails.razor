@@ -2,7 +2,7 @@
 
 <PageTitle>@title</PageTitle>
 
-<div class="container mt-5 row">
+<div class="container mt-5 row justify-content-between">
     @if (!string.IsNullOrWhiteSpace(erreur))
     {
         <p class="text-center">@erreur</p>
@@ -16,9 +16,21 @@
         else
         {
             <div class="col-md-4">
-                @article.nom
+                <img src="images_articles/@image" class="img-fluid" alt="@article.nom"/>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-3">
+                <h2>@article.nom</h2>
+                <p>@article.description</p>
+                <p>@article.prix</p>
+                <p>@article.date</p>
+                @if (article.quantite > 0)
+                {
+                    <p class="text-success">en stock</p>
+                }
+                else
+                {
+                    <p class="text-danger">rupture de stock</p>
+                }
             </div>
         }
 
