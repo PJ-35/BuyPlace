@@ -4,6 +4,7 @@ using BuyPlace.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace BuyPlace.Server.Controllers
 {
@@ -36,5 +37,38 @@ namespace BuyPlace.Server.Controllers
             }
             return lstArtSession;
         }
-    }
+
+        [HttpGet]
+        [Route("GetArticleById")]
+        [AllowAnonymous]
+        public ActionResult<ArticleSession> GetArticleById([FromQuery] string idArticle)
+        {
+            try
+            {
+                ObjectId idArticle2 = new ObjectId(idArticle);
+                Article article = _artService.GetArticle(idArticle2);
+
+                if (article is not null)
+                {
+                    return new ArticleSession()
+                    {
+                        Id = article.Id.ToString(),
+                        nom = article.nom,
+                        quantite = article.quantite,
+                        date = article.date,
+                        id_categorie = article.id_categorie,
+                        prix = article.prix,
+                        description = article.description,
+                        id_user = article.id_user
+                    };
+                }
+                return BadRequest("Aucun article trouvé");
+            }
+            catch
+            {
+                return BadRequest("Aucun article trouvé");
+            }
+
+        }
+}
 }

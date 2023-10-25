@@ -1,0 +1,29 @@
+﻿@page "/detail/{idArticle}"
+
+<PageTitle>@title</PageTitle>
+
+<div class="container mt-5 row">
+    @if (!string.IsNullOrWhiteSpace(erreur))
+    {
+        <p class="text-center">@erreur</p>
+    }
+    else
+    {
+        if(article is null)
+        {
+            <p class="text-center">Veuillez patienter</p>
+        }
+        else
+        {
+            <div class="col-md-4">
+                @article.nom
+            </div>
+            <div class="col-md-8">
+            </div>
+        }
+
+    }
+
+
+</div>
+

@@ -36,7 +36,7 @@ namespace BuyPlace.Server.Controllers
 
         [HttpGet]
         [Route("cherche")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult<CategorieSession> GetCategorie([FromQuery] string categorie)
         {
             Categories lstCategorie = _catService.GetCategorie(categorie);

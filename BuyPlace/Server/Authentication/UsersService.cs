@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 using BCrypt.Net;
-
+using MongoDB.Bson;
 
 namespace BuyPlace.Server.Authentication
 {
@@ -37,6 +37,12 @@ namespace BuyPlace.Server.Authentication
         {
 
             return _userTable.Find(x => x.UserName == username).FirstOrDefault();
+        }
+
+        public User GetUserById(ObjectId idUser)
+        {
+
+            return _userTable.Find(x => x.Id == idUser).SingleOrDefault();
         }
 
 

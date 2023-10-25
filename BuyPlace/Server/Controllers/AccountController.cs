@@ -3,6 +3,7 @@ using BuyPlace.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace BuyPlace.Server.Controllers
 {
@@ -37,7 +38,7 @@ namespace BuyPlace.Server.Controllers
 
         [HttpPost]
         [Route("GetbyUserName")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult<NewUser> GetByUserName([FromBody] string userName)
         {
             User user=_userService.GetUserByUsername(userName);
@@ -58,7 +59,7 @@ namespace BuyPlace.Server.Controllers
 
         [HttpPost]
         [Route("DoublonbyUserName")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult<User> DoublonByUserName([FromBody] string userName)
         {
             User user = _userService.GetUserByUsername(userName);
@@ -75,7 +76,7 @@ namespace BuyPlace.Server.Controllers
 
         [HttpPost]
         [Route("GetbyCourriel")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult<User> GetByCourriel([FromBody] string courriel)
         {
             User user = _userService.GetUserByCourriel(courriel);
@@ -94,7 +95,7 @@ namespace BuyPlace.Server.Controllers
 
         [HttpPost]
         [Route("DoublonbyCourriel")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult<User> DoublonByCourriel([FromBody] string courriel)
         {
             User user = _userService.GetUserByCourriel(courriel);
@@ -124,5 +125,6 @@ namespace BuyPlace.Server.Controllers
                 return BadRequest();
 
         }
+
     }
 }
