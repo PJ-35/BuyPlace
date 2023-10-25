@@ -1,9 +1,11 @@
 ﻿
 using BuyPlace.Shared;
 using Microsoft.AspNetCore.Components;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BuyPlace.Client.Pages
 {
@@ -79,7 +81,7 @@ namespace BuyPlace.Client.Pages
         {
             if (lstArticles is not null && !string.IsNullOrWhiteSpace(FormDataService.recherche))
             {
-                lstArticles = lstArticles.Where(x => x.nom.IndexOf(FormDataService.recherche) != -1 || x.description.IndexOf(FormDataService.recherche) != -1).ToList();
+                lstArticles = lstArticles.Where(x => x.nom.ToLower().IndexOf(FormDataService.recherche.ToLower()) != -1 || x.description.ToLower().IndexOf(FormDataService.recherche.ToLower()) != -1).ToList();
                 FormDataService.boolRecherche = true;
             }
             else if (string.IsNullOrWhiteSpace(FormDataService.recherche))
@@ -89,13 +91,11 @@ namespace BuyPlace.Client.Pages
         {
             if (!string.IsNullOrWhiteSpace(categorie))
             {
-                //navigationManager.NavigateTo("/error404", true);
-                CategorieSession cat = await httpClient.GetFromJsonAsync<CategorieSession>($"api/categorie/cherche?categorie={categorie}");
-                if (string.IsNullOrWhiteSpace(cat.nom))
-                    navigationManager.NavigateTo("/error404",true);
+                var reponse = await httpClient.GetAsync($"api/categorie/cherche?categorie={categorie}");
+                if (reponse.StatusCode == HttpStatusCode.BadRequest)
+                    navigationManager.NavigateTo("/error404", true);
                 FormDataService.categorie = categorie;
                 lstArticles = await httpClient.GetFromJsonAsync<List<ArticleSession>>($"api/article/article?categorie={categorie}");
-                //lstArticles = lstArticles.Count == 0 ? null : lstArticles;
             }
             else
             {
@@ -108,7 +108,6 @@ namespace BuyPlace.Client.Pages
                 if (FormDataService.MinChange && FormDataService.MaxChange)
                 {
                     lstArticles = lstArticles.Where(x => x.prix >= FormDataService.Min && x.prix <= FormDataService.Max).ToList();
-                    //lstArticles = lstArticles.Count == 0 ? null : lstArticles;
                 }
                 else
                 {
@@ -116,15 +115,12 @@ namespace BuyPlace.Client.Pages
                         lstArticles = lstArticles.Where(x => x.prix >= FormDataService.Min).ToList();
                     if (FormDataService.MaxChange)
                         lstArticles = lstArticles.Where(x => x.prix <= FormDataService.Max).ToList();
-                    //lstArticles = lstArticles.Count == 0 ? null : lstArticles;
                 }
             }
 
             if (FormDataService.boolRecherche)
             {
                 Recherche();
-                //if (lstArticles is not null)
-                    //lstArticles = lstArticles.Count == 0 ? null : lstArticles;
 
             }
             if(lstArticles is not null)

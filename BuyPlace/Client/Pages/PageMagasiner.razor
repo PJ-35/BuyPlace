@@ -47,23 +47,26 @@
             }
             else
             {
-                <div class=" row">
-                    @for(int i=0;i<lstArticles.Count;i++)
+
+                <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+
+                    @for (int i = 0; i < lstArticles.Count; i++)
                     {
                         string image = lstImages[i];
-                        
+
                         <a href="/detail/@lstArticles[i].Id" class="d-block col-lg-3 col-md-4 col-sm-5 mb-2">
-                            <div>
-                                <img src="images_articles/@image" class="card-img-top" height="200px" alt="@lstArticles[i].nom">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">@lstArticles[i].nom </h5>
-                                    <p class="card-text">@lstArticles[i].description <br> @lstArticles[i].prix $</p>
+
+                            <div class="card">
+                                <img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="images_articles/@image" />
+                                <div class="card-body p-4">
+                                    <h4 class="card-title">@lstArticles[i].nom</h4>
+                                    <p class="card-text">@lstArticles[i].description</p>
+                                    <small>@lstArticles[i].prix</small>
                                 </div>
                             </div>
                         </a>
                     }
                 </div>
-
 
             }
         </div>
