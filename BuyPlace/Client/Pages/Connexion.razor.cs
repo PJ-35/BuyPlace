@@ -34,7 +34,6 @@ namespace BuyPlace.Client.Pages
         {
             try
             {
-
                 var loginResponse = await httpClient.PostAsJsonAsync<LoginRequest>("api/Account/Login", logRequest);
                 //var content= await loginResponse.Content.ReadAsStringAsync();
                 if (loginResponse.IsSuccessStatusCode)

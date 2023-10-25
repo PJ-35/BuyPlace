@@ -134,9 +134,9 @@ namespace BuyPlace.Client.Pages
                 {
                     LoginMesssage = "";
                 }
-                var loginResponseUserName = await httpClient.PostAsJsonAsync("api/Account/DoublonbyUserName", user.Nom);
+                var loginResponseUserName = await httpClient.PostAsJsonAsync("api/Account/DoublonbyUserName", user.UserName);
                 var loginResponseCourriel = await httpClient.PostAsJsonAsync("api/Account/DoublonbyCourriel", user.Courriel);
-                if (loginResponseUserName.StatusCode == HttpStatusCode.Unauthorized|| loginResponseCourriel.StatusCode == HttpStatusCode.Unauthorized && isValid && LoginMesssage == "")
+                if (loginResponseUserName.StatusCode == HttpStatusCode.Unauthorized|| loginResponseCourriel.StatusCode == HttpStatusCode.Unauthorized /*&& isValid*/ && LoginMesssage == "")
                 {
 
                     if (loginResponseUserName.StatusCode == HttpStatusCode.Unauthorized)

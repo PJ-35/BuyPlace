@@ -31,7 +31,7 @@ namespace BuyPlace.Server.Authentication
 
             // Pour vérifier le mot de passe lors de l'authentification
             bool isPasswordValid = _usersService.VerifyPassword(password, hashedPassword);
-            //if (!isPasswordValid) { return null; }
+
             if (userAccount == null || !isPasswordValid)
             {
                 return null;
