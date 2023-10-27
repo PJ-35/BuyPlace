@@ -14,13 +14,11 @@ namespace BuyPlace.Client.Pages
         private System.Timers.Timer timer;
         protected override async Task OnInitializedAsync()
         {
-            categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie");
-            FormDataService.details = "";
+            categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie"); ;
             timer = new System.Timers.Timer(2000);
             timer.Elapsed += async (sender, e) =>
             {
-                categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie");
-                FormDataService.details = "";
+                categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie"); ;
                 InvokeAsync(StateHasChanged);
             };
             timer.Start();
