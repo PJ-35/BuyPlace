@@ -89,6 +89,7 @@ namespace BuyPlace.Client.Pages
         }
         private async void chargement()
         {
+            FormDataService.details = "";
             if (!string.IsNullOrWhiteSpace(categorie))
             {
                 var reponse = await httpClient.GetAsync($"api/categorie/cherche?categorie={categorie}");

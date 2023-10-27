@@ -1,4 +1,6 @@
 ﻿@page "/detail/{idArticle}"
+@using BuyPlace.Shared
+@inject FormDataService FormDataService
 
 <PageTitle>@title</PageTitle>
 <div class="container mb-5 pb-5">
@@ -32,13 +34,13 @@
                         @if (article.quantite > 0)
                         {
                             <p class="text-success">en stock</p>
-                            <button class="btn btn-info">Ajouter au panier</button>
+                            <button class="btn btn-success">Ajouter au panier</button>
 
                         }
                         else
                         {
                             <p class="text-danger">rupture de stock</p>
-                            <button class="btn btn-info disabled">Ajouter au panier</button>
+                            <button class="btn btn-success disabled">Ajouter au panier</button>
 
                         }
                         </Authorized>
