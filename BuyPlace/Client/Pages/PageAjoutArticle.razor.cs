@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
+using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace BuyPlace.Client.Pages
 {
@@ -21,6 +23,9 @@ namespace BuyPlace.Client.Pages
 
         public string id_categorie { get; set; }
 
+        private List<CategorieSession> categories;
+
+
         [Inject]
         AuthenticationStateProvider authStateProvider { get; set; }
 
@@ -29,29 +34,55 @@ namespace BuyPlace.Client.Pages
 
         public string LoginMesssage { get; set; } = "";
 
+        private void ValidationForm()
+        {
+            LoginMesssage = "Veuillez bien remplir tous les champs";
+            if (article.nom.Length < 3)
+                LoginMesssage += "\n-le nom doit avoir plus de 3 caractères";
+            if (article.quantite < 0)
+                LoginMesssage += "\n-la quantité doit être plus grand que 0";
+            if (article.description.Length < 3)
+                LoginMesssage += "\n-la description doit avoir plus de 3 caractères";
+            if (article.prix < 0)
+                LoginMesssage += "\n-le prix doit être plus grand que 0";
+            if (article.id_categorie.Length == 0)
+                LoginMesssage += "\n-Veuillez sélectionner une catégorie";
+            if (LoginMesssage.Equals("Veuillez bien remplis tous les champs"))
+                LoginMesssage = "";
+        }
+
+        private AuthenticationState authenticationState;
+
+        protected override async Task OnInitializedAsync()
+        {
+            categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie");
+            //authenticationState = await authStateProvider.GetAuthenticationStateAsync();
+
+            //if (!authenticationState.User.Identity.IsAuthenticated)
+            //{
+            //    navManager.NavigateTo("/connexion");
+            //}
+        }
         private async Task HandleLogin()
         {
-            //try
+            article.nom = article.nom.Trim();
+            article.description = article.description.Trim();
+            var validationResults = new List<ValidationResult>();
+            var isValid = Validator.TryValidateObject(article, new ValidationContext(article), validationResults, true);
+            //if (isValid)
             //{
-                //var loginResponse = await httpClient.PostAsJsonAsync<LoginRequest>("api/Account/Login", logRequest);
-                //var content= await loginResponse.Content.ReadAsStringAsync();
-            //    if (loginResponse.IsSuccessStatusCode)
-            //    {
-            //        var userSession = await loginResponse.Content.ReadFromJsonAsync<UserSession>();
-            //        var custum = (CustumAuthStateProvider)authStateProvider;
-            //        await custum.UpdateAuthState(userSession);
-            //        navManager.NavigateTo("/", true);
-            //    }
-            //    else if (loginResponse.StatusCode == HttpStatusCode.Unauthorized)
-            //    {
-            //        LoginMesssage = "nom d'utilisateur ou mot de passe invalide";
-            //        return;
-            //    }
+            //    ValidationForm();
             //}
-            //catch (Exception ex)
+            //else
             //{
-            //    String t = ex.Message;
+            //    ValidationForm();  
             //}
+            ValidationForm();
+            if (isValid && LoginMesssage == "")
+            {
+
+            }
+            
         }
     }
 }

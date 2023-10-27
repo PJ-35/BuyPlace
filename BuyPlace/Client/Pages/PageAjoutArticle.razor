@@ -20,25 +20,36 @@
             <div class="form-item ">
                 <span class="form-item-icon material-symbols-rounded">person</span>
                 <InputText @bind-Value="article.nom" type="text" class="input" placeholder="Entrer un nom d'articles" required />
+                <ValidationMessage For="@(() => article.nom)" />
             </div>
 
             <div class="form-item">
                 <span class="form-item-icon material-symbols-rounded">lock</span>
-                <InputNumber @bind-Value="article.prix" class="input" placeholder="Entrer le prix" required />
+                <InputNumber @bind-Value="article.prix" type="decimal" class="input" placeholder="Entrer le prix" required min="1"/>
+                <ValidationMessage For="@(() => article.prix)" />
             </div>
 
             <div class="form-item">
                 <span class="form-item-icon material-symbols-rounded">lock</span>
-                <InputNumber @bind-Value="article.quantite" type="number" class="input" placeholder="Entrer la quantité" required />
+                <InputNumber @bind-Value="article.quantite" type="number" class="input" placeholder="Entrer la quantité" required min="1" />
+                <ValidationMessage For="@(() => article.quantite)" />
             </div>
             <div class="form-item">
                 <span class="form-item-icon material-symbols-rounded">lock</span>
-                <InputText @bind-Value="article.description" type="password" class="input" placeholder="Entrer la description" id="mdp" required />
+                <InputText @bind-Value="article.description" type="text" class="input" placeholder="Entrer la description" required />
+                <ValidationMessage For="@(() => article.description)" />
             </div>
 
            <div class="form-item">
                 @*<span class="form-item-icon material-symbols-rounded">lock</span>*@
-                <InputSelect @bind-Value="article.nom" type="password" placeholder="Entrer la catégorie" id="mdp" required />
+                <InputSelect @bind-Value="article.id_categorie" class="form-select" placeholder="Entrer la catégorie" required >
+                    <option value="" selected>----Faites un choix-----</option>
+
+                    @foreach(var categorie in categories)
+                    {
+                        <option value="@categorie.Id">@categorie.nom</option>
+                    }
+                </InputSelect>
             </div>
 
 
