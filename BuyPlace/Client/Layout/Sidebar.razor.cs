@@ -1,6 +1,7 @@
 ﻿using BuyPlace.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
+using System.Net;
 using System.Net.Http.Json;
 
 namespace BuyPlace.Client.Layout
@@ -71,9 +72,9 @@ namespace BuyPlace.Client.Layout
             categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie");
             if (!string.IsNullOrWhiteSpace(formDataService.categorie))
             {
-                CategorieSession cat = await httpClient.GetFromJsonAsync<CategorieSession>($"api/categorie/cherche?categorie={formDataService.categorie}");
-                if (cat is null)
-                    navigationManager.NavigateTo("/error404",true);
+                var reponse = await httpClient.GetAsync($"api/categorie/cherche?categorie={formDataService.categorie}");
+                if (reponse.StatusCode == HttpStatusCode.BadRequest)
+                    navigationManager.NavigateTo("/error404", true);
 
             }
         }
