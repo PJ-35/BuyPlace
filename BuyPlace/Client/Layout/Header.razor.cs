@@ -118,11 +118,11 @@ namespace BuyPlace.Client.Layout
                 try
                 {
                     List<ArticleSession> lst = await httpClient.GetFromJsonAsync<List<ArticleSession>>("api/article/article");
-                    lst = lst.Where(x => x.nom.IndexOf(input) != -1).ToList();
-                    option = lst.Select(art => art.nom).Take(5).ToList();
-                    lst = await httpClient.GetFromJsonAsync<List<ArticleSession>>("api/article/article");
-                    lst = lst.Where(x => x.description.IndexOf(input) != -1).ToList();
-                    option.AddRange(lst.Select(art => art.description).Take(5).ToList());
+                    List<ArticleSession>lst2 = lst.Where(x => x.nom.ToLower().IndexOf(input.ToLower()) != -1).ToList();
+                    option = lst2.Select(art => art.nom).Take(3).ToList();
+                    //lst = await httpClient.GetFromJsonAsync<List<ArticleSession>>("api/article/article");
+                    lst2 = lst.Where(x => x.description.ToLower().IndexOf(input.ToLower()) != -1).ToList();
+                    option.AddRange(lst2.Select(art => art.description).Take(3).ToList());
                 }
                 catch
                 {

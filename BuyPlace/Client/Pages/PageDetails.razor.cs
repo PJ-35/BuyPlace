@@ -39,6 +39,7 @@ namespace BuyPlace.Client.Pages
         private async void chargement()
         {
              var reponse= await httpClient.GetAsync($"api/article/getarticlebyid?idArticle={idArticle}");
+            FormDataService.details = "";
             if(reponse.StatusCode == HttpStatusCode.BadRequest)
             {
                 erreur= await reponse.Content.ReadAsStringAsync();
@@ -49,6 +50,7 @@ namespace BuyPlace.Client.Pages
                 article= await reponse.Content.ReadFromJsonAsync<ArticleSession>();
                 erreur = "";
                 title = $"Détails||{article.nom}";
+                FormDataService.details = article.Id;
                 var imageReponse = await httpClient.GetAsync("/images_articles/" + article.Id + ".jpg");
                 if (imageReponse.IsSuccessStatusCode)
                 {

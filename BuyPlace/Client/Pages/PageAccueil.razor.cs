@@ -10,15 +10,16 @@ namespace BuyPlace.Client.Pages
         HttpClient httpClient { get; set; }
 
         private List<CategorieSession> categories;
-        //private MongoServiceCategories mongoService = new MongoServiceCategories();
         private System.Timers.Timer timer;
         protected override async Task OnInitializedAsync()
         {
-            categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie"); ;
+            categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie");
+            FormDataService.details = "";
             timer = new System.Timers.Timer(2000);
             timer.Elapsed += async (sender, e) =>
             {
-                categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie"); ;
+                categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie");
+                FormDataService.details = "";
                 InvokeAsync(StateHasChanged);
             };
             timer.Start();
