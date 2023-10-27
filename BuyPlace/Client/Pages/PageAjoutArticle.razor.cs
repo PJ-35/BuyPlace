@@ -18,9 +18,6 @@ namespace BuyPlace.Client.Pages
         [Inject]
         HttpClient httpClient { get; set; }
 
-        [Inject]
-        IJSRuntime js { get; set; }
-
         public string id_categorie { get; set; }
 
         private List<CategorieSession> categories;
