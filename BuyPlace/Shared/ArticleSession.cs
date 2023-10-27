@@ -16,7 +16,6 @@ namespace BuyPlace.Shared
         public DateTime date { get; set; }
         public decimal prix { get; set; }
         public string description { get; set; }
-
         public string id_user { get; set; }
     }
 }

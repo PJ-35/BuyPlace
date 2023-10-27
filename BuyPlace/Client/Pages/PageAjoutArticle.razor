@@ -1,0 +1,54 @@
+﻿@page "/ajout/article"
+
+<div class="login-card-container logRegis d-flex align-items-center justify-content-center ">
+
+    <div class="login-card my-4 align-content-center">
+
+
+        <div class=" login-card-header text-center mb-2">
+            <h3 style="font-weight:bold; color:purple" class="fs-2 fw-bold mb-1"> Ajout d'articles </h3>
+            <div style="font-size:calc(1rem*.8); opacity:.8;">Connecte toi pour rejoindre la plateforme</div>
+        </div>
+
+        <EditForm Model="@article" OnSubmit="HandleLogin" novalidate class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
+            <DataAnnotationsValidator />
+
+            <div class="col-12 row text-white bg-danger mb-2" style="text-align:center; font-weight:bold">
+                <span class="col-12">@LoginMesssage</span>
+            </div>
+
+            <div class="form-item ">
+                <span class="form-item-icon material-symbols-rounded">person</span>
+                <InputText @bind-Value="article.nom" type="text" class="input" placeholder="Entrer un nom d'articles" required />
+            </div>
+
+            <div class="form-item">
+                <span class="form-item-icon material-symbols-rounded">lock</span>
+                <InputNumber @bind-Value="article.prix" class="input" placeholder="Entrer le prix" required />
+            </div>
+
+            <div class="form-item">
+                <span class="form-item-icon material-symbols-rounded">lock</span>
+                <InputNumber @bind-Value="article.quantite" type="number" class="input" placeholder="Entrer la quantité" required />
+            </div>
+            <div class="form-item">
+                <span class="form-item-icon material-symbols-rounded">lock</span>
+                <InputText @bind-Value="article.description" type="password" class="input" placeholder="Entrer la description" id="mdp" required />
+            </div>
+
+           <div class="form-item">
+                @*<span class="form-item-icon material-symbols-rounded">lock</span>*@
+                <InputSelect @bind-Value="article.nom" type="password" placeholder="Entrer la catégorie" id="mdp" required />
+            </div>
+
+
+            <button type="submit" class="btn-primary btn_log">Se connecter</button>
+
+
+        </EditForm>
+
+
+    </div>
+
+
+</div>

@@ -77,27 +77,6 @@ header a:hover {
     /* height: 100%;*/
 }
 
-/*@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}*/
-/*
-.log {
-    background-repeat: no-repeat;
-    background-position:center;
-    background-size: cover;
-    background-image: url(../image_auth_log/bg_log.jpg);
-    min-height: 80vh;
-}*/
 
 .login-card {
     width: 700px;
@@ -160,9 +139,6 @@ header a:hover {
     border-radius: 100px;
     width: 100%;
     transition: background .5s;
-}
-
-input[type="file"] {
 }
 
 .ou {

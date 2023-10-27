@@ -48,12 +48,6 @@ namespace BuyPlace.Shared
         //public bool IsAdmin { get; set; } = false;
         public string Role { get; set; } = "user";
 
-        public static implicit operator NewUser(HttpResponseMessage v)
-        {
-            throw new NotImplementedException();
-        }
-        //public bool IsCompleted { get; set; }
-
         #endregion
     }
 }
