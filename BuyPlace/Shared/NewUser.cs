@@ -17,6 +17,7 @@ namespace BuyPlace.Shared
         [MinLength(3, ErrorMessage = "Le nom d'utilisateur doit contenir au moins 3 caractères.")]
         public string UserName { get; set; }
 
+        public string Id { get; set; }
 
 
         public string Image { get; set; } = "";

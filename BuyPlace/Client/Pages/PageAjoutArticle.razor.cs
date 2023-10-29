@@ -8,6 +8,7 @@ using Microsoft.JSInterop;
 using System.Net.Http.Json;
 using System.ComponentModel.DataAnnotations;
 using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BuyPlace.Client.Pages
 {
@@ -31,7 +32,7 @@ namespace BuyPlace.Client.Pages
 
         public string LoginMesssage { get; set; } = "";
 
-        private void ValidationForm()
+        private async Task ValidationFormAsync()
         {
             LoginMesssage = "Veuillez bien remplir tous les champs";
             if (article.nom.Length < 3)
@@ -44,6 +45,9 @@ namespace BuyPlace.Client.Pages
                 LoginMesssage += "\n-le prix doit être plus grand que 0";
             if (article.id_categorie.Length == 0)
                 LoginMesssage += "\n-Veuillez sélectionner une catégorie";
+            var reponse = await httpClient.GetAsync($"api/categorie/cherche?categorie={article.id_categorie}");
+            if (reponse.StatusCode == HttpStatusCode.BadRequest)
+                navManager.NavigateTo('/error404', true);
             if (LoginMesssage.Equals("Veuillez bien remplis tous les champs"))
                 LoginMesssage = "";
         }
@@ -74,10 +78,29 @@ namespace BuyPlace.Client.Pages
             //{
             //    ValidationForm();  
             //}
-            ValidationForm();
+            ValidationFormAsync();
             if (isValid && LoginMesssage == "")
             {
+                var custum = (CustumAuthStateProvider)authStateProvider;
+                UserSession storedUser = await custum.GetUserSession();
 
+                if (storedUser is not null)
+                {
+
+                    var user = await httpClient.PostAsJsonAsync("api/Account/GetbyUserName", storedUser.UserName);
+                    NewUser userSession = await user.Content.ReadFromJsonAsync<NewUser>();
+                    ArticleSession article2=new ArticleSession() { 
+                        id_categorie=article.id_categorie,
+                        id_user=userSession.Id
+                    };
+                    id_categorie = article1.id_categorie,
+                id_user = article1.id_user,
+                nom = article1.nom,
+                description = article1.description,
+                prix = article1.prix,
+                quantite = article1.quantite,
+                date = article1.date,
+                }
             }
             
         }

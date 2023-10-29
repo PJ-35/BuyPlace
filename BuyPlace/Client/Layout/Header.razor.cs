@@ -16,7 +16,7 @@ namespace BuyPlace.Client.Layout
         string baseMenuClass = "navbar-collapse d-sm-inline-flex flex-sm-row-reverse";
         string validation = "";
         bool validationRequis = true;
-        UserSession storedUser ;
+        private UserSession storedUser ;
 
         public NewUser userSession = new NewUser();
         //private readonly ISessionStorageService sessionStorageService;

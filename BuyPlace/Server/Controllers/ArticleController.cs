@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace BuyPlace.Server.Controllers
 {
@@ -70,5 +71,28 @@ namespace BuyPlace.Server.Controllers
             }
 
         }
-}
+
+        [HttpPost]
+        [Route("Save")]
+        [AllowAnonymous]
+        public ActionResult Save([FromBody] ArticleSession article1)
+        {
+            Article article = new Article()
+            {
+                id_categorie = article1.id_categorie,
+                id_user = article1.id_user,
+                nom = article1.nom,
+                description = article1.description,
+                prix = article1.prix,
+                quantite = article1.quantite,
+                date=article1.date,
+            };
+
+            if (_artService.AddArticle(article))
+                return Ok();
+            else
+                return BadRequest();
+
+        }
+    }
 }
