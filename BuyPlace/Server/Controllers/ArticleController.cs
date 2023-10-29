@@ -46,8 +46,7 @@ namespace BuyPlace.Server.Controllers
         {
             try
             {
-                ObjectId idArticle2 = new ObjectId(idArticle);
-                Article article = _artService.GetArticle(idArticle2);
+                Article article = _artService.GetArticle(idArticle);
 
                 if (article is not null)
                 {

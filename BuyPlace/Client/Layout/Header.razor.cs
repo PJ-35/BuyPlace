@@ -118,7 +118,7 @@ namespace BuyPlace.Client.Layout
                 try
                 {
                     List<ArticleSession> lst = await httpClient.GetFromJsonAsync<List<ArticleSession>>("api/article/article");
-                    List<ArticleSession> lst2 = lst.Where(x => x.nom.ToLower().IndexOf(input.ToLower()) != -1).ToList();
+                    List<ArticleSession>lst2 = lst.Where(x => x.nom.ToLower().IndexOf(input.ToLower()) != -1).ToList();
                     option = lst2.Select(art => art.nom).Take(3).ToList();
                     //lst = await httpClient.GetFromJsonAsync<List<ArticleSession>>("api/article/article");
                     lst2 = lst.Where(x => x.description.ToLower().IndexOf(input.ToLower()) != -1).ToList();

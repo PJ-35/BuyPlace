@@ -39,13 +39,21 @@ namespace BuyPlace.Server.Controllers
         [AllowAnonymous]
         public ActionResult<CategorieSession> GetCategorie([FromQuery] string categorie)
         {
-            Categories lstCategorie = _catService.GetCategorie(categorie);
-            CategorieSession categorieSession;
-            if (lstCategorie is not null)
-                categorieSession = new CategorieSession() { Id = lstCategorie.Id.ToString(), nom = lstCategorie.nom };
-            else
-                return null;
-            return categorieSession;
+            try
+            {
+                Categories lstCategorie = _catService.GetCategorie(categorie);
+                CategorieSession categorieSession;
+                if (lstCategorie is not null)
+                    categorieSession = new CategorieSession() { Id = lstCategorie.Id.ToString(), nom = lstCategorie.nom };
+                else
+                    return BadRequest();
+                return categorieSession;
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
         }
 
     }

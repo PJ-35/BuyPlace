@@ -73,8 +73,8 @@ namespace BuyPlace.Client.Layout
             if (!string.IsNullOrWhiteSpace(formDataService.categorie))
             {
                 var reponse = await httpClient.GetAsync($"api/categorie/cherche?categorie={formDataService.categorie}");
-                if (reponse.StatusCode == HttpStatusCode.BadRequest)
-                    navigationManager.NavigateTo("/error404", true);
+                if (reponse.StatusCode==HttpStatusCode.BadRequest)
+                    navigationManager.NavigateTo("/error404",true);
 
             }
         }

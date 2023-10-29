@@ -41,7 +41,10 @@ namespace BuyPlace.Client.Pages
                     var userSession = await loginResponse.Content.ReadFromJsonAsync<UserSession>();
                     var custum = (CustumAuthStateProvider)authStateProvider;
                     await custum.UpdateAuthState(userSession);
-                    navManager.NavigateTo("/", true);
+                    if(string.IsNullOrWhiteSpace(FormDataService.details))
+                        navManager.NavigateTo("/", true);
+                    else
+                        navManager.NavigateTo($"/detail/{FormDataService.details}",true);
                 }
                 else if (loginResponse.StatusCode == HttpStatusCode.Unauthorized)
                 {
