@@ -1,6 +1,7 @@
 ﻿
 using BuyPlace.Shared;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -129,15 +130,20 @@ namespace BuyPlace.Client.Pages
                 lstImages = new string[lstArticles.Count];
                 for (int i = 0; i < lstArticles.Count; i++)
                 {
-                    var reponse = await httpClient.GetAsync("/images_articles/" + lstArticles[i].Id + ".jpg");
-                    if (reponse.IsSuccessStatusCode)
-                    {
-                        lstImages[i] = $"{lstArticles[i].Id}.jpg";
-                    }
-                    else
-                    {
-                        lstImages[i] = "indisponible.jpg";
-                    }
+
+                        byte[] imageBytes = await httpClient.GetByteArrayAsync($"api/article/{lstArticles[i].Id}");
+                        lstImages[i] = $"data:image/jpg;base64,{Convert.ToBase64String(imageBytes)}";
+                        
+                    //StateHasChanged();
+                    //var reponse = await httpClient.GetAsync("/images_articles/" + lstArticles[i].Id + ".jpg");
+                    //if (reponse.IsSuccessStatusCode)
+                    //{
+                    //    lstImages[i] = $"{lstArticles[i].Id}.jpg";
+                    //}
+                    //else
+                    //{
+                    //    lstImages[i] = "indisponible.jpg";
+                    //}
                 }
             }
 

@@ -10,7 +10,7 @@
             <div style="font-size:calc(1rem*.8); opacity:.8;">Connecte toi pour rejoindre la plateforme</div>
         </div>
 
-        <EditForm Model="@article" OnSubmit="HandleLogin" novalidate class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
+        <EditForm Model="@article" OnSubmit="HandleAjout" novalidate class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
             <DataAnnotationsValidator />
 
             <div class="col-12 row text-white bg-danger mb-2" style="text-align:center; font-weight:bold">
@@ -41,7 +41,6 @@
             </div>
 
            <div class="form-item">
-                @*<span class="form-item-icon material-symbols-rounded">lock</span>*@
                 <InputSelect @bind-Value="article.id_categorie" class="form-select" placeholder="Entrer la catégorie" required >
                     <option value="" selected>----Faites un choix-----</option>
 
@@ -51,13 +50,20 @@
                     }
                 </InputSelect>
             </div>
+            
+            <div class="form-item">
+                <span class="form-item-icon material-symbols-rounded ">imagesmode</span>
+                <InputFile unique class="form-control" @onclick="OnClick" OnChange="@OnChange" accept=".jpg" />
 
-
+            </div>
+            @if(image is not null)
+            {
+                <img src="data:@image.contenttype;base64,@image.base64"/>
+            }
             <button type="submit" class="btn-primary btn_log">Se connecter</button>
 
 
         </EditForm>
-
 
     </div>
 

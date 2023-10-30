@@ -52,12 +52,10 @@
 
                     @for (int i = 0; i < lstArticles.Count; i++)
                     {
-                        string image = lstImages[i];
-
                         <a href="/detail/@lstArticles[i].Id" class="d-block col-lg-3 col-md-4 col-sm-5 mb-2">
 
                             <div class="card">
-                                <img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="images_articles/@image" />
+                                <img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="@lstImages[i]" />
                                 <div class="card-body p-4">
                                     <h4 class="card-title">@lstArticles[i].nom</h4>
                                     <p class="card-text">@lstArticles[i].description</p>

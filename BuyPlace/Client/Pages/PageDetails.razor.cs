@@ -51,15 +51,19 @@ namespace BuyPlace.Client.Pages
                 erreur = "";
                 title = $"Détails||{article.nom}";
                 FormDataService.details = article.Id;
-                var imageReponse = await httpClient.GetAsync("/images_articles/" + article.Id + ".jpg");
-                if (imageReponse.IsSuccessStatusCode)
-                {
-                    image = $"{article.Id}.jpg";
-                }
-                else
-                {
-                    image = "indisponible.jpg";
-                }
+                byte[] imageBytes = await httpClient.GetByteArrayAsync($"api/article/{article.Id}");
+                image = $"data:image/jpg;base64,{Convert.ToBase64String(imageBytes)}";
+
+
+                //var imageReponse = await httpClient.GetAsync("/images_articles/" + article.Id + ".jpg");
+                //if (imageReponse.IsSuccessStatusCode)
+                //{
+                //    image = $"{article.Id}.jpg";
+                //}
+                //else
+                //{
+                //    image = "indisponible.jpg";
+                //}
 
             }
 

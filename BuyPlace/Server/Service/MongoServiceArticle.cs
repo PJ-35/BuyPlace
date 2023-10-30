@@ -45,16 +45,18 @@ namespace BuyPlace.Server.Service
         /// </summary>
         /// <param name="article">l'article à ajouter</param>
         /// <returns>un bool représentant l'état si jamais il y'avait déjà un article de même nom</returns>
-        public bool AddArticle(Article article)
+        public string AddArticle(Article article)
         {
-            var obj = _articlesTable.Find(u => u.nom == article.nom).FirstOrDefault();
-            if (obj is null)
+            try
             {
                 _articlesTable.InsertOne(article);
-                return true;
+                return article.Id.ToString();
             }
-            else
-                return false;
+            catch
+            {
+                return "";
+            }
+           
         }
 
         /// <summary>
