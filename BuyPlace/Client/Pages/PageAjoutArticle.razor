@@ -1,0 +1,71 @@
+﻿@page "/ajout/article"
+
+<div class="login-card-container logRegis d-flex align-items-center justify-content-center ">
+
+    <div class="login-card my-4 align-content-center">
+
+
+        <div class=" login-card-header text-center mb-2">
+            <h3 style="font-weight:bold; color:purple" class="fs-2 fw-bold mb-1"> Ajout d'articles </h3>
+            <div style="font-size:calc(1rem*.8); opacity:.8;">Connecte toi pour rejoindre la plateforme</div>
+        </div>
+
+        <EditForm Model="@article" OnSubmit="HandleAjout" novalidate class="login-card-form align-content-center oi-account-login d-flex flex-column gap-1">
+            <DataAnnotationsValidator />
+
+            <div class="col-12 row text-white bg-danger mb-2" style="text-align:center; font-weight:bold">
+                <span class="col-12">@LoginMesssage</span>
+            </div>
+
+            <div class="form-item ">
+                <span class="form-item-icon material-symbols-rounded">person</span>
+                <InputText @bind-Value="article.nom" type="text" class="input" placeholder="Entrer un nom d'articles" required />
+                <ValidationMessage For="@(() => article.nom)" />
+            </div>
+
+            <div class="form-item">
+                <span class="form-item-icon material-symbols-rounded">lock</span>
+                <InputNumber @bind-Value="article.prix" type="decimal" class="input" placeholder="Entrer le prix" required min="1"/>
+                <ValidationMessage For="@(() => article.prix)" />
+            </div>
+
+            <div class="form-item">
+                <span class="form-item-icon material-symbols-rounded">lock</span>
+                <InputNumber @bind-Value="article.quantite" type="number" class="input" placeholder="Entrer la quantité" required min="1" />
+                <ValidationMessage For="@(() => article.quantite)" />
+            </div>
+            <div class="form-item">
+                <span class="form-item-icon material-symbols-rounded">lock</span>
+                <InputText @bind-Value="article.description" type="text" class="input" placeholder="Entrer la description" required />
+                <ValidationMessage For="@(() => article.description)" />
+            </div>
+
+           <div class="form-item">
+                <InputSelect @bind-Value="article.id_categorie" class="form-select" placeholder="Entrer la catégorie" required >
+                    <option value="" selected>----Faites un choix-----</option>
+
+                    @foreach(var categorie in categories)
+                    {
+                        <option value="@categorie.Id">@categorie.nom</option>
+                    }
+                </InputSelect>
+            </div>
+            
+            <div class="form-item">
+                <span class="form-item-icon material-symbols-rounded ">imagesmode</span>
+                <InputFile unique class="form-control" @onclick="OnClick" OnChange="@OnChange" accept=".jpg" />
+
+            </div>
+            @if(image is not null)
+            {
+                <img src="data:@image.contenttype;base64,@image.base64"/>
+            }
+            <button type="submit" class="btn-primary btn_log">Se connecter</button>
+
+
+        </EditForm>
+
+    </div>
+
+
+</div>
