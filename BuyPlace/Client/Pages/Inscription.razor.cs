@@ -73,7 +73,7 @@ namespace BuyPlace.Client.Pages
                 string newFileName = Path.ChangeExtension(Path.GetRandomFileName(), ".jpg");
                 string path = Path.Combine(config.GetValue<string>("FileStorage")!, newFileName);
                 string relativePath = Path.Combine(newFileName);
-                //Directory.CreateDirectory(Path.Combine(config.GetValue<string>("FileStorage")!, $"{user.UserName}"));
+                Directory.CreateDirectory(Path.Combine(config.GetValue<string>("FileStorage")!, $"{user.UserName}"));
 
 
                 await using FileStream fs = new(path, FileMode.Create);

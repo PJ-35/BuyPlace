@@ -1,4 +1,6 @@
 ﻿@page "/connexion"
+@using BuyPlace.Shared
+@inject FormDataService FormDataService
 
 
 <div class="login-card-container logRegis d-flex align-items-center justify-content-center ">
@@ -63,8 +65,6 @@
 
             </div>
 
-
-
             <div class="form-item">
                 <span class="form-item-icon material-symbols-rounded">lock</span>
                 <InputText @bind-Value="logRequest.Password" type="password" class="input" placeholder="Entrer le mot de passe" id="mdp" required />
@@ -75,8 +75,6 @@
 
             <button type="submit" class="btn-primary btn_log">Se connecter</button>
 
-
-           @*  <Connexion /> *@
         </EditForm>
         <div class="login-card-footer">
             Vous n'avez pas de compte? <a href="/inscription" class="col-3">S'inscrire</a>

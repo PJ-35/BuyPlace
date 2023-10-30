@@ -1,6 +1,7 @@
 using BuyPlace.Server.Authentication;
 using BuyPlace.Server.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

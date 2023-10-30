@@ -46,7 +46,7 @@ namespace BuyPlace.Server.Controllers
 
             if (user is not null)
             {
-                NewUser newUser = new NewUser() { UserName = user.UserName, Nom = user.Nom, Courriel = user.Courriel, Role = user.Role, Image = user.Image, Solde = user.Solde, Prenom = user.Prenom,Id = user.Id.ToString() };
+                NewUser newUser = new NewUser() {Id=user.Id.ToString(), UserName = user.UserName, Nom = user.Nom, Courriel = user.Courriel, Role = user.Role, Image = user.Image, Solde = user.Solde, Prenom = user.Prenom };
 
                 return newUser;
             }

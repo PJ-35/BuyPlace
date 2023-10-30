@@ -6,3 +6,8 @@
 main a:hover{
     text-decoration:underline;
 }
+
+.fit-cover {
+    object-fit: cover;
+}
+

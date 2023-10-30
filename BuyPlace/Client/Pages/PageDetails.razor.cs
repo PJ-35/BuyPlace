@@ -39,6 +39,7 @@ namespace BuyPlace.Client.Pages
         private async void chargement()
         {
              var reponse= await httpClient.GetAsync($"api/article/getarticlebyid?idArticle={idArticle}");
+            FormDataService.details = "";
             if(reponse.StatusCode == HttpStatusCode.BadRequest)
             {
                 erreur= await reponse.Content.ReadAsStringAsync();
@@ -49,15 +50,20 @@ namespace BuyPlace.Client.Pages
                 article= await reponse.Content.ReadFromJsonAsync<ArticleSession>();
                 erreur = "";
                 title = $"Détails||{article.nom}";
-                var imageReponse = await httpClient.GetAsync("/images_articles/" + article.Id + ".jpg");
-                if (imageReponse.IsSuccessStatusCode)
-                {
-                    image = $"{article.Id}.jpg";
-                }
-                else
-                {
-                    image = "indisponible.jpg";
-                }
+                FormDataService.details = article.Id;
+                byte[] imageBytes = await httpClient.GetByteArrayAsync($"api/article/{article.Id}?timestamp={DateTime.UtcNow.Ticks}");
+                image = $"data:image/jpg;base64,{Convert.ToBase64String(imageBytes)}";
+
+
+                //var imageReponse = await httpClient.GetAsync("/images_articles/" + article.Id + ".jpg");
+                //if (imageReponse.IsSuccessStatusCode)
+                //{
+                //    image = $"{article.Id}.jpg";
+                //}
+                //else
+                //{
+                //    image = "indisponible.jpg";
+                //}
 
             }
 

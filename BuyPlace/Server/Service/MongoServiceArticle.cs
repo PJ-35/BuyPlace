@@ -46,16 +46,18 @@ namespace BuyPlace.Server.Service
         /// </summary>
         /// <param name="article">l'article à ajouter</param>
         /// <returns>un bool représentant l'état si jamais il y'avait déjà un article de même nom</returns>
-        public bool AddArticle(Article article)
+        public string AddArticle(Article article)
         {
-            var obj = _articlesTable.Find(u => u.nom == article.nom).FirstOrDefault();
-            if (obj is null)
+            try
             {
                 _articlesTable.InsertOne(article);
-                return true;
+                return article.Id.ToString();
             }
-            else
-                return false;
+            catch
+            {
+                return "";
+            }
+           
         }
 
         /// <summary>
@@ -63,9 +65,9 @@ namespace BuyPlace.Server.Service
         /// </summary>
         /// <param name="id">L'id d'un article</param>
         /// <returns>Un article</returns>
-        public Article GetArticle(ObjectId id)
+        public Article GetArticle(string id)
         {
-            return _articlesTable.Find(u => u.Id == id).SingleOrDefault();
+            return _articlesTable.Find(u => u.Id.ToString() == id).SingleOrDefault();
         }
 
         /// <summary>
@@ -86,7 +88,7 @@ namespace BuyPlace.Server.Service
         /// <returns>retourne un état</returns>
         public bool UpdateArticle(Article article)
         {
-            Article art = GetArticle(article.Id);
+            Article art = GetArticle(article.Id.ToString());
             if (art != null)
             {
                 _articlesTable.ReplaceOne(u => u.Id == art.Id, article);
@@ -104,7 +106,7 @@ namespace BuyPlace.Server.Service
         /// <returns>Retourne un état</returns>
         public bool DeleteArticle(ObjectId id)
         {
-            Article art = GetArticle(id);
+            Article art = GetArticle(id.ToString());
             if (art != null)
             {
                 _articlesTable.DeleteOne(u => u.Id == id);
