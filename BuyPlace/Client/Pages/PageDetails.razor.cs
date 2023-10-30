@@ -51,7 +51,7 @@ namespace BuyPlace.Client.Pages
                 erreur = "";
                 title = $"Détails||{article.nom}";
                 FormDataService.details = article.Id;
-                byte[] imageBytes = await httpClient.GetByteArrayAsync($"api/article/{article.Id}");
+                byte[] imageBytes = await httpClient.GetByteArrayAsync($"api/article/{article.Id}?timestamp={DateTime.UtcNow.Ticks}");
                 image = $"data:image/jpg;base64,{Convert.ToBase64String(imageBytes)}";
 
 

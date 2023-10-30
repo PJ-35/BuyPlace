@@ -131,7 +131,7 @@ namespace BuyPlace.Client.Pages
                 for (int i = 0; i < lstArticles.Count; i++)
                 {
 
-                        byte[] imageBytes = await httpClient.GetByteArrayAsync($"api/article/{lstArticles[i].Id}");
+                        byte[] imageBytes = await httpClient.GetByteArrayAsync($"api/article/{lstArticles[i].Id}?timestamp={DateTime.UtcNow.Ticks}");
                         lstImages[i] = $"data:image/jpg;base64,{Convert.ToBase64String(imageBytes)}";
                         
                     //StateHasChanged();

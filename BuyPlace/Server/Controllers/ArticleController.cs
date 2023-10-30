@@ -88,6 +88,7 @@ namespace BuyPlace.Server.Controllers
         }
 
         [HttpGet("{imageName}")]
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult GetImage(string imageName)
         {
             // Construit le chemin complet du fichier dans le dossier wwwroot/uploads
