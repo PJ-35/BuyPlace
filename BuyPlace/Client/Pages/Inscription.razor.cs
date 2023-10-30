@@ -6,6 +6,7 @@ using BuyPlace.Shared;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Net;
+using Microsoft.JSInterop;
 
 namespace BuyPlace.Client.Pages
 {
@@ -49,58 +50,58 @@ namespace BuyPlace.Client.Pages
 
         }
 
-        private void LoadFiles(InputFileChangeEventArgs e)
-        {
-            error.Clear();
-            if (e.FileCount > maxAllowedFiles)
-            {
-                error.Add($"tentative de téléchargement de {e.FileCount} fichiers, mais seulement {maxAllowedFiles} fichiers est autorisé");
-                return;
-            }
-            file = e.File;
-        }
+        //private void LoadFiles(InputFileChangeEventArgs e)
+        //{
+        //    error.Clear();
+        //    if (e.FileCount > maxAllowedFiles)
+        //    {
+        //        error.Add($"tentative de téléchargement de {e.FileCount} fichiers, mais seulement {maxAllowedFiles} fichiers est autorisé");
+        //        return;
+        //    }
+        //    file = e.File;
+        //}
 
-        private async Task<string> CaptureFiles()
-        {
-
-
-            if (file == null)
-            {
-                return "";
-            }
-            try
-            {
-                string newFileName = Path.ChangeExtension(Path.GetRandomFileName(), ".jpg");
-                string path = Path.Combine(config.GetValue<string>("FileStorage")!, newFileName);
-                string relativePath = Path.Combine(newFileName);
-                Directory.CreateDirectory(Path.Combine(config.GetValue<string>("FileStorage")!, $"{user.UserName}"));
+        //private async Task<string> CaptureFiles()
+        //{
 
 
-                await using FileStream fs = new(path, FileMode.Create);
-                await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
-                user.Image = newFileName;
+        //    if (file == null)
+        //    {
+        //        return "";
+        //    }
+        //    try
+        //    {
+        //        string newFileName = Path.ChangeExtension(Path.GetRandomFileName(), ".jpg");
+        //        string path = Path.Combine(config.GetValue<string>("FileStorage")!, newFileName);
+        //        string relativePath = Path.Combine(newFileName);
+        //        Directory.CreateDirectory(Path.Combine(config.GetValue<string>("FileStorage")!, $"{user.UserName}"));
 
-                return path;
-            }
-            catch (Exception ex)
-            {
 
-                error.Add($"file: {file.Name} Error: {ex.Message}");
-                throw;
-            }
+        //        await using FileStream fs = new(path, FileMode.Create);
+        //        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+        //        user.Image = newFileName;
 
-        }
+        //        return path;
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        error.Add($"file: {file.Name} Error: {ex.Message}");
+        //        throw;
+        //    }
+
+        //}
 
         private async Task SignInUser()
         {
-            var userobj = user;
-            string rgxMdp = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$";
+            //var userobj = user;
+            //string rgxMdp = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$";
 
             // userService.Save(user);
 
             // NavManager.NavigateTo("/");
 
-            var editContext = new EditContext(user);
+            //var editContext = new EditContext(user);
             var validationResults = new List<ValidationResult>();
             var isValid = Validator.TryValidateObject(user, new ValidationContext(user), validationResults, true);
 
@@ -188,10 +189,12 @@ namespace BuyPlace.Client.Pages
                         LoginMesssage = "Veuillez remplir tous les champs";
                 }
 
-                if (LoginMesssage == "" && error.Count < 1)
+                if (LoginMesssage == "" && isValid)
                 {
                     //string relativePath = await CaptureFiles();
-                    var loginResponse = await httpClient.PostAsJsonAsync("api/Account/Save", user);
+                    user.Id = "eded";
+                    var loginResponse = await httpClient.PostAsJsonAsync<NewUser>("api/Account/Save", user);
+                    string tt = await loginResponse.Content.ReadAsStringAsync();
                     if (loginResponse.IsSuccessStatusCode)
                     {
                         NavManager.NavigateTo("connexion", true);

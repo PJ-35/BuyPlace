@@ -20,9 +20,6 @@ namespace BuyPlace.Client.Pages
         HttpClient httpClient { get; set; }
 
         [Inject]
-        IJSRuntime js { get; set; }
-
-        [Inject]
         AuthenticationStateProvider authStateProvider { get; set; }
 
         [Inject]
@@ -32,25 +29,32 @@ namespace BuyPlace.Client.Pages
 
         private async Task HandleLogin()
         {
+            LoginMesssage = "";
             try
             {
-                var loginResponse = await httpClient.PostAsJsonAsync<LoginRequest>("api/Account/Login", logRequest);
-                //var content= await loginResponse.Content.ReadAsStringAsync();
-                if (loginResponse.IsSuccessStatusCode)
+                if (string.IsNullOrWhiteSpace(logRequest.UserName) ||string.IsNullOrWhiteSpace(logRequest.Password))
+                    LoginMesssage = "Veuillez remplir tous les champs";
+                else
                 {
-                    var userSession = await loginResponse.Content.ReadFromJsonAsync<UserSession>();
-                    var custum = (CustumAuthStateProvider)authStateProvider;
-                    await custum.UpdateAuthState(userSession);
-                    if(string.IsNullOrWhiteSpace(FormDataService.details))
-                        navManager.NavigateTo("/", true);
-                    else
-                        navManager.NavigateTo($"/detail/{FormDataService.details}",true);
+                    var loginResponse = await httpClient.PostAsJsonAsync<LoginRequest>("api/Account/Login", logRequest);
+                    //var content= await loginResponse.Content.ReadAsStringAsync();
+                    if (loginResponse.IsSuccessStatusCode)
+                    {
+                        var userSession = await loginResponse.Content.ReadFromJsonAsync<UserSession>();
+                        var custum = (CustumAuthStateProvider)authStateProvider;
+                        await custum.UpdateAuthState(userSession);
+                        if (string.IsNullOrWhiteSpace(FormDataService.details))
+                            navManager.NavigateTo("/", true);
+                        else
+                            navManager.NavigateTo($"/detail/{FormDataService.details}", true);
+                    }
+                    else if (loginResponse.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        LoginMesssage = "nom d'utilisateur ou mot de passe invalide";
+                        return;
+                    }
                 }
-                else if (loginResponse.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    LoginMesssage="nom d'utilisateur ou mot de passe invalide";
-                    return;
-                }
+
             }
             catch (Exception ex)
             {
