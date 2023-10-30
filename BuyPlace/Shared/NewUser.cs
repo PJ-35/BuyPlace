@@ -11,6 +11,8 @@ namespace BuyPlace.Shared
     public class NewUser
     {
         #region Propriétés et indexeurs
+
+        public string Id { get; set; }
         public decimal Solde { get; set; } = 5000;
 
         //[Required(ErrorMessage = "Le nom d'utilisateur est obligatoire.")]
