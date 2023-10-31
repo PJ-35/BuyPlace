@@ -26,11 +26,10 @@ namespace BuyPlace.Server.Authentication
             }
 
             var userAccount = _usersService.GetUserByUsername(username);
-            string hashedPassword = _usersService.HashPassword(password);
             // Enregistrez le hashedPassword dans votre modèle d'utilisateur
 
             // Pour vérifier le mot de passe lors de l'authentification
-            bool isPasswordValid = _usersService.VerifyPassword(password, hashedPassword);
+            bool isPasswordValid = _usersService.VerifyPassword(password, userAccount.Mdp);
 
             if (userAccount == null || !isPasswordValid)
             {

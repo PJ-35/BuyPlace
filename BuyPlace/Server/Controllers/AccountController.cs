@@ -120,9 +120,9 @@ namespace BuyPlace.Server.Controllers
             User user = new User(user1.Image,user1.Courriel,user1.Nom,user1.Prenom,user1.Mdp,user1.UserName,user1.Solde,user1.Role);
 
             if (_userService.Save(user))
-                return Ok();
+                return Ok("123456");
             else
-                return BadRequest();
+                return BadRequest("pfeef");
 
         }
 
