@@ -48,17 +48,21 @@ namespace BuyPlace.Server.Authentication
 
         public bool Save(User user)
         {
-
-            //var userObj = _userTable.Find(x => x.Id == user.Id).FirstOrDefault();
-            if (user is null||string.IsNullOrWhiteSpace(user.Nom))
-                return false;
-            else
+            try
             {
-                string hashedPassword = HashPassword(user.Mdp);
-                user.Mdp = hashedPassword;
-                _userTable.InsertOne(user);
-                return true;
+                //var userObj = _userTable.Find(x => x.Id == user.Id).FirstOrDefault();
+                if (user is null)
+                    return false;
+                else
+                {
+                    string hashedPassword = HashPassword(user.Mdp);
+                    user.Mdp = hashedPassword;
+                    _userTable.InsertOne(user);
+                    return true;
+                }
+
             }
+            catch { return false; }
 
 
         }
