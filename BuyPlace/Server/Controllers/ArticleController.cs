@@ -130,5 +130,59 @@ namespace BuyPlace.Server.Controllers
                 return BadRequest();
 
         }
+
+        [HttpGet]
+        [Route("articleUser")]
+        public ActionResult<List<ArticleSession>> GetArticleByIdUser([FromQuery] string idUser)
+        {
+            List<Article> lstArt = new List<Article>();
+
+            lstArt = _artService.GetArticlesByUserId(idUser);
+
+            List<ArticleSession> lstArtSession = new List<ArticleSession>();
+            foreach (Article art in lstArt)
+            {
+                lstArtSession.Add(new ArticleSession()
+                {
+                    date = art.date,
+                    Id = art.Id.ToString(),
+                    nom = art.nom,
+                    quantite = art.quantite,
+                    id_categorie = art.id_categorie,
+                    prix = art.prix,
+                    description = art.description,
+                    id_user = art.id_user
+                });
+            }
+            return lstArtSession;
+
+        }
+
+        [HttpGet]
+        [Route("articleUserFact")]
+        public ActionResult<List<ArticleSession>> GetArticleFactureUser([FromQuery] List<string> lstIdUA)
+        {
+            List<Article> lstArt = new List<Article>();
+
+            lstArt = _artService.GetArticlesForFacture(lstIdUA);
+
+            List<ArticleSession> lstArtSession = new List<ArticleSession>();
+            foreach (Article art in lstArt)
+            {
+                lstArtSession.Add(new ArticleSession()
+                {
+                    date = art.date,
+                    Id = art.Id.ToString(),
+                    nom = art.nom,
+                    quantite = art.quantite,
+                    id_categorie = art.id_categorie,
+                    prix = art.prix,
+                    description = art.description,
+                    id_user = art.id_user
+                });
+            }
+            return lstArtSession;
+        }
+
     }
 }

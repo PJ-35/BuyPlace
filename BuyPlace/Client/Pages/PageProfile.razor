@@ -1,0 +1,403 @@
+﻿@page "/profile"
+
+        <PageTitle>Profile</PageTitle>
+
+        <div >
+        <section class="portfolio-block block-intro container mx-auto py-5">
+            <div class="container">
+                <div class="avatar" style="background-image: url(https://robohash.org/userSessionUserName);"></div>
+                <div class="about-me">
+                <p>Salut <strong>@userSession.Nom @userSession.Prenom</strong>. Nous sommes ravis de vous revoir sur votre profil. Découvrez et gérez vos informations personnelles, vos commandes et bien plus encore.</p>@* <a class="btn btn-outline-primary" role="button" href="#">Hire me</a> *@
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
+                    Modifier le profile
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalScrollableTitle">Modifier le profile</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <EditForm Model="@userSession"  OnSubmit="UpdateProfile" novalidate class="login-card-form align-content-center  d-flex flex-column gap-1">
+                                    <DataAnnotationsValidator />
+
+                                     <div class="col-12 row text-white @colorMessage mb-2" style="text-align:center; font-weight:bold">
+                                        @if (!string.IsNullOrWhiteSpace(LoginMesssage))
+                                        {
+                                            <span class="col-12">@LoginMesssage</span>
+                                        }
+                                    </div>
+
+                                    <div class="form-item ">
+                                        <label class="">Nom d'utilisateur</label>
+                                        <InputText @bind-Value=userSessionCopie.UserName class="form-control " disabled id="username" placeholder="Entrer un nom d'utilisateur" required />
+                                         <ValidationMessage For="@(() => userSession.UserName)" />
+
+                                    </div>
+
+                                    <div class="form-item ">
+                                        <label class="">Courriel</label>
+                                        <InputText @bind-Value=userSessionCopie.Courriel @onblur="HandleInputChange" type="email" class="form-control" id="Courriel)" placeholder="Entrer courriel" required />
+                                         <ValidationMessage For="@(() => userSession.Courriel)" />
+
+                                    </div>
+
+                                    <div class="form-item">
+                                        <label class="">Nom</label>
+                                        <InputText @bind-Value=userSessionCopie.Nom @oninput="HandleInputChange" class="form-control" id="mdp" required />
+                                        <ValidationMessage For="@(() => userSession.Nom)" />
+                                    </div>
+
+                                    <div class="form-item">
+                                        <label class="">Prénom</label>
+                                        <InputText @bind-Value=userSessionCopie.Prenom @oninput="HandleInputChange" class="form-control" required />
+                                         <ValidationMessage For="@(() => userSession.Prenom)" />
+                                    </div>
+@* 
+                                    <div class="form-item">
+                                        <span class="form-item-icon material-symbols-rounded">person</span>
+                                        <InputText @bind-Value=userSession.Mdp type="password" class="input" id="cMdp" required />
+                                         <ValidationMessage For="@(() => Mdp)" />
+                                    </div> *@
+
+
+                                    @*  <button type="submit" class="btn-primary btn_log">Suivant</button>
+
+                                    <br /> *@
+                                    <button type="submit" class="btn btn-primary" disabled="@disabled" >Sauvegarder les modifications</button>
+
+
+                                </EditForm>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CloseModalForm">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+        <div class="container-fluid">
+            <ul class="nav nav-tabs sticky-top bg-light" role="tablist">
+                <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab-1">Ventes</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-2">Facture</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-3">Tab 3</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active" role="tabpanel">
+                     <div class="container">
+                        <div class="heading mx-auto my-5">
+                            <h2>Mes articles</h2>
+                        </div>
+                        <div class="row">
+
+                        @if(lstArticles is not null)
+                        {
+                            @for (int i = 0; i < lstArticles.Count; i++)
+                            {
+                                string image = lstImages[i];
+
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card border-0">
+                                        <a href="/detail/@lstArticles[i].Id"><img class="card-img-top scale-on-hover" src="@image" alt="@lstArticles[i].nom" /></a>
+                                        <div class="card-body">
+                                            <h6><a href="#">@lstArticles[i].nom</a></h6>
+                                            <p class="text-muted card-text">@lstArticles[i].description</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        }
+
+               
+       
+                        </div>
+                     </div>
+                </div>
+
+
+
+                <div id="tab-2" class="tab-pane mt-3" role="tabpanel">
+                <div class="container text-white bg-primary border rounded border-0 p-4 p-lg-5 py-4 py-xl-5">
+                    <div class="row mb-5">
+                        <div class="col-md-8 col-xl-6 text-center mx-auto">
+                            <h2 class="text-white">Facture</h2>
+                            <p class="w-lg-50">Curae hendrerit donec commodo hendrerit egestas tempus, turpis facilisis nostra nunc. Vestibulum dui eget ultrices.</p>
+                        </div>
+                    </div>
+                    <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+
+                        @if (lstFactures != null)
+                        {
+                            @if (lstFactures.Count == 0)
+                            {
+                                <p class="text-center">Aucune facture disponible</p>
+                            }
+                            else
+                            {
+                               
+                                @foreach (var fact in lstFactures)
+                                {
+
+                                    var modalId = "detail" + fact.date.ToString("ddMMyyyyHHmmss") + fact.Id.ToString();
+
+                                    <div class="col-md-6 col-xl-3 mb-4" data-toggle="modal" data-target="#@modalId" @onclick="()=>GetFacture(fact.Id)">
+                                        
+                                        <div class="card shadow border-start-primary py-2">
+                                            
+                                            <div class="card-body">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col me-2">
+                                                        <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>@fact.date</span></div>
+                                                        <div class="text-dark fw-bold h5 mb-0"><span>$@fact.Montant</span></div>
+                                                    </div>
+                                                    <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Modal -->
+                                    <div class="modal fade " id="@modalId" tabindex="-1" role="dialog" aria-labelledby="@modalId" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="@modalId">@fact.date</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div>
+                                                        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+                                                        <div class="page-content container">
+                                                            <div class="page-header text-blue-d2">
+                                                                <h1 class="page-title text-secondary-d1">
+                                                                    Facture
+                                                                    <small class="page-info">
+                                                                        <i class="fa fa-angle-double-right text-80"></i>
+                                                                        ID: @fact.Id
+                                                                    </small>
+                                                                </h1>
+                                                                <div class="page-tools">
+                                                                    <div class="action-buttons">
+                                                                        <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
+                                                                            <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
+                                                                            Imprimer
+                                                                        </a><a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="PDF">
+                                                                            <i class="mr-1 fa fa-file-pdf-o text-danger-m1 text-120 w-2"></i>
+                                                                            Télécharger
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="container px-0">
+                                                                <div class="row mt-4">
+                                                                    <div class="col-12 col-lg-10 offset-lg-1">
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="text-center text-150"><i class="fa fa-book fa-2x text-success-m2 mr-1"></i><span class="text-black fw-bold">Buyplace</span></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <hr class="row brc-default-l1 mx-n1 mb-4" />
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <div><span class="text-sm text-grey-m2 align-middle">To:</span><span class="text-600 text-110 text-blue align-middle">@userSession.UserName</span></div>
+                                                                                <div class="text-grey-m2">
+                                                                                    <div class="my-1">
+                                                                                        @userSession.Nom
+                                                                                    </div>
+                                                                                    <div class="my-1">
+                                                                                        @userSession.Prenom
+                                                                                    </div>
+                                                                                    <div class="my-1"><i class="fa fa-mail fa-flip-horizontal text-secondary"></i><b class="text-600">@userSession.Courriel</b></div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
+                                                                                <hr class="d-sm-none" />
+                                                                                <div class="text-grey-m2">
+                                                                                    <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
+                                                                                       Facture
+                                                                                    </div>
+                                                                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i><span class="text-600 text-90">ID:</span> #@fact.Id</div>
+                                                                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i><span class="text-600 text-90">Date:</span> @fact.date.ToString("dd/MM/yyyy")</div>
+                                                                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i><span class="text-600 text-90">Status:</span><span class="badge badge-warning badge-pill px-25">Payé</span></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mt-4">
+                                                                            <div class="row text-600 text-white bgc-default-tp1 py-25">
+                                                                                <div class="d-none d-sm-block col-1">#</div>
+                                                                                <div class="col-9 col-sm-5">Description</div>
+                                                                                <div class="d-none d-sm-block col-4 col-sm-2">Qte</div>
+                                                                                <div class="d-none d-sm-block col-sm-2">Prix unitaire</div>
+                                                                                <div class="col-2">Montant</div>
+                                                                            </div>
+                                                                            <div class="text-95 text-secondary-d3">
+                                                                                @if (lstArticlesFacture != null)
+                                                                                {
+                                                                                    int i = 1;
+                                                                                    decimal montantLigne = 0;
+                                                                                    foreach(ArticleSession art in lstArticlesFacture)
+                                                                                    {
+                                                                                        montantLigne = art.prix * lstRelationUsers[i - 1].Quantite;
+
+                                                                                        <div class="row mb-2 mb-sm-0 py-25 @(i % 2 != 0 ? "" : "bgc-default-l4")">
+                                                                                            <div class="d-none d-sm-block col-1">@i</div>
+                                                                                            <div class="col-9 col-sm-5">@art.description</div>
+                                                                                            <div class="d-none d-sm-block col-2">@lstRelationUsers[i-1].Quantite</div>
+                                                                                            <div class="d-none d-sm-block col-2 text-95">$@lstRelationUsers[i-1].PrixUnitaire</div>
+                                                                                            <div class="col-2 text-secondary-d2">$@montantLigne</div>
+                                                                                        </div>
+                                                                                   
+
+                                                                                        i++;
+                                                                                    }
+                                                                                }
+
+                                                                              
+                                                                             
+                                                                            
+                                                                            </div>
+                                                                            <div class="row border-b-2 brc-default-l2"></div>
+                                                                            <div class="row mt-3">
+                                                                                <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
+                                                                                    Extra note such as company or payment information...
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-5 text-black text-90 order-first order-sm-last">
+                                                                                    <div class="row my-2">
+                                                                                        <div class="col-7 text-right">
+                                                                                            Sous-Total
+                                                                                        </div>
+                                                                                        <div class="col-5"><span class="text-120 text-secondary-d1">$@SousTotal</span></div>
+                                                                                    </div>
+                                                                                    <div class="row my-2">
+                                                                                        <div class="col-7 text-right">
+                                                                                            Taxe (10%)
+                                                                                        </div>
+                                                                                        <div class="col-5"><span class="text-110 text-secondary-d1">$@Taxe</span></div>
+                                                                                    </div>
+                                                                                    <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                                                                                        <div class="col-7 text-right">
+                                                                                            Total 
+                                                                                        </div>
+                                                                                        <div class="col-5"><span class="text-150 text-success-d3 opacity-2">$@fact.Montant</span></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr />
+@*                                                                             <div><span class="text-secondary-d1 text-105">Merci pour votre achat</span><a class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" href="#">Pay Now</a></div>
+ *@                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                   
+
+                                }
+
+                                //Modal
+                               
+                            }
+                          
+                        }
+                        else
+                        {
+                            <p class="text-center">Chargement en cours...</p>  
+                        }
+                        @*  <div class="col">
+                            <div class="d-flex">
+                                <div class="bs-icon-sm bs-icon-rounded bs-icon-semi-white text-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon">
+                                    <svg class="bi bi-bell" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"></path>
+                                    </svg>
+                                </div>
+                                <div class="px-3">
+                                    <h4 class="text-white">Title</h4>
+                                    <p>Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis. Bibendum vulputate cras aenean.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex">
+                                <div class="bs-icon-sm bs-icon-rounded bs-icon-semi-white text-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon">
+                                    <svg class="bi bi-bell" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"></path>
+                                    </svg>
+                                </div>
+                                <div class="px-3">
+                                    <h4 class="text-white">Title</h4>
+                                    <p>Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis. Bibendum vulputate cras aenean.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex">
+                                <div class="bs-icon-sm bs-icon-rounded bs-icon-semi-white text-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon">
+                                    <svg class="bi bi-bell" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"></path>
+                                    </svg>
+                                </div>
+                                <div class="px-3">
+                                    <h4 class="text-white">Title</h4>
+                                    <p>Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis. Bibendum vulputate cras aenean.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex">
+                                <div class="bs-icon-sm bs-icon-rounded bs-icon-semi-white text-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon">
+                                    <svg class="bi bi-bezier" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M0 10.5A1.5 1.5 0 0 1 1.5 9h1A1.5 1.5 0 0 1 4 10.5v1A1.5 1.5 0 0 1 2.5 13h-1A1.5 1.5 0 0 1 0 11.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm10.5.5A1.5 1.5 0 0 1 13.5 9h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM6 4.5A1.5 1.5 0 0 1 7.5 3h1A1.5 1.5 0 0 1 10 4.5v1A1.5 1.5 0 0 1 8.5 7h-1A1.5 1.5 0 0 1 6 5.5v-1zM7.5 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"></path>
+                                        <path d="M6 4.5H1.866a1 1 0 1 0 0 1h2.668A6.517 6.517 0 0 0 1.814 9H2.5c.123 0 .244.015.358.043a5.517 5.517 0 0 1 3.185-3.185A1.503 1.503 0 0 1 6 5.5v-1zm3.957 1.358A1.5 1.5 0 0 0 10 5.5v-1h4.134a1 1 0 1 1 0 1h-2.668a6.517 6.517 0 0 1 2.72 3.5H13.5c-.123 0-.243.015-.358.043a5.517 5.517 0 0 0-3.185-3.185z"></path>
+                                    </svg>
+                                </div>
+                                <div class="px-3">
+                                    <h4 class="text-white">Title</h4>
+                                    <p>Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis. Bibendum vulputate cras aenean.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex">
+                                <div class="bs-icon-sm bs-icon-rounded bs-icon-semi-white text-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon">
+                                    <svg class="bi bi-flag" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z"></path>
+                                    </svg>
+                                </div>
+                                <div class="px-3">
+                                    <h4 class="text-white">Title</h4>
+                                    <p>Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis. Bibendum vulputate cras aenean.</p>
+                                </div>
+                            </div>
+                        </div> *@
+                    </div>
+                </div>
+                </div>
+
+
+                <div id="tab-3" class="tab-pane" role="tabpanel">
+                    <p>Content for tab 3.</p>
+                </div>
+            </div>
+        </div>
+        </div>

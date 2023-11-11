@@ -6,23 +6,26 @@
 <PageTitle>Accueil</PageTitle>
 <div id="carouselExampleControls" class="carousel slide h-auto mb-3" data-bs-ride="carousel">
     <div class="carousel-inner text-white">
-        @for (int i = 0; i < categories.Count; i++)
+        @if(categories is not null)
         {
-            string image = categories[i].nom + "2.jpg";
-             @if (i == 0)
-        { 
-            <div class="carousel-item p-5 active align-items-center" style="background-image:url(../images_Accueil/@image); background-position:center; background-size:cover; background-repeat:no-repeat; min-height:100vh;">
-                <h2 class="text-center text-decoration-underline fw-bold">@categories[i].nom</h2>
-                <p class="text-center">Nouvelle collection <br><br> <a href="/magasiner/@categories[i].Id" class="btn btn-danger rounded-pill">Magasiner</a></p>
-            </div>
-               }
-        else
-        {
-                <div class="carousel-item p-5 pt-5 " style="background-image:url(../images_Accueil/@image);background-position:center; background-size:cover; background-repeat:no-repeat; min-height:100vh">
-        <h2 class="text-center text-decoration-underline fw-bold">@categories[i].nom</h2>
-        <p class="text-center">Nouvelle collection <br><br> <a href="/magasiner/@categories[i].Id" class="btn btn-danger rounded-pill">Acheter</a></p>
-        </div>
-        } 
+            @for (int i = 0; i < categories.Count; i++)
+            {
+                string image = categories[i].nom + "2.jpg";
+                @if (i == 0)
+                {
+                    <div class="carousel-item p-5 active align-items-center" style="background-image:url(../images_Accueil/@image); background-position:center; background-size:cover; background-repeat:no-repeat; min-height:100vh;">
+                        <h2 class="text-center text-decoration-underline fw-bold">@categories[i].nom</h2>
+                        <p class="text-center">Nouvelle collection <br><br> <a href="/magasiner/@categories[i].Id" class="btn btn-danger rounded-pill">Magasiner</a></p>
+                    </div>
+                }
+                else
+                {
+                    <div class="carousel-item p-5 pt-5 " style="background-image:url(../images_Accueil/@image);background-position:center; background-size:cover; background-repeat:no-repeat; min-height:100vh">
+                        <h2 class="text-center text-decoration-underline fw-bold">@categories[i].nom</h2>
+                        <p class="text-center">Nouvelle collection <br><br> <a href="/magasiner/@categories[i].Id" class="btn btn-danger rounded-pill">Acheter</a></p>
+                    </div>
+                }
+            }
         }
 
 
@@ -38,18 +41,21 @@
 </div>
 <div class="container d-flex justify-content-between mb-5 pb-5 flex-wrap cat">
 
-    @foreach (var categorie in categories)
+    @if(categories is not null)
     {
-        string image = categorie.nom + ".jpg";
-        <a href="/magasiner/@categorie.Id" class="d-block card mb-3" style="width:22%">
-            <div>
-                <img src="images_Accueil/@image" class="card-img-top" alt="@categorie.nom">
-                <div class="card-body bg-light text-center">
-                    <h5 class="card-title ">@categorie.nom</h5>
+        @foreach (var categorie in categories)
+        {
+            string image = categorie.nom + ".jpg";
+            <a href="/magasiner/@categorie.Id" class="d-block card mb-3" style="width:22%">
+                <div>
+                    <img src="images_Accueil/@image" class="card-img-top" alt="@categorie.nom">
+                    <div class="card-body bg-light text-center">
+                        <h5 class="card-title ">@categorie.nom</h5>
 
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        }
     }
 
 

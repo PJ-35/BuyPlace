@@ -50,19 +50,22 @@
 
                 <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
 
-                    @for (int i = 0; i < lstArticles.Count; i++)
+                    @if(lstArticles != null)
                     {
-                        <a href="/detail/@lstArticles[i].Id" class="d-block col-lg-3 col-md-4 col-sm-5 mb-2">
+                        @for (int i = 0; i < lstArticles.Count; i++)
+                        {
+                            <a href="/detail/@lstArticles[i].Id" class="d-block col-lg-3 col-md-4 col-sm-5 mb-2">
 
-                            <div class="card">
-                                <img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="@lstImages[i]" />
-                                <div class="card-body p-4">
-                                    <h4 class="card-title">@lstArticles[i].nom</h4>
-                                    <p class="card-text">@lstArticles[i].description</p>
-                                    <small>@lstArticles[i].prix</small>
+                                <div class="card">
+                                    <img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="@lstImages[i]" />
+                                    <div class="card-body p-4">
+                                        <h4 class="card-title">@lstArticles[i].nom</h4>
+                                        <p class="card-text">@lstArticles[i].description</p>
+                                        <small>@lstArticles[i].prix</small>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        }
                     }
                 </div>
 

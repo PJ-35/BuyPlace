@@ -16,7 +16,11 @@ header a:hover {
     height:100px;
 }
 
-
+.menu {
+    box-shadow: 0 4px 10px rgba(0,0,0,.1);
+    background: linear-gradient(120deg, #7f70f5, #0ea0ff);
+    color: #fff;
+}
 
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
@@ -201,7 +205,11 @@ header a:hover {
     background: white;
     transform: scale(1.1);
 }
-
+/*
+.modal-xl, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bree Serif', serif;
+}
+*/
 
 
 

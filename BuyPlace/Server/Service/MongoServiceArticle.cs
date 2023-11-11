@@ -1,6 +1,7 @@
 ﻿using BuyPlace.Server.Authentication;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Linq;
 
 namespace BuyPlace.Server.Service
 {
@@ -69,6 +70,16 @@ namespace BuyPlace.Server.Service
             return _articlesTable.Find(u => u.Id.ToString() == id).SingleOrDefault();
         }
 
+        /// <summary>
+        /// Obtient un article avec le id de l'utilisateur
+        /// </summary>
+        /// <param name="idUser">L'id d'un article</param>
+        /// <returns>Une liste article</returns>
+        public List<Article> GetArticlesByUserId(string idUser)
+        {
+            return _articlesTable.Find(u => u.id_user == idUser).ToList();
+        }
+
 
         /// <summary>
         /// Met à jour une article
@@ -102,6 +113,25 @@ namespace BuyPlace.Server.Service
                 return true;
             }
             return false;
+        }
+
+
+        public List<Article> GetArticlesForFacture(List<string> idArticles)
+        {
+            //ObjectId factureObjectId = new ObjectId(factureId);
+            //Facture facture = _factureCollection.Find(f => f.Id == factureObjectId).FirstOrDefault();
+
+            //if (facture != null)
+            //{
+            //    List<Article> articles = _articlesTable.Find(a => idArticles.Contains(a.Id)).ToList();
+            //    return articles;
+            //}
+
+            //// Si la facture n'est pas trouvée, renvoyez une liste vide ou une valeur par défaut
+            // return new List<Article>();
+
+            List<Article> articles = _articlesTable.Find(a => idArticles.Contains(a.Id.ToString())).ToList();
+            return articles;
         }
     }
 }

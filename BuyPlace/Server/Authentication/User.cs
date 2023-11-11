@@ -33,6 +33,7 @@ namespace BuyPlace.Server.Authentication
         //[Required(ErrorMessage = "Le courriel est obligatoire.")]
         //[UniqueEmail(ErrorMessage = "Cette adresse e-mail est déjà utilisée.")]
         [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Veuillez entrer une adresse de courriel valide.")]
+      
         public string Courriel { get; set; }
 
 

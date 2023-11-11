@@ -5,7 +5,7 @@ using BuyPlace.Shared;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.SessionStorage;
-using BuyPlace.Shared;
+//using BuyPlace.Shared;
 
 namespace BuyPlace.Client.Layout
 {
@@ -26,10 +26,11 @@ namespace BuyPlace.Client.Layout
         public bool DropDownValue=false;
         private bool collapswNavMenu = true;
         // private string NavMenuCss1Class => collapseNavMenu ? "collapse" : null;
-    
 
 
 
+
+        #region Inject
         [Inject]
         HttpClient httpClient { get; set; }
 
@@ -40,13 +41,14 @@ namespace BuyPlace.Client.Layout
         AuthenticationStateProvider authProvider { get; set; }
 
         // private MongoServiceArticle mongoService = new MongoServiceArticle();
-       string NavMenuCssClass => baseMenuClass + (collapseNavMenu ? " collapse" : "");
+        string NavMenuCssClass => baseMenuClass + (collapseNavMenu ? " collapse" : "");
 
         [Inject]
         NavigationManager navigationManager { get; set; }
 
         [Inject]
         ISessionStorageService sessionStorageService { get; set; }
+        #endregion
 
         #region Menu contextuele
 
@@ -88,6 +90,7 @@ namespace BuyPlace.Client.Layout
 
                 var user = await httpClient.PostAsJsonAsync("api/Account/GetbyUserName", storedUser.UserName);
                 userSession = await user.Content.ReadFromJsonAsync<NewUser>();
+               
 
                 Console.WriteLine(userSession.UserName);
             }
