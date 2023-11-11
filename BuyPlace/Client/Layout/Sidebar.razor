@@ -19,9 +19,13 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><NavLink class="dropdown-item" href="/magasiner" Match="NavLinkMatch.All">Tout</NavLink></li>
-                        @foreach( var categorie in categories){
-                            string lien= "magasiner/"+categorie.Id.ToString();
-                            <li><NavLink class="dropdown-item" Match="NavLinkMatch.Prefix" href="@lien">@categorie.nom</NavLink></li>
+                        @if (categories != null)
+                        {
+                            @foreach (var categorie in categories)
+                            {
+                                string lien = "magasiner/" + categorie.Id.ToString();
+                                <li><NavLink class="dropdown-item" Match="NavLinkMatch.Prefix" href="@lien">@categorie.nom</NavLink></li>
+                            }
                         }
                     </ul>
                 </div>

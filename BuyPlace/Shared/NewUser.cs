@@ -19,8 +19,6 @@ namespace BuyPlace.Shared
         [MinLength(3, ErrorMessage = "Le nom d'utilisateur doit contenir au moins 3 caractères.")]
         public string UserName { get; set; }
 
-        public string Id { get; set; }
-
 
         public string Image { get; set; } = "";
 
@@ -52,5 +50,30 @@ namespace BuyPlace.Shared
         public string Role { get; set; } = "user";
 
         #endregion
+
+
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            NewUser otherUser = (NewUser)obj;
+
+            // Comparez les propriétés pertinentes pour déterminer l'égalité
+            return
+
+                   UserName == otherUser.UserName &&
+
+                   Courriel == otherUser.Courriel &&
+                   Nom == otherUser.Nom &&
+                   Prenom == otherUser.Prenom;
+                  
+        }
+
+
+
     }
 }

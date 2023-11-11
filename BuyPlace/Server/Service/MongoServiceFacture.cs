@@ -31,14 +31,28 @@ namespace BuyPlace.Server.Service
             return _facturesTable.Find(FilterDefinition<Factures>.Empty).ToList();
         }
 
-        /// <summary>
-        /// Retourne une liste d' articles correspondant à une catégorie
-        /// </summary>
-        /// <param name="idCategorie">id de la catégorie</param>
-        /// <returns>la liste de factures</returns>
+       /// <summary>
+       /// Retourne les factures de l'utilisateur idUser
+       /// </summary>
+       /// <param name="idUser"></param>
+       /// <returns></returns>
         public List<Factures> GetFActUser(string idUser)
         {
             return _facturesTable.Find(u => u.UserId == idUser).ToList();
+        }
+
+
+        public List<string> GetRelation(string idFacture)
+        {
+
+            
+            Factures fact = GetFacture(idFacture);
+            if (fact == null)
+            {
+                return null;
+            }
+
+            return fact.RelationsUserArticles;
         }
 
         /// <summary>
@@ -67,9 +81,9 @@ namespace BuyPlace.Server.Service
         /// </summary>
         /// <param name="id">L'id d'un article</param>
         /// <returns>Un article</returns>
-        public Factures GetFacture(ObjectId id)
+        public Factures GetFacture(string idFacture)
         {
-            return _facturesTable.Find(u => u.Id == id).SingleOrDefault();
+            return _facturesTable.Find(u => u.Id.ToString() == idFacture).SingleOrDefault();
         }
 
 
@@ -81,12 +95,12 @@ namespace BuyPlace.Server.Service
         /// </summary>
         /// <param name="nom">nom de l'article</param>
         /// <returns>Retourne un état</returns>
-        public bool DeleteFacture(ObjectId id)
+        public bool DeleteFacture(string id)
         {
             Factures fact = GetFacture(id);
             if (fact != null)
             {
-                _facturesTable.DeleteOne(u => u.Id == id);
+                _facturesTable.DeleteOne(u => u.Id.ToString() == id);
                 return true;
             }
             return false;

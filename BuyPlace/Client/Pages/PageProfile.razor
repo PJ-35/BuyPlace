@@ -7,7 +7,80 @@
             <div class="container">
                 <div class="avatar" style="background-image: url(https://robohash.org/userSessionUserName);"></div>
                 <div class="about-me">
-                    <p>Hello! I am <strong>@userSession.Nom @userSession.Prenom</strong>. I work as interface and front end developer. I have passion for pixel perfect, minimal and easy to use interfaces.</p>@* <a class="btn btn-outline-primary" role="button" href="#">Hire me</a> *@
+                <p>Salut <strong>@userSession.Nom @userSession.Prenom</strong>. Nous sommes ravis de vous revoir sur votre profil. Découvrez et gérez vos informations personnelles, vos commandes et bien plus encore.</p>@* <a class="btn btn-outline-primary" role="button" href="#">Hire me</a> *@
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
+                    Modifier le profile
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalScrollableTitle">Modifier le profile</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <EditForm Model="@userSession"  OnSubmit="UpdateProfile" novalidate class="login-card-form align-content-center  d-flex flex-column gap-1">
+                                    <DataAnnotationsValidator />
+
+                                     <div class="col-12 row text-white @colorMessage mb-2" style="text-align:center; font-weight:bold">
+                                        @if (!string.IsNullOrWhiteSpace(LoginMesssage))
+                                        {
+                                            <span class="col-12">@LoginMesssage</span>
+                                        }
+                                    </div>
+
+                                    <div class="form-item ">
+                                        <label class="">Nom d'utilisateur</label>
+                                        <InputText @bind-Value=userSessionCopie.UserName class="form-control " disabled id="username" placeholder="Entrer un nom d'utilisateur" required />
+                                         <ValidationMessage For="@(() => userSession.UserName)" />
+
+                                    </div>
+
+                                    <div class="form-item ">
+                                        <label class="">Courriel</label>
+                                        <InputText @bind-Value=userSessionCopie.Courriel @onblur="HandleInputChange" type="email" class="form-control" id="Courriel)" placeholder="Entrer courriel" required />
+                                         <ValidationMessage For="@(() => userSession.Courriel)" />
+
+                                    </div>
+
+                                    <div class="form-item">
+                                        <label class="">Nom</label>
+                                        <InputText @bind-Value=userSessionCopie.Nom @oninput="HandleInputChange" class="form-control" id="mdp" required />
+                                        <ValidationMessage For="@(() => userSession.Nom)" />
+                                    </div>
+
+                                    <div class="form-item">
+                                        <label class="">Prénom</label>
+                                        <InputText @bind-Value=userSessionCopie.Prenom @oninput="HandleInputChange" class="form-control" required />
+                                         <ValidationMessage For="@(() => userSession.Prenom)" />
+                                    </div>
+@* 
+                                    <div class="form-item">
+                                        <span class="form-item-icon material-symbols-rounded">person</span>
+                                        <InputText @bind-Value=userSession.Mdp type="password" class="input" id="cMdp" required />
+                                         <ValidationMessage For="@(() => Mdp)" />
+                                    </div> *@
+
+
+                                    @*  <button type="submit" class="btn-primary btn_log">Suivant</button>
+
+                                    <br /> *@
+                                    <button type="submit" class="btn btn-primary" disabled="@disabled" >Sauvegarder les modifications</button>
+
+
+                                </EditForm>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CloseModalForm">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </section>
@@ -25,20 +98,23 @@
                         </div>
                         <div class="row">
 
-                        @for (int i = 0; i < lstArticles.Count; i++)
+                        @if(lstArticles is not null)
                         {
-                            string image = lstImages[i];
+                            @for (int i = 0; i < lstArticles.Count; i++)
+                            {
+                                string image = lstImages[i];
 
-                            <div class="col-md-6 col-lg-4">
-                                <div class="card border-0">
-                                    <a href="/detail/@lstArticles[i].Id"><img class="card-img-top scale-on-hover" src="images_articles/@image" alt="@lstArticles[i].nom" /></a>
-                                    <div class="card-body">
-                                        <h6><a href="#">@lstArticles[i].nom</a></h6>
-                                        <p class="text-muted card-text">@lstArticles[i].description</p>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card border-0">
+                                        <a href="/detail/@lstArticles[i].Id"><img class="card-img-top scale-on-hover" src="@image" alt="@lstArticles[i].nom" /></a>
+                                        <div class="card-body">
+                                            <h6><a href="#">@lstArticles[i].nom</a></h6>
+                                            <p class="text-muted card-text">@lstArticles[i].description</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            }
                         }
 
                
@@ -67,23 +143,180 @@
                             }
                             else
                             {
+                               
                                 @foreach (var fact in lstFactures)
                                 {
-                                    <div class="col">
-                                        <div class="d-flex">
-                                            <div class="bs-icon-sm bs-icon-rounded bs-icon-semi-white text-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-3 bs-icon">
-                                                <svg class="bi bi-bell" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="px-3">
-                                                <h4 class="text-white">Title</h4>
-                                                <p>Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis. Bibendum vulputate cras aenean.</p>
+
+                                    var modalId = "detail" + fact.date.ToString("ddMMyyyyHHmmss") + fact.Id.ToString();
+
+                                    <div class="col-md-6 col-xl-3 mb-4" data-toggle="modal" data-target="#@modalId" @onclick="()=>GetFacture(fact.Id)">
+                                        
+                                        <div class="card shadow border-start-primary py-2">
+                                            
+                                            <div class="card-body">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col me-2">
+                                                        <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>@fact.date</span></div>
+                                                        <div class="text-dark fw-bold h5 mb-0"><span>$@fact.Montant</span></div>
+                                                    </div>
+                                                    <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
+
+                                    <!-- Modal -->
+                                    <div class="modal fade " id="@modalId" tabindex="-1" role="dialog" aria-labelledby="@modalId" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="@modalId">@fact.date</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div>
+                                                        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+                                                        <div class="page-content container">
+                                                            <div class="page-header text-blue-d2">
+                                                                <h1 class="page-title text-secondary-d1">
+                                                                    Facture
+                                                                    <small class="page-info">
+                                                                        <i class="fa fa-angle-double-right text-80"></i>
+                                                                        ID: @fact.Id
+                                                                    </small>
+                                                                </h1>
+                                                                <div class="page-tools">
+                                                                    <div class="action-buttons">
+                                                                        <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
+                                                                            <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
+                                                                            Imprimer
+                                                                        </a><a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="PDF">
+                                                                            <i class="mr-1 fa fa-file-pdf-o text-danger-m1 text-120 w-2"></i>
+                                                                            Télécharger
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="container px-0">
+                                                                <div class="row mt-4">
+                                                                    <div class="col-12 col-lg-10 offset-lg-1">
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="text-center text-150"><i class="fa fa-book fa-2x text-success-m2 mr-1"></i><span class="text-black fw-bold">Buyplace</span></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <hr class="row brc-default-l1 mx-n1 mb-4" />
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <div><span class="text-sm text-grey-m2 align-middle">To:</span><span class="text-600 text-110 text-blue align-middle">@userSession.UserName</span></div>
+                                                                                <div class="text-grey-m2">
+                                                                                    <div class="my-1">
+                                                                                        @userSession.Nom
+                                                                                    </div>
+                                                                                    <div class="my-1">
+                                                                                        @userSession.Prenom
+                                                                                    </div>
+                                                                                    <div class="my-1"><i class="fa fa-mail fa-flip-horizontal text-secondary"></i><b class="text-600">@userSession.Courriel</b></div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
+                                                                                <hr class="d-sm-none" />
+                                                                                <div class="text-grey-m2">
+                                                                                    <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
+                                                                                       Facture
+                                                                                    </div>
+                                                                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i><span class="text-600 text-90">ID:</span> #@fact.Id</div>
+                                                                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i><span class="text-600 text-90">Date:</span> @fact.date.ToString("dd/MM/yyyy")</div>
+                                                                                    <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i><span class="text-600 text-90">Status:</span><span class="badge badge-warning badge-pill px-25">Payé</span></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mt-4">
+                                                                            <div class="row text-600 text-white bgc-default-tp1 py-25">
+                                                                                <div class="d-none d-sm-block col-1">#</div>
+                                                                                <div class="col-9 col-sm-5">Description</div>
+                                                                                <div class="d-none d-sm-block col-4 col-sm-2">Qte</div>
+                                                                                <div class="d-none d-sm-block col-sm-2">Prix unitaire</div>
+                                                                                <div class="col-2">Montant</div>
+                                                                            </div>
+                                                                            <div class="text-95 text-secondary-d3">
+                                                                                @if (lstArticlesFacture != null)
+                                                                                {
+                                                                                    int i = 1;
+                                                                                    decimal montantLigne = 0;
+                                                                                    foreach(ArticleSession art in lstArticlesFacture)
+                                                                                    {
+                                                                                        montantLigne = art.prix * lstRelationUsers[i - 1].Quantite;
+
+                                                                                        <div class="row mb-2 mb-sm-0 py-25 @(i % 2 != 0 ? "" : "bgc-default-l4")">
+                                                                                            <div class="d-none d-sm-block col-1">@i</div>
+                                                                                            <div class="col-9 col-sm-5">@art.description</div>
+                                                                                            <div class="d-none d-sm-block col-2">@lstRelationUsers[i-1].Quantite</div>
+                                                                                            <div class="d-none d-sm-block col-2 text-95">$@lstRelationUsers[i-1].PrixUnitaire</div>
+                                                                                            <div class="col-2 text-secondary-d2">$@montantLigne</div>
+                                                                                        </div>
+                                                                                   
+
+                                                                                        i++;
+                                                                                    }
+                                                                                }
+
+                                                                              
+                                                                             
+                                                                            
+                                                                            </div>
+                                                                            <div class="row border-b-2 brc-default-l2"></div>
+                                                                            <div class="row mt-3">
+                                                                                <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
+                                                                                    Extra note such as company or payment information...
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-5 text-black text-90 order-first order-sm-last">
+                                                                                    <div class="row my-2">
+                                                                                        <div class="col-7 text-right">
+                                                                                            Sous-Total
+                                                                                        </div>
+                                                                                        <div class="col-5"><span class="text-120 text-secondary-d1">$@SousTotal</span></div>
+                                                                                    </div>
+                                                                                    <div class="row my-2">
+                                                                                        <div class="col-7 text-right">
+                                                                                            Taxe (10%)
+                                                                                        </div>
+                                                                                        <div class="col-5"><span class="text-110 text-secondary-d1">$@Taxe</span></div>
+                                                                                    </div>
+                                                                                    <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                                                                                        <div class="col-7 text-right">
+                                                                                            Total 
+                                                                                        </div>
+                                                                                        <div class="col-5"><span class="text-150 text-success-d3 opacity-2">$@fact.Montant</span></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr />
+@*                                                                             <div><span class="text-secondary-d1 text-105">Merci pour votre achat</span><a class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" href="#">Pay Now</a></div>
+ *@                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                   
+
                                 }
+
+                                //Modal
+                               
                             }
                           
                         }

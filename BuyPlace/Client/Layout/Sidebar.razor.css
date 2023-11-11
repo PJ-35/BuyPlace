@@ -1,3 +1,12 @@
 ﻿form button:hover{
-    background-color:dodgerblue
+    background-color:black
 }
+
+.fixed-element {
+    /*position: fixed;*/
+     /* Vous pouvez ajuster la position verticale selon vos besoins */
+    /*left: 0;*/ /* Vous pouvez ajuster la position horizontale selon vos besoins */
+    /* Ajoutez d'autres styles CSS selon vos besoins */
+    /*height:100vh;*/
+}
+

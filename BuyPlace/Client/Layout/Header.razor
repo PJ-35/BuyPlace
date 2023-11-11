@@ -1,10 +1,10 @@
-﻿<header class=" pt-1 bg-light  mb-3">
-    <div class="container mb-3">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light ">
-    <div class="container">
+﻿<header class="pt-1 menu">
+    <div class="container ">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm t ">
+            <div class="container">
                    <a class="navbar-brand h1 fw-bold" href="/">BuyPlace</a>
-        <button class="navbar-toggler" type="button" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler " type="button" @onclick="ToggleNavMenu">
+                    <span class="navbar-toggler-icon style=" color: #fff;""></span>
         </button>
         <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
 
@@ -96,19 +96,19 @@
             </ul>
         </div>
     </div>
-</nav>
-        <ul class="justify-content-center nav">
+        </nav>
+        <ul class="justify-content-center nav text-white fw-bold">
             <li class="nav-item me-4">
                 <NavLink class="nav-link text-dark" href="magasiner" Match="NavLinkMatch.Prefix">
                     Magasiner
                 </NavLink>
             </li>
             <li class="nav-item">
-                <div class="d-flex justify-content-center mb-3">
+                <div class="d-flex justify-content-center text-white mb-3">
                     <form class="w-100" @onsubmit="SubmitForm" role="search">
                         <div class="input-group">
                             <input class="form-control @validation" list="datalistOptions" @oninput="HandleInputChange" @bind="FormDataService.recherche" type="search" placeholder="Rechercher " aria-label="Search" aria-describedby="button-addon2">
-                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                            <button class="btn btn-outline-info " type="submit" id="button-addon2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                                 </svg>

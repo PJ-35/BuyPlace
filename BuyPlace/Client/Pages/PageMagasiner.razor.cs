@@ -125,6 +125,8 @@ namespace BuyPlace.Client.Pages
                 Recherche();
 
             }
+
+
             if(lstArticles is not null)
             {
                 lstImages = new string[lstArticles.Count];

@@ -14,7 +14,11 @@ namespace BuyPlace.Server.Authentication
 
         public double Montant {  get; set; }
 
-       
+
+        
+        public List<string> RelationsUserArticles {  get; set; }
+
+
 
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime Date { get; set; }

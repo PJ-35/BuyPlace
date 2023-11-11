@@ -17,5 +17,9 @@ namespace BuyPlace.Shared
         public int ExpiresIn { get; set; }
 
         public DateTime ExpiryTimeStamp { get; set; }
+
+
+
+       
     }
 }

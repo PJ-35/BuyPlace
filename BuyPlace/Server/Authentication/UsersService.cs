@@ -39,10 +39,10 @@ namespace BuyPlace.Server.Authentication
             return _userTable.Find(x => x.UserName == username).FirstOrDefault();
         }
 
-        public User GetUserById(ObjectId idUser)
+        public User GetUserById(string idUser)
         {
 
-            return _userTable.Find(x => x.Id == idUser).SingleOrDefault();
+            return _userTable.Find(x => x.Id.ToString() == idUser).SingleOrDefault();
         }
 
 
@@ -68,14 +68,15 @@ namespace BuyPlace.Server.Authentication
         }
 
 
-        public void Update(User user)
+        public bool Update(User user)
         {
-            var userObj = GetUserByCourriel(user.Courriel);
+            var userObj = GetUserById(user.Id.ToString());
             if (userObj != null)
             {
                 _userTable.ReplaceOne(x => x.Id == userObj.Id, user);
-
+                return true;
             }
+            return false;
         }
 
         public string HashPassword(string password)

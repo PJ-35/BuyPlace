@@ -16,6 +16,7 @@ builder.Services.AddSingleton<UsersService>();
 builder.Services.AddSingleton<MongoServiceArticle>();
 builder.Services.AddSingleton<MongoServiceCategories>();
 builder.Services.AddSingleton<MongoServiceFacture>();
+builder.Services.AddSingleton<MongoServiceRelationUserArticles>();
 builder.Services.AddAuthentication(o =>
 {
     o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
