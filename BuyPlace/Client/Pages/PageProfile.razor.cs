@@ -14,16 +14,21 @@ namespace BuyPlace.Client.Pages
     public partial class PageProfile
     {
         UserSession storedUser;
-        private List<ArticleSession>? lstArticles;
+        private List<ArticleSession> lstArticles;
         private List<ArticleSession> lstArticlesFacture;
         private List<string> lstImageArticle;
-        private List<FactureSession>? lstFactures;
-        private List<RelationUserArticleSession>? lstRelationUsers;
-        string[]? lstImages;
+        private List<FactureSession> lstFactures;
+        private List<RelationUserArticleSession> lstRelationUsers;
+        string[] lstImages;
         private System.Timers.Timer timer;
-        private NewUser userSessionCopie;
+        private NewUser userSessionCopie=new NewUser();
+        private string mdp { get;set; }
+        private string mdp2 { get;set; }
+        private string bg_danger { get; set; } = "bg-danger";
+        private string bg_sucess { get; set; } = "";
+
         string modal="";
-        private string? LoginMesssage = "";
+        private string LoginMesssage = "";
         private string colorMessage { get; set; } = "bg-danger";
         private bool disabled {  get; set; }
         private decimal SousTotal;
@@ -72,7 +77,7 @@ namespace BuyPlace.Client.Pages
 
                 Console.WriteLine(userSession.UserName);
             }
-
+            
              userSessionCopie = new NewUser
             {
                 Nom = userSession.Nom,
@@ -150,7 +155,7 @@ namespace BuyPlace.Client.Pages
                     }
                     else
                     {
-                        LoginMesssage = "Modiffication";
+                        LoginMesssage = "Modification";
                         colorMessage = "bg-success";
                         disabled = true;
                         userSession.Nom = userSessionCopie.Nom;
@@ -158,8 +163,6 @@ namespace BuyPlace.Client.Pages
                         userSession.Courriel = userSessionCopie.Courriel;
                         userSession.Image = userSessionCopie.Image;
                         userSession.Prenom = userSessionCopie.Prenom;
-                        //userSession = userSessionCopie;
-                        //InvokeAsync(StateHasChanged);
                     }
 
                 }
@@ -269,8 +272,6 @@ namespace BuyPlace.Client.Pages
 
         private async Task ChargerFacture()
         {
-            List<string> LstRelationId = new List<string>();
-            List<string> LstArtId = new List<string>();
             try
             {
                 lstFactures = await httpClient.GetFromJsonAsync<List<FactureSession>>($"/api/factures/factureUser?idUser={userSession.Id}");
@@ -350,6 +351,66 @@ namespace BuyPlace.Client.Pages
                    
                 }
             }
+        }
+
+        private string mdpMessage { get; set; }
+        [Inject]
+        IJSRuntime js { get;set; }
+        private async Task ChangerMdp()
+        {
+            mdpMessage = "";
+            bg_danger = "bg-danger";
+            bg_sucess = "";
+            if (string.IsNullOrWhiteSpace(mdp) || string.IsNullOrWhiteSpace(mdp2)||string.IsNullOrWhiteSpace(userSessionCopie.Mdp)) {
+                mdpMessage = "Veuillez remplir tous les champs";
+            }
+            else
+            {
+                var validationResults = new List<ValidationResult>();
+                var isValid = Validator.TryValidateObject(userSessionCopie, new ValidationContext(userSessionCopie), validationResults, true);
+                if (isValid)
+                {
+                    mdpMessage = mdp2 != userSessionCopie.Mdp ? "Les nouveaux mot de passe doivent être identiques" : "";
+                    if (!string.IsNullOrWhiteSpace(mdpMessage))
+                        mdp2 = userSessionCopie.Mdp = "";
+                    else
+                    {
+                        //LoginRequest loginRequest = new LoginRequest { UserName=userSession.UserName,Password=mdp};
+                        var loginResponse = await httpClient.PostAsJsonAsync<LoginRequest>("api/Account/Login", new LoginRequest { UserName = userSession.UserName,Password = mdp});
+                        if(loginResponse.IsSuccessStatusCode)
+                        {
+                            var mdpChange = await httpClient.PostAsJsonAsync<LoginRequest>("api/Account/UpdateMdp", new LoginRequest { UserName = userSession.UserName,Password = userSessionCopie.Mdp});
+                            string tt = await mdpChange.Content.ReadAsStringAsync();
+                            mdpMessage = tt;
+                            if (mdpChange.IsSuccessStatusCode)
+                            {
+                                bg_danger = "";
+                                bg_sucess = "bg-success";
+                                mdp = mdp2 = userSessionCopie.Mdp = "";
+                            }
+                            else
+                            {
+                                bg_danger = "bg_danger";
+                                bg_sucess = "";
+                            }
+                        }
+                        else
+                        {
+                            mdpMessage = "Le mot de passe actuel saisi est incorrect";
+                            mdp = mdp2=userSessionCopie.Mdp= "";
+                        }
+                    }
+                }
+
+            }
+        }
+
+        private  void vide()
+        {
+            mdpMessage = "";
+            mdp = mdp2 = userSessionCopie.Mdp = "";
+            bg_danger = "bg-danger";
+            bg_sucess = "";
         }
     }
 }

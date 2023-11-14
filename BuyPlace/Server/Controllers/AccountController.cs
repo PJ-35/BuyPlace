@@ -37,6 +37,25 @@ namespace BuyPlace.Server.Controllers
         }
 
         [HttpPost]
+        [Route("UpdateMdp")]
+        public ActionResult UpdateMdp([FromBody] LoginRequest loginRequest)
+        {
+            User existingUser = _userService.GetUserByUsername(loginRequest.UserName);
+            if(existingUser is null)
+                return BadRequest("Échec de la mise à jour.");
+            existingUser.Mdp=_userService.HashPassword(loginRequest.Password);
+
+            if (_userService.Update(existingUser))
+            {
+                return Ok("Mise à jour réussie.");
+            }
+            else
+            {
+                return BadRequest("Échec de la mise à jour.");
+            }
+        }
+
+        [HttpPost]
         [Route("GetbyUserName")]
         [AllowAnonymous]
         public ActionResult<NewUser> GetByUserName([FromBody] string userName)
