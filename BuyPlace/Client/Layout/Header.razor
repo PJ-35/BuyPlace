@@ -45,7 +45,7 @@
                                         }
                                 </NavLink>
 
-                                    <div class="dropdown-menu @show" aria-labelledby="navbarDropdown" style="border-radius:10px;min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                                <div class="dropdown-menu @show" aria-labelledby="navbarDropdown" style="border-radius:10px;min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
 
                                     <div class="d-md-flex align-items-lg-start justify-content-start">
 
@@ -62,22 +62,23 @@
 
                                                 }
                                             <div class="dropdown-header">Mon profile</div>
+                                                <a class="dropdown-item btn btn-outline-primary" role="button" href="/Profile">Profil</a>
 
-                                            <a class="dropdown-item" @onclick=Logout> Deconnexion</a>
+                                                <a class="dropdown-item btn btn-outline-primary" @onclick=Logout> Deconnexion</a>
                                         </div>
                                     </div>
                                 </div>
                             </li>
 
-                                <li class="nav-item dropdown @show" @onmousedown="MouseOverDropDown">
+                                <li class="nav-item dropdown @showPanier" @onmousedown="MouseOverDropDownPanier">
                                     <NavLink class="nav-link text-dark dropdown-toggle" id="navbarDropdownPanier" data-toggle="dropdown"
-                                             aria-haspopup="true" aria-expanded="@DropDownValue" href="javascript:void(0)">
+                                             aria-haspopup="true" aria-expanded="@DropDownValuePanier" href="javascript:void(0)">
                                       
                                         <img src="/images_Accueil/panier2.jpg" style="border-radius:100px; width:40px; height:40px;" class="img_profile" /> 
                                       
                                     </NavLink>
 
-                                    <div class="dropdown-menu @show" aria-labelledby="navbarDropdown" style="border-radius:10px; min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                                    <div class="dropdown-menu @showPanier" aria-labelledby="navbarDropdown" style="border-radius:10px; min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
 
                                         <div class="d-md-flex align-items-lg-start justify-content-start">
 

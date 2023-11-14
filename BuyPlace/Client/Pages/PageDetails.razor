@@ -31,18 +31,24 @@
                         <a class="btn btn-primary" href="connexion">Connectez vous pour acheter</a>
                   </NotAuthorized>
                   <Authorized>
-                        @if (article.quantite > 0)
-                        {
-                            <p class="text-success">en stock</p>
-                            <button class="btn btn-success">Ajouter au panier</button>
+                            @if (userSession.Id != article.id_user)
+                            {
+                                @if (article.quantite > 0)
+                                {
+                                    <p class="text-success">en stock</p>
+                                    <button class="btn btn-success">Ajouter au panier</button>
 
-                        }
-                        else
-                        {
-                            <p class="text-danger">rupture de stock</p>
-                            <button class="btn btn-success disabled">Ajouter au panier</button>
+                                }
+                                else
+                                {
+                                    <p class="text-danger">rupture de stock</p>
+                                    <button class="btn btn-success disabled">Ajouter au panier</button>
 
-                        }
+                                }
+                            }else{
+                                <a class="btn btn-outline-primary" role="button" href="#" >Gérer</a>
+
+                            }
                         </Authorized>
                   </AuthorizeView>
 

@@ -6,6 +6,10 @@ a.navbar-brand {
     word-break: break-all;
 }
 
+main{
+    min-height:90vh;
+}
+
 header a:hover {
     text-decoration: underline;
 }

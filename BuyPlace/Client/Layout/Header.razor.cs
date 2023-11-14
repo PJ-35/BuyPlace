@@ -23,7 +23,9 @@ namespace BuyPlace.Client.Layout
 
         // DropDown Profile
         public string show {  get; set; }
+        public string showPanier {  get; set; }
         public bool DropDownValue=false;
+        public bool DropDownValuePanier=false;
         private bool collapswNavMenu = true;
         // private string NavMenuCss1Class => collapseNavMenu ? "collapse" : null;
 
@@ -62,6 +64,18 @@ namespace BuyPlace.Client.Layout
         {
             show = string.Empty;
             DropDownValue = false;
+        }
+
+        public void MouseOverDropDownPanier()
+        {
+            showPanier = "show";
+            DropDownValuePanier = true;
+        }
+
+        public void MoiseOutDropDownPanier()
+        {
+            showPanier = string.Empty;
+            DropDownValuePanier = false;
         }
 
         void ToggleNavMenu()

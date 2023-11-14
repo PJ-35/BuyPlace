@@ -143,4 +143,19 @@ hr {
   border-radius: .25rem;
 }
 
+@media (min-width: 768px) {
+    .portfolio-block .heading h2, .portfolio-block .heading .h2 {
+        font-size: 2rem;
+    }
+}
+
+.portfolio-block .heading h2, .portfolio-block .heading .h2 {
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+
+}
+
+
+
 
