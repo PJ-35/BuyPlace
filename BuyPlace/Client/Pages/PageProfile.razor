@@ -6,15 +6,16 @@
         <section class="portfolio-block block-intro container mx-auto py-5">
             <div class="container">
                 <div class="avatar" style="background-image: url(https://robohash.org/userSessionUserName);"></div>
-                <div class="about-me">
-                <p>Salut <strong>@userSession.Nom @userSession.Prenom</strong>. Nous sommes ravis de vous revoir sur votre profil. Découvrez et gérez vos informations personnelles, vos commandes et bien plus encore.</p>@* <a class="btn btn-outline-primary" role="button" href="#">Hire me</a> *@
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
-                    Modifier le profile
-                </button>
+                <div class="about-me text-center">
+                    <p>Salut <strong>@userSession.Nom @userSession.Prenom</strong>. Nous sommes ravis de vous revoir sur votre profil. Découvrez et gérez vos informations personnelles, vos commandes et bien plus encore.</p>@* <a class="btn btn-outline-primary" role="button" href="#">Hire me</a> *@
+                    <!-- Button trigger modal -->
+                  @*   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
+                        Modifier le profile
+                    </button> *@
+                    <a class="btn btn-outline-primary" role="button" href="#" data-toggle="modal" data-target="#exampleModalScrollable">Modifier le profile</a>
 
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -84,6 +85,7 @@
                 </div>
             </div>
         </section>
+        
         <div class="container-fluid">
             <ul class="nav nav-tabs sticky-top bg-light" role="tablist">
                 <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab-1">Ventes</a></li>
@@ -199,7 +201,7 @@
                                                                         <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
                                                                             <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
                                                                             Imprimer
-                                                                        </a><a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="PDF">
+                                                                        </a><a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="PDF" onclick="generatePDF()">
                                                                             <i class="mr-1 fa fa-file-pdf-o text-danger-m1 text-120 w-2"></i>
                                                                             Télécharger
                                                                         </a>

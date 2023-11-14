@@ -1,5 +1,7 @@
-﻿using BuyPlace.Shared;
+﻿using BuyPlace.Client.Authentication;
+using BuyPlace.Shared;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using System.Net;
 using System.Net.Http.Json;
 
@@ -15,9 +17,17 @@ namespace BuyPlace.Client.Pages
         private string erreur;
         private string title;
         private string image;
+        private AuthenticationState authState;
+        NewUser userSession = new NewUser();
+        UserSession storedUser;
+
+
 
         [Inject]
         HttpClient httpClient { get; set; }
+
+        [Inject]
+        AuthenticationStateProvider authProvider { get; set; }
 
         private System.Timers.Timer timer;
 
@@ -38,7 +48,23 @@ namespace BuyPlace.Client.Pages
 
         private async void chargement()
         {
-             var reponse= await httpClient.GetAsync($"api/article/getarticlebyid?idArticle={idArticle}");
+
+
+            var custum = (CustumAuthStateProvider)authProvider;
+
+            storedUser = await custum.GetUserSession();
+
+            if (storedUser is not null)
+            {
+
+                var user = await httpClient.PostAsJsonAsync("api/Account/GetbyUserName", storedUser.UserName);
+                userSession = await user.Content.ReadFromJsonAsync<NewUser>();
+
+
+                Console.WriteLine(userSession.UserName);
+            }
+
+            var reponse= await httpClient.GetAsync($"api/article/getarticlebyid?idArticle={idArticle}");
             FormDataService.details = "";
             if(reponse.StatusCode == HttpStatusCode.BadRequest)
             {
