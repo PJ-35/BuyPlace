@@ -164,13 +164,14 @@ namespace BuyPlace.Server.Controllers
             //    return BadRequest("Ce nom d'utilisateur est déjà attribué.");
             //}
 
-            //User existingUser1 = _userService.GetUserByCourriel(updatedUser.Courriel);
-            //if (existingUser1 is not null)
-            //{
-            //    return BadRequest("Ce courriel est déjà attribué.");
-            //}
+            User existingUser1 = _userService.GetUserByCourriel(updatedUser.Courriel);
+    
 
             User existingUser = _userService.GetUserById(updatedUser.Id);
+            if (existingUser1 is not null && existingUser1.Courriel!=existingUser.Courriel)
+            {
+                return BadRequest("Ce courriel est déjà attribué.");
+            }
             //existingUser = new User(updatedUser.Image,updatedUser.Courriel,updatedUser.Nom,updatedUser.Prenom,updatedUser.Mdp,updatedUser.UserName,updatedUser.Solde,updatedUser.Role);
 
             // Mettez à jour les informations de l'utilisateur avec les nouvelles données.

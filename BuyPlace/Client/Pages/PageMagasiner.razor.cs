@@ -90,7 +90,7 @@ namespace BuyPlace.Client.Pages
         }
         private async void chargement()
         {
-            FormDataService.details = "";
+            //FormDataService.details = "";
             if (!string.IsNullOrWhiteSpace(categorie))
             {
                 var reponse = await httpClient.GetAsync($"api/categorie/cherche?categorie={categorie}");
@@ -135,17 +135,6 @@ namespace BuyPlace.Client.Pages
 
                         byte[] imageBytes = await httpClient.GetByteArrayAsync($"api/article/{lstArticles[i].Id}?timestamp={DateTime.UtcNow.Ticks}");
                         lstImages[i] = $"data:image/jpg;base64,{Convert.ToBase64String(imageBytes)}";
-                        
-                    //StateHasChanged();
-                    //var reponse = await httpClient.GetAsync("/images_articles/" + lstArticles[i].Id + ".jpg");
-                    //if (reponse.IsSuccessStatusCode)
-                    //{
-                    //    lstImages[i] = $"{lstArticles[i].Id}.jpg";
-                    //}
-                    //else
-                    //{
-                    //    lstImages[i] = "indisponible.jpg";
-                    //}
                 }
             }
 

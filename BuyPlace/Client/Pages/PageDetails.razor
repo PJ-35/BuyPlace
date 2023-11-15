@@ -1,6 +1,4 @@
 ﻿@page "/detail/{idArticle}"
-@using BuyPlace.Shared
-@inject FormDataService FormDataService
 
 <PageTitle>@title</PageTitle>
 <div class="container mb-5 pb-5">
@@ -28,7 +26,7 @@
                 <p>Posté le @article.date.Day/@article.date.Month/@article.date.Year </p>
                   <AuthorizeView>
                   <NotAuthorized>
-                        <a class="btn btn-primary" href="connexion">Connectez vous pour acheter</a>
+                        <a class="btn btn-primary" @onclick="redirection" href="#">Connectez vous pour acheter</a>
                   </NotAuthorized>
                   <Authorized>
                             @if (userSession.Id != article.id_user)
