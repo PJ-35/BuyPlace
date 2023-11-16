@@ -276,34 +276,7 @@ namespace BuyPlace.Client.Pages
             {
                 lstFactures = await httpClient.GetFromJsonAsync<List<FactureSession>>($"/api/factures/factureUser?idUser={userSession.Id}");
 
-                //if (lstFactures!=null)
-                //{
-                //    foreach (FactureSession fct in lstFactures)
-                //    {
-                //        if (fct.RelationsUserArticles != null)
-                //        {
-                //            foreach (string idUserArt in fct.RelationsUserArticles)
-                //            {
-                //                LstRelationId.Add(idUserArt);
-                //            }
-                //        }
-
-                //    }
-                //}
-
-
-                //lstRelationUsers= await httpClient.GetFromJsonAsync<List<RelationUserArticleSession>>($"/api/userArticle/articleUserList?lstIdUA={LstRelationId}");
-
-                //if (lstRelationUsers!=null && lstRelationUsers.Count!=0)
-                //{
-                //    foreach (RelationUserArticleSession lstRel in lstRelationUsers)
-                //    {
-                //        LstArtId.Add(lstRel.ArticleId.ToString());
-                //    }
-
-                //    lstArticlesFacture = await httpClient.GetFromJsonAsync<List<ArticleSession>>($"/api/Article/articleUserFact?lstIdUA={LstArtId}");
-
-                //}
+              
 
             }
             catch (HttpRequestException e)
@@ -411,6 +384,11 @@ namespace BuyPlace.Client.Pages
             mdp = mdp2 = userSessionCopie.Mdp = "";
             bg_danger = "bg-danger";
             bg_sucess = "";
+        }
+
+        private void Print()
+        {
+            js.InvokeVoidAsync("Print");
         }
     }
 }

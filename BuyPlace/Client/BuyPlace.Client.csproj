@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Shared\BuyPlace.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\JS\" />
-  </ItemGroup>
-
 </Project>
