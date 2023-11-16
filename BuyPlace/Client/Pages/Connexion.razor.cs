@@ -1,4 +1,5 @@
-﻿using BuyPlace.Client.Authentication;
+﻿
+using BuyPlace.Client.Authentication;
 using BuyPlace.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components;
