@@ -181,6 +181,7 @@ namespace BuyPlace.Client.Layout
 
         private async Task Logout()
         {
+          //  FormDataService.details = "";
             var custumAuth = (CustumAuthStateProvider)authProvider;
             await custumAuth.UpdateAuthState(null);
             navigationManager.NavigateTo("/", true);

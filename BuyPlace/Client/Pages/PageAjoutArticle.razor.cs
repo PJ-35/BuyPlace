@@ -23,7 +23,7 @@ namespace BuyPlace.Client.Pages
 
         public string id_categorie { get; set; }
 
-        private List<CategorieSession> categories;
+        private List<CategorieSession> categories=new List<CategorieSession>();
 
 
         [Inject]
@@ -39,7 +39,6 @@ namespace BuyPlace.Client.Pages
 
         private async Task OnClick()
         {
-            // Réinitialise l'objet image à null lors du clic sur le bouton de sélection
             image = null;
         }
 
@@ -90,13 +89,14 @@ namespace BuyPlace.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie");
             authenticationState = await authStateProvider.GetAuthenticationStateAsync();
 
             if (!authenticationState.User.Identity.IsAuthenticated)
             {
                 navManager.NavigateTo("/connexion");
             }
+            categories = await httpClient.GetFromJsonAsync<List<CategorieSession>>("api/categorie/categorie");
+
         }
         private async Task HandleAjout()
         {

@@ -43,7 +43,7 @@
            <div class="form-item">
                 <InputSelect @bind-Value="article.id_categorie" class="form-select" placeholder="Entrer la catégorie" required >
                     <option value="" selected>----Faites un choix-----</option>
-
+                    
                     @foreach(var categorie in categories)
                     {
                         <option value="@categorie.Id">@categorie.nom</option>

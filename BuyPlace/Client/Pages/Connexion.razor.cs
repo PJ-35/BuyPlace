@@ -14,6 +14,8 @@ namespace BuyPlace.Client.Pages
         private LoginRequest logRequest = new LoginRequest();
 
         public string LoginMesssage { get; set; } = "";
+
+        private string resultat { get; set; } = "";
         //private UsersService userService = new UsersService();
 
         [Inject]
@@ -25,7 +27,15 @@ namespace BuyPlace.Client.Pages
         [Inject]
         NavigationManager navManager { get; set; }
 
+        [Inject]
+        IJSRuntime JSRuntime { get; set; }
 
+        protected override async Task OnInitializedAsync()
+        {
+            resultat = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "sharedInformation");
+            await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "sharedInformation");
+
+        }
 
         private async Task HandleLogin()
         {
@@ -37,16 +47,16 @@ namespace BuyPlace.Client.Pages
                 else
                 {
                     var loginResponse = await httpClient.PostAsJsonAsync<LoginRequest>("api/Account/Login", logRequest);
-                    //var content= await loginResponse.Content.ReadAsStringAsync();
+
                     if (loginResponse.IsSuccessStatusCode)
                     {
                         var userSession = await loginResponse.Content.ReadFromJsonAsync<UserSession>();
                         var custum = (CustumAuthStateProvider)authStateProvider;
                         await custum.UpdateAuthState(userSession);
-                        if (string.IsNullOrWhiteSpace(FormDataService.details))
+                        if (string.IsNullOrWhiteSpace(resultat))
                             navManager.NavigateTo("/", true);
                         else
-                            navManager.NavigateTo($"/detail/{FormDataService.details}", true);
+                            navManager.NavigateTo($"/detail/{resultat}", true);
                     }
                     else if (loginResponse.StatusCode == HttpStatusCode.Unauthorized)
                     {

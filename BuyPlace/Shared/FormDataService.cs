@@ -11,7 +11,6 @@ namespace BuyPlace.Shared
         public int Min { get; set; }
         public int Max { get; set; }
         public string recherche { get; set; }
-        public string details { get; set; }
         public string categorie { get; set; }
         public bool MinChange { get; set; } = false;
         public bool MaxChange { get; set; } = false;
