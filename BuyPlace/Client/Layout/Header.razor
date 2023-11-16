@@ -6,7 +6,7 @@
         <button class="navbar-toggler " type="button" @onclick="ToggleNavMenu">
                     <span class="navbar-toggler-icon style=" color: #fff;""></span>
         </button>
-        <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+        <div class="@NavMenuCssClass" >
 
 
             <ul class="navbar-nav my-auto menu">
@@ -30,7 +30,7 @@
                             <li class="nav-item my-auto mt-3">
                                     <p class="fw-bold">@userSession.UserName</p>
                             </li>
-                            <li class="nav-item dropdown @show" @onmousedown="MouseOverDropDown">
+                            <li class="nav-item dropdown @show" @onclick="MouseOverDropDown">
                                 <NavLink  class="nav-link text-dark dropdown-toggle" id="navbarDropdownProfil" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="@DropDownValue" href="javascript:void(0)">
                                         @if(userSession.Image is not null)
@@ -70,7 +70,7 @@
                                 </div>
                             </li>
 
-                                <li class="nav-item dropdown @showPanier" @onmousedown="MouseOverDropDownPanier">
+                                <li class="nav-item dropdown @showPanier" @onclick="MouseOverDropDownPanier">
                                     <NavLink class="nav-link text-dark dropdown-toggle" id="navbarDropdownPanier" data-toggle="dropdown"
                                              aria-haspopup="true" aria-expanded="@DropDownValuePanier" href="javascript:void(0)">
                                       
