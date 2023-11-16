@@ -5,7 +5,7 @@
                       <div >
         <section class="portfolio-block block-intro container mx-auto py-5">
             <div class="container">
-                <div class="avatar" style="background-image: url(https://robohash.org/userSessionUserName);"></div>
+                <div class="avatar" style="background-image: url(https://robohash.org/@userSession.UserName);"></div>
                 <div class="about-me text-center">
                     <p>Salut <strong>@userSession.Nom @userSession.Prenom</strong>. Nous sommes ravis de vous revoir sur votre profil. Découvrez et gérez vos informations personnelles, vos commandes et bien plus encore.</p>@* <a class="btn btn-outline-primary" role="button" href="#">Hire me</a> *@
                     <!-- Button trigger modal -->
@@ -25,7 +25,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <EditForm Model="@userSession"  OnSubmit="UpdateProfile" novalidate class="login-card-form align-content-center  d-flex flex-column gap-1">
+                                <EditForm Model="@userSession"  OnSubmit="UpdateProfile" novalidate class="login-card-form   ">
                                     <DataAnnotationsValidator />
 
                                      <div class="col-12 row text-white @colorMessage mb-2" style="text-align:center; font-weight:bold">
@@ -36,27 +36,27 @@
                                     </div>
 
                                     <div class="form-item ">
-                                        <label class="">Nom d'utilisateur</label>
+                                        <label class="float-start">Nom d'utilisateur</label>
                                         <InputText @bind-Value=userSessionCopie.UserName class="form-control " disabled id="username" placeholder="Entrer un nom d'utilisateur" required />
                                          <ValidationMessage For="@(() => userSession.UserName)" />
 
                                     </div>
 
                                     <div class="form-item ">
-                                        <label class="flex-start">Courriel</label>
+                                        <label class="float-start">Courriel</label>
                                         <InputText @bind-Value=userSessionCopie.Courriel @onblur="HandleInputChange" type="email" class="form-control" id="Courriel)" placeholder="Entrer courriel" required />
                                          <ValidationMessage For="@(() => userSession.Courriel)" />
 
                                     </div>
 
                                     <div class="form-item">
-                                        <label class="">Nom</label>
-                                        <InputText @bind-Value=userSessionCopie.Nom @onblur="HandleInputChange" class="form-control" id="nom" required />
+                                        <label class="float-start">Nom</label>
+                                        <InputText @bind-Value=userSessionCopie.Nom @onblur="HandleInputChange" class="form-control" id="mdp" required />
                                         <ValidationMessage For="@(() => userSession.Nom)" />
                                     </div>
 
                                     <div class="form-item">
-                                        <label class="">Prénom</label>
+                                        <label class="float-start">Prénom</label>
                                         <InputText @bind-Value=userSessionCopie.Prenom @onblur="HandleInputChange" class="form-control" required />
                                          <ValidationMessage For="@(() => userSession.Prenom)" />
                                     </div>
