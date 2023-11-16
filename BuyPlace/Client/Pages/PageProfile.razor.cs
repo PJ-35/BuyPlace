@@ -103,121 +103,72 @@ namespace BuyPlace.Client.Pages
            
             //InvokeAsync(StateHasChanged);
         }
-        //[Inject]
-        //IJSRuntime Js {  get; set; }
+
 
         private async Task UpdateProfile()
         {
-
-            var validationResults = new List<ValidationResult>();
-            var isValid = Validator.TryValidateObject(userSession, new ValidationContext(userSession), validationResults, true);
-
-            LoginMesssage = "";
-
-
-            if (string.IsNullOrWhiteSpace(userSession.UserName) || string.IsNullOrWhiteSpace(userSession.Courriel) || string.IsNullOrWhiteSpace(userSession.Nom) || string.IsNullOrWhiteSpace(userSession.Prenom))
+            if (!disabled)
             {
-                LoginMesssage += "Veuillez remplir tous les champs\n";
-            }
-            if(userSession.Nom.Length < 3) {
-                LoginMesssage += "Le nom choisir doit avoir plus de 3 caractère\n";
-            }
-            if (userSession.Prenom.Length < 3)
-            {
-                LoginMesssage += "Le prenom choisir doit avoir plus de 3 caractère\n";
-            }
+                var validationResults = new List<ValidationResult>();
+                var isValid = Validator.TryValidateObject(userSession, new ValidationContext(userSession), validationResults, true);
 
-            if (userSession.UserName.Length < 3)
-            {
-                LoginMesssage += "Le nom d'utilisateur choisir doit avoir plus de 3 caractère\n";
-            }
-
-            if (!(string.IsNullOrWhiteSpace(userSession.UserName) 
-                || string.IsNullOrWhiteSpace(userSession.Courriel) 
-                || string.IsNullOrWhiteSpace(userSession.Nom) 
-                || string.IsNullOrWhiteSpace(userSession.Prenom)) && userSession.UserName.Length >= 3 && 
-                userSession.Prenom.Length >= 3 && userSession.Nom.Length>=3)
-            {
                 LoginMesssage = "";
 
-                if (!userSession.Equals(userSessionCopie))
+
+                if (string.IsNullOrWhiteSpace(userSession.UserName) || string.IsNullOrWhiteSpace(userSession.Courriel) || string.IsNullOrWhiteSpace(userSession.Nom) || string.IsNullOrWhiteSpace(userSession.Prenom))
                 {
-                    userSessionCopie.Mdp = "Qwerty1234";
-
-                    var loginResponse = await httpClient.PostAsJsonAsync<NewUser>("api/Account/UpdateUser", userSessionCopie);
-
-                    string tt = await loginResponse.Content.ReadAsStringAsync();
-                    // await Js.InvokeVoidAsync("alert",tt);
-                    if (!loginResponse.IsSuccessStatusCode)
-                    {
-                        LoginMesssage = tt;
-
-                    }
-                    else
-                    {
-                        LoginMesssage = "Modification";
-                        colorMessage = "bg-success";
-                        disabled = true;
-                        userSession.Nom = userSessionCopie.Nom;
-                        userSession.UserName = userSessionCopie.UserName;
-                        userSession.Courriel = userSessionCopie.Courriel;
-                        userSession.Image = userSessionCopie.Image;
-                        userSession.Prenom = userSessionCopie.Prenom;
-                    }
-
+                    LoginMesssage += "Veuillez remplir tous les champs\n";
                 }
-                //else
-                //    modal = "modal";
-                //InvokeAsync(StateHasChanged);
+                if (userSession.Nom.Length < 3)
+                {
+                    LoginMesssage += "Le nom choisir doit avoir plus de 3 caractère\n";
+                }
+                if (userSession.Prenom.Length < 3)
+                {
+                    LoginMesssage += "Le prenom choisir doit avoir plus de 3 caractère\n";
+                }
+
+                if (userSession.UserName.Length < 3)
+                {
+                    LoginMesssage += "Le nom d'utilisateur choisir doit avoir plus de 3 caractère\n";
+                }
+
+                if (!(string.IsNullOrWhiteSpace(userSession.UserName)
+                    || string.IsNullOrWhiteSpace(userSession.Courriel)
+                    || string.IsNullOrWhiteSpace(userSession.Nom)
+                    || string.IsNullOrWhiteSpace(userSession.Prenom)) && userSession.UserName.Length >= 3 &&
+                    userSession.Prenom.Length >= 3 && userSession.Nom.Length >= 3)
+                {
+                    LoginMesssage = "";
+
+                    if (!userSession.Equals(userSessionCopie))
+                    {
+                        userSessionCopie.Mdp = "Qwerty1234";
+
+                        var loginResponse = await httpClient.PostAsJsonAsync<NewUser>("api/Account/UpdateUser", userSessionCopie);
+
+                        string tt = await loginResponse.Content.ReadAsStringAsync();
+                        // await Js.InvokeVoidAsync("alert",tt);
+                        if (!loginResponse.IsSuccessStatusCode)
+                        {
+                            LoginMesssage = tt;
+
+                        }
+                        else
+                        {
+                            LoginMesssage = "Modification";
+                            colorMessage = "bg-success";
+                            disabled = true;
+                            userSession.Nom = userSessionCopie.Nom;
+                            userSession.UserName = userSessionCopie.UserName;
+                            userSession.Courriel = userSessionCopie.Courriel;
+                            userSession.Image = userSessionCopie.Image;
+                            userSession.Prenom = userSessionCopie.Prenom;
+                        }
+
+                    }
+                }
             }
-
-            //if (isValid)
-            //{
-            //    if (string.IsNullOrWhiteSpace(userSession.UserName) || string.IsNullOrWhiteSpace(userSession.Courriel) || string.IsNullOrWhiteSpace(userSession.Nom) || string.IsNullOrWhiteSpace(userSession.Prenom))
-            //    {
-            //        LoginMesssage += "Veuillez remplir tous les champs\n";
-            //    }
-               
-
-
-            //}
-            //else
-            //{
-            //    if (!(string.IsNullOrWhiteSpace(userSession.UserName) || string.IsNullOrWhiteSpace(userSession.Courriel) || string.IsNullOrWhiteSpace(userSession.Nom) || string.IsNullOrWhiteSpace(userSession.Prenom)))
-            //    {
-            //        LoginMesssage = "";
-            //        //InvokeAsync(StateHasChanged);
-            //    }
-            //    else
-            //        LoginMesssage = "Veuillez remplir tous les champs";
-            //}
-
-            //if(isValid && LoginMesssage == "")
-            //{
-            //    if (!userSession.Equals(userSessionCopie))
-            //    {
-            //        userSession.Mdp = "Qwerty1234";
-
-            //        var loginResponse = await httpClient.PostAsJsonAsync<NewUser>("api/Account/UpdateUser", userSession);
-
-            //        string tt = await loginResponse.Content.ReadAsStringAsync();
-            //       // await Js.InvokeVoidAsync("alert",tt);
-            //        if (!loginResponse.IsSuccessStatusCode)
-            //        {
-            //            LoginMesssage = tt;
-            //        }
-            //        else
-            //        {
-            //            userSessionCopie.Nom = userSession.Nom;
-            //            userSessionCopie.UserName = userSession.UserName;
-            //            userSessionCopie.Courriel = userSession.Courriel;
-            //            userSessionCopie.Image = userSession.Image;
-            //            userSessionCopie.Prenom = userSession.Prenom;
-            //        }
-
-            //    }else
-            //        modal = "modal";
-            //}
 
            
         }

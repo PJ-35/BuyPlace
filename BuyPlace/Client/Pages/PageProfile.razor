@@ -43,7 +43,7 @@
                                     </div>
 
                                     <div class="form-item ">
-                                        <label class="">Courriel</label>
+                                        <label class="flex-start">Courriel</label>
                                         <InputText @bind-Value=userSessionCopie.Courriel @onblur="HandleInputChange" type="email" class="form-control" id="Courriel)" placeholder="Entrer courriel" required />
                                          <ValidationMessage For="@(() => userSession.Courriel)" />
 
@@ -51,13 +51,13 @@
 
                                     <div class="form-item">
                                         <label class="">Nom</label>
-                                        <InputText @bind-Value=userSessionCopie.Nom @oninput="HandleInputChange" class="form-control" id="mdp" required />
+                                        <InputText @bind-Value=userSessionCopie.Nom @onblur="HandleInputChange" class="form-control" id="nom" required />
                                         <ValidationMessage For="@(() => userSession.Nom)" />
                                     </div>
 
                                     <div class="form-item">
                                         <label class="">Prénom</label>
-                                        <InputText @bind-Value=userSessionCopie.Prenom @oninput="HandleInputChange" class="form-control" required />
+                                        <InputText @bind-Value=userSessionCopie.Prenom @onblur="HandleInputChange" class="form-control" required />
                                          <ValidationMessage For="@(() => userSession.Prenom)" />
                                     </div>
 @* 

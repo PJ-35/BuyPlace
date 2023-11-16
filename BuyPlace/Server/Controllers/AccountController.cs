@@ -150,19 +150,6 @@ namespace BuyPlace.Server.Controllers
         
         public ActionResult UpdateUser([FromBody] NewUser updatedUser)
         {
-            // Assurez-vous que l'utilisateur actuellement authentifié correspond à l'utilisateur que vous souhaitez mettre à jour.
-            // Vous pouvez utiliser User.Identity.Name pour obtenir le nom d'utilisateur de l'utilisateur actuellement authentifié.
-            //if (User.Identity.Name != updatedUser.UserName)
-            //{
-            //    return Unauthorized("Vous n'êtes pas autorisé à mettre à jour cet utilisateur.");
-            //}
-
-            //User existingUser = _userService.GetUserByUsername(updatedUser.UserName);
-
-            //if (existingUser is not null)
-            //{
-            //    return BadRequest("Ce nom d'utilisateur est déjà attribué.");
-            //}
 
             User existingUser1 = _userService.GetUserByCourriel(updatedUser.Courriel);
     
@@ -172,7 +159,6 @@ namespace BuyPlace.Server.Controllers
             {
                 return BadRequest("Ce courriel est déjà attribué.");
             }
-            //existingUser = new User(updatedUser.Image,updatedUser.Courriel,updatedUser.Nom,updatedUser.Prenom,updatedUser.Mdp,updatedUser.UserName,updatedUser.Solde,updatedUser.Role);
 
             // Mettez à jour les informations de l'utilisateur avec les nouvelles données.
             existingUser.Courriel = updatedUser.Courriel;
