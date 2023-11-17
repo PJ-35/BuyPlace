@@ -28,13 +28,15 @@
                   <Authorized>
 
                             <li class="nav-item my-auto mt-3">
-                                    <p class="fw-bold">@userSession.UserName</p>
+                                    @*<span class="fw-bold">@userSession.UserName</span>*@
                             </li>
                             <li class="nav-item dropdown @show" @onclick="MouseOverDropDown">
                                 <NavLink  class="nav-link text-dark dropdown-toggle" id="navbarDropdownProfil" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="@DropDownValue" href="javascript:void(0)">
                                         @if(userSession.Image is not null)
                                         {
+                                            <span class="fw-bold">@userSession.UserName </span>
+
                                             <img src="https://robohash.org/@userSession.UserName " style="border-radius:100px; width:40px; height:40px;" class="border border-3" />
 
                                         }
