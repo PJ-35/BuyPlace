@@ -1,104 +1,265 @@
-﻿<header class="pt-1 menu">
-    <div class="container ">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm t ">
-            <div class="container">
-                   <a class="navbar-brand h1 fw-bold" href="/">BuyPlace</a>
-        <button class="navbar-toggler " type="button" @onclick="ToggleNavMenu">
-                    <span class="navbar-toggler-icon style=" color: #fff;""></span>
-        </button>
-        <div class="@NavMenuCssClass" >
+﻿<header class=" ">
+
+  
+
+   
+</header>
+
+<nav class="navbar navbar-light navbar-expand-md navbar-fixed-top navigation-clean-button menu py-3" style="">
 
 
-            <ul class="navbar-nav my-auto menu">
-              <AuthorizeView>
-                  <NotAuthorized>
-                                <li class="nav-item">
-                                    <NavLink class="nav-link text-dark" href="inscription" Match="NavLinkMatch.All">
-                                        <span class="oi oi"></span>
-                                        Rejoins nous
-                                    </NavLink>
-                                </li>
-                                <li class="nav-item">
-                                    <NavLink class="nav-link text-dark" href="connexion" Match="NavLinkMatch.All">
-                                        <span class="oi oi-account-login"></span>
-                                        Se connecter
-                                    </NavLink>
-                                </li>
-                  </NotAuthorized>
-                  <Authorized>
 
-                            <li class="nav-item my-auto mt-3">
-                                    @*<span class="fw-bold">@userSession.UserName</span>*@
-                            </li>
-                            <li class="nav-item dropdown @show" @onclick="MouseOverDropDown">
-                                <NavLink  class="nav-link text-dark dropdown-toggle" id="navbarDropdownProfil" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="@DropDownValue" href="javascript:void(0)">
-                                        @if(userSession.Image is not null)
+
+    <div class="container">
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-1" style=" background-color: rgba(224,217,217,0.9);"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div><a class="navbar-brand" href="/"><span>BuyPlace </span></a></div>
+        <div id="navcol-1" class="collapse navbar-collapse" style="color: rgb(255,255,255);">
+            <ul class="navbar-nav nav-right">
+                <li class="nav-item"><a class="nav-link active" href="/" style="color: rgba(224,217,217,0.9);">Accueil </a></li>
+                <li class="nav-item">
+                    <NavLink class="nav-link " href="magasiner" Match="NavLinkMatch.Prefix" style="color: rgba(224,217,217,0.9);">
+                        Magasiner
+                    </NavLink>
+                </li>
+                @*  <li class="nav-item dropdown">
+                <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#" style="color: rgba(224,217,217,0.9);">Services </a>
+                <div class="dropdown-menu"><a class="dropdown-item" href="services.html">Price Packages</a><a class="dropdown-item" href="#">Order Services</a><a class="dropdown-item" href="#">Custom Request</a></div>
+                </li> *@
+
+
+                <AuthorizeView>
+                    <Authorized>
+                        <li class="nav-item ">
+                            <NavLink class="nav-link " href="/ajout/article" style="color: rgba(224,217,217,0.9);" Match="NavLinkMatch.Prefix">
+                                Vendre
+                            </NavLink>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
+
+                @* <li class="nav-item"><a class="nav-link" href="faq.html" style="color: rgba(224,217,217,0.9);">faq </a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html" style="color: rgba(224,217,217,0.9);">contact </a></li> *@
+            </ul>
+
+            <form class=" mx-auto navbar-center" @onsubmit="SubmitForm" role="search">
+                <div class="input-group">
+                    <input class="form-control @validation" list="datalistOptions" @oninput="HandleInputChange" @bind="FormDataService.recherche" type="search" placeholder="Rechercher " aria-label="Search" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-info " type="submit" id="button-addon2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                        </svg>
+                    </button>
+                    <datalist id="datalistOptions">
+                        @if (option.Count != 0)
+                        {
+                            for (int i = 0; i < option.Count; i++)
+                            {
+                                <option value="@option[i]" />
+                            }
+                        }
+                    </datalist>
+
+                </div>
+            </form>
+
+            <AuthorizeView>
+
+                <NotAuthorized>
+                    <p class="ms-auto navbar-text actions">
+                        <a class="login" href="connexion" style="color: rgba(224,217,217,0.9);">Connexion</a>
+                        <span class="mx-3" style="color: rgba(224,217,217,0.9);">|</span>
+                        <a class="btn btn-light action-button" role="button" href="inscription" style="color: rgba(0,0,0,0.9);background: var(--bs-gray-200);border-radius:
+                                            10px;border-style: solid;border-color: rgba(0,0,0,0.9);font-size: 16px;padding: 5px 8px;">Inscription</a>
+                    </p>
+                </NotAuthorized>
+                <Authorized>
+                    <p class="ms-auto navbar-text align-items-center d-flex justify-content-end actions flex-wrap">
+                        <span class="fw-bold" style="color: rgba(224,217,217,0.9);">@userSession.Courriel</span>
+                        <a class=" dropdown  @show" @onclick="MouseOverDropDown">
+                            <NavLink class="nav-link dropdown-toggle" id="navbarDropdownProfil" data-toggle="dropdown"
+                                     aria-haspopup="true" aria-expanded="@DropDownValue" href="javascript:void(0)">
+                                @if (userSession.Image is not null)
+                                {
+                                    @* <span class="fw-bold">@userSession.UserName </span> *@
+
+                                    <img src="https://robohash.org/@userSession.UserName " style="border-radius:100px; width:30px; height:30px;" class="border border-3" />
+
+                                }
+                                else
+                                {
+                                    <img src="img_users/@userSession.Image" style="border-radius:100px; width:30px; height:30px;" class="img_profile" />
+
+                                }
+                            </NavLink>
+
+                            <div class="dropdown-menu @show" aria-labelledby="navbarDropdown" style="border-radius:10px;min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+
+                                <div class="d-md-flex align-items-lg-start justify-content-start">
+
+                                    <div class="align-items-center mx-auto">
+
+                                        @if (userSession.Image is "")
                                         {
-                                            <span class="fw-bold">@userSession.UserName </span>
-
-                                            <img src="https://robohash.org/@userSession.UserName " style="border-radius:100px; width:40px; height:40px;" class="border border-3" />
+                                            <img src="https://robohash.org/@userSession.UserName " style="border-radius:100px; width:100px; height:100px;" class="border border-3 mx-auto" />
 
                                         }
                                         else
                                         {
-                                            <img src="img_users/@userSession.Image" style="border-radius:100px; width:40px; height:40px;" class="img_profile" />
+                                            <img src="img_users/@userSession.Image" style="border-radius:100px; width:100px; height:100px;" class="img_profile" />
 
                                         }
-                                </NavLink>
+                                        <div class="dropdown-header">Mon profile</div>
+                                        <a class="dropdown-item btn btn-outline-primary" role="button" href="/Profile">Profil</a>
 
-                                <div class="dropdown-menu @show" aria-labelledby="navbarDropdown" style="border-radius:10px;min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                                        <a class="dropdown-item btn btn-outline-primary" @onclick=Logout> Deconnexion</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
 
-                                    <div class="d-md-flex align-items-lg-start justify-content-start">
+                        <span class="mx-3" style="color: rgba(224,217,217,0.9);">|</span>
 
-                                        <div class="align-items-center mx-auto">
+                        <a class=" dropdown @showPanier " @onclick="MouseOverDropDownPanier">
+                            <NavLink class="nav-link text-dark dropdown-toggle" id="navbarDropdownPanier" data-toggle="dropdown"
+                                     aria-haspopup="true" aria-expanded="@DropDownValuePanier" href="javascript:void(0)">
 
-                                                @if (userSession.Image is "")
+                                <img src="/images_Accueil/panier2.jpg" style="border-radius:100px; width:30px; height:30px;" class="img_profile" />
+
+                            </NavLink>
+
+                            <div class="dropdown-menu @showPanier" aria-labelledby="navbarDropdown" style="border-radius:10px; min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+
+                                <div class="d-md-flex align-items-lg-start justify-content-start">
+
+                                    <div class="align-items-center">
+
+
+                                        <div class="dropdown-header">Panier</div>
+
+                                        <a class="dropdown-item" href="#"> Acheter</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </p>
+                </Authorized>
+
+
+
+
+            </AuthorizeView>
+
+
+
+        </div>
+    </div>
+
+
+
+
+</nav>
+
+
+@*  <div class="container ">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm t ">
+            <div class="container">
+                <a class="navbar-brand h1 fw-bold" href="/">BuyPlace</a>
+                <button class="navbar-toggler " type="button" @onclick="ToggleNavMenu">
+                            <span class="navbar-toggler-icon style=" color: #fff;""></span>
+                </button>
+                <div class="@NavMenuCssClass" >
+
+
+                    <ul class="navbar-nav my-auto menu">
+                      <AuthorizeView>
+                          <NotAuthorized>
+                                        <li class="nav-item">
+                                            <NavLink class="nav-link text-dark" href="inscription" Match="NavLinkMatch.All">
+                                                <span class="oi oi"></span>
+                                                Rejoins nous
+                                            </NavLink>
+                                        </li>
+                                        <li class="nav-item">
+                                            <NavLink class="nav-link text-dark" href="connexion" Match="NavLinkMatch.All">
+                                                <span class="oi oi-account-login"></span>
+                                                Se connecter
+                                            </NavLink>
+                                        </li>
+                          </NotAuthorized>
+                          <Authorized>
+
+                                    <li class="nav-item my-auto mt-3">
+                                            <span class="fw-bold">@userSession.UserName</span>
+                                    </li>
+                                    <li class="nav-item dropdown @show" @onclick="MouseOverDropDown">
+                                        <NavLink  class="nav-link text-dark dropdown-toggle" id="navbarDropdownProfil" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="@DropDownValue" href="javascript:void(0)">
+                                                @if(userSession.Image is not null)
                                                 {
-                                                    <img src="https://robohash.org/@userSession.UserName " style="border-radius:100px; width:100px; height:100px;" class="border border-3 mx-auto" />
+                                                    <span class="fw-bold">@userSession.UserName </span>
+
+                                                    <img src="https://robohash.org/@userSession.UserName " style="border-radius:100px; width:40px; height:40px;" class="border border-3" />
 
                                                 }
                                                 else
                                                 {
-                                                    <img src="img_users/@userSession.Image" style="border-radius:100px; width:100px; height:100px;" class="img_profile" />
+                                                    <img src="img_users/@userSession.Image" style="border-radius:100px; width:40px; height:40px;" class="img_profile" />
 
                                                 }
-                                            <div class="dropdown-header">Mon profile</div>
-                                                <a class="dropdown-item btn btn-outline-primary" role="button" href="/Profile">Profil</a>
+                                        </NavLink>
 
-                                                <a class="dropdown-item btn btn-outline-primary" @onclick=Logout> Deconnexion</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                                        <div class="dropdown-menu @show" aria-labelledby="navbarDropdown" style="border-radius:10px;min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
 
-                                <li class="nav-item dropdown @showPanier" @onclick="MouseOverDropDownPanier">
-                                    <NavLink class="nav-link text-dark dropdown-toggle" id="navbarDropdownPanier" data-toggle="dropdown"
-                                             aria-haspopup="true" aria-expanded="@DropDownValuePanier" href="javascript:void(0)">
-                                      
-                                        <img src="/images_Accueil/panier2.jpg" style="border-radius:100px; width:40px; height:40px;" class="img_profile" /> 
-                                      
-                                    </NavLink>
+                                            <div class="d-md-flex align-items-lg-start justify-content-start">
 
-                                    <div class="dropdown-menu @showPanier" aria-labelledby="navbarDropdown" style="border-radius:10px; min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                                                <div class="align-items-center mx-auto">
 
-                                        <div class="d-md-flex align-items-lg-start justify-content-start">
+                                                        @if (userSession.Image is "")
+                                                        {
+                                                            <img src="https://robohash.org/@userSession.UserName " style="border-radius:100px; width:100px; height:100px;" class="border border-3 mx-auto" />
 
-                                            <div class="align-items-center">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="img_users/@userSession.Image" style="border-radius:100px; width:100px; height:100px;" class="img_profile" />
 
-                                              
-                                                <div class="dropdown-header">Panier</div>
+                                                        }
+                                                    <div class="dropdown-header">Mon profile</div>
+                                                        <a class="dropdown-item btn btn-outline-primary" role="button" href="/Profile">Profil</a>
 
-                                                <a class="dropdown-item" href="#"> Acheter</a>
+                                                        <a class="dropdown-item btn btn-outline-primary" @onclick=Logout> Deconnexion</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                  </Authorized>
-              </AuthorizeView>
-            </ul>
-        </div>
-    </div>
+                                    </li>
+
+                                        <li class="nav-item dropdown @showPanier" @onclick="MouseOverDropDownPanier">
+                                            <NavLink class="nav-link text-dark dropdown-toggle" id="navbarDropdownPanier" data-toggle="dropdown"
+                                                     aria-haspopup="true" aria-expanded="@DropDownValuePanier" href="javascript:void(0)">
+
+                                                <img src="/images_Accueil/panier2.jpg" style="border-radius:100px; width:40px; height:40px;" class="img_profile" />
+
+                                            </NavLink>
+
+                                            <div class="dropdown-menu @showPanier" aria-labelledby="navbarDropdown" style="border-radius:10px; min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+
+                                                <div class="d-md-flex align-items-lg-start justify-content-start">
+
+                                                    <div class="align-items-center">
+
+
+                                                        <div class="dropdown-header">Panier</div>
+
+                                                        <a class="dropdown-item" href="#"> Acheter</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                          </Authorized>
+                      </AuthorizeView>
+                    </ul>
+                </div>
+            </div>
         </nav>
         <ul class="justify-content-center nav text-white fw-bold">
             <li class="nav-item me-2">
@@ -143,5 +304,5 @@
         </ul>
 
     </div>
-</header>
+ *@
 

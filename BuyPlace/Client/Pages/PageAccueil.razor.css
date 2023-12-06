@@ -5,3 +5,142 @@
 .d-flex a:hover {
     text-decoration: underline;
 }
+
+.btn-primary:hover {
+    color: #000;
+    background-color: #fed854;
+    border-color: #fed64a;
+}
+
+@media (min-width: 768px) {
+    .masthead .intro-text .intro-lead-in {
+        font-size: 40px;
+        line-height: 40px;
+        margin-bottom: 25px;
+        font-family: "Montserrat","Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+
+    .container-md, .container-sm, .container {
+        max-width: 720px;
+    }
+
+    .masthead .intro-text {
+        padding-top: 300px;
+        padding-bottom: 200px;
+        font-size: 4rem;
+    }
+
+    .masthead .intro-text .intro-heading {
+        font-size: 75px;
+        font-weight: 700;
+        line-height: 75px;
+        margin-bottom: 50px;
+        font-family: "Montserrat","Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+    #portfolio .portfolio-item {
+        margin: 0 0 30px;
+    }
+    .col-md-4 {
+        flex: 0 0 auto;
+        width: 33.33333333%;
+    }
+
+    section {
+        padding: 150px 0;
+    }
+
+    #portfolio .portfolio-item {
+        margin: 0 0 30px;
+    }
+
+
+
+
+}
+
+#portfolio .portfolio-item .portfolio-caption {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 25px;
+    text-align: center;
+    background-color: #fff;
+}
+
+    #portfolio .portfolio-item .portfolio-caption p {
+        font-size: 16px;
+        margin: 0;
+        font-family: "Montserrat","Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+
+
+
+#portfolio .portfolio-item .portfolio-link {
+    position: relative;
+    display: block;
+    max-width: 400px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+
+
+@media (min-width: 992px) {
+    .col-lg-12 {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    font-weight: 700;
+    font-family: "Montserrat","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+section h3.section-subheading, section .section-subheading.h3 {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 75px;
+    text-transform: none;
+    font-family: "Montserrat","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+
+
+section h2.section-heading, section .section-heading.h2 {
+    font-size: 40px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.text-uppercase {
+    text-transform: uppercase !important;
+}
+
+
+
+
+.text-center {
+    text-align: center !important;
+}
+
+
+
+#portfolio * {
+    z-index: 2;
+}
+
+
+.categorie {
+    text-align: center;
+    color: #fff;
+    
+    height: 90vh;
+    min-height: 650px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.firstsiv {
+    background-image: url(/wwwroot/header-bg.jpg);
+
+}
