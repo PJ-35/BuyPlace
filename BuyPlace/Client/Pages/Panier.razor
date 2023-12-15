@@ -29,35 +29,44 @@
                                     
                                     @if(lstArticles is not null)
                                     {
-                                        
-                                        int i = 0;
-                                        string cat = "";
-                                        foreach(ArticleSession art in lstArticles)
+                                        if ( lstArticles.Count() > 0)
                                         {
-                                            cat = GetCategorie(@art.id_categorie);
-                                            <tr>
-                                                <th class="border-0" scope="row">
-                                                    <div class="p-2">
-                                                        <img class="img-fluid rounded shadow-sm" src="@lstImages[i]" alt="@art.nom" width="70" />
-                                                        <div class="ml-3 d-inline-block align-middle">
-                                                            <h5 class="mb-0"><a class="text-dark d-inline-block align-middle" href="#">@art.nom</a></h5><span class="text-muted font-weight-normal font-italic d-block">categorie: @cat</span>
+                                            int i = 0;
+                                            string cat = "";
+                                            foreach (ArticleSession art in lstArticles)
+                                            {
+                                                cat = GetCategorie(@art.id_categorie);
+                                                <tr>
+                                                    <th class="border-0" scope="row">
+                                                        <div class="p-2">
+                                                            <img class="img-fluid rounded shadow-sm" src="@lstImages[i]" alt="@art.nom" width="70" />
+                                                            <div class="ml-3 d-inline-block align-middle">
+                                                                <h5 class="mb-0"><a class="text-dark d-inline-block align-middle" href="#">@art.nom</a></h5><span class="text-muted font-weight-normal font-italic d-block">categorie: @cat</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </th>
-                                                <td class="border-0 align-middle"><strong>$@art.prix</strong></td>
-                                                <td class="border-0 align-middle"><strong>@art.quantite</strong></td>
-                                                <td class="border-0 align-middle"><a class="text-dark" href="#"><i class="fa fa-trash"></i></a></td>
-                                            </tr>
-                                            i++;
-                                            sousTotal += art.prix;
+                                                    </th>
+                                                    <td class="border-0 align-middle"><strong>$@art.prix</strong></td>
+                                                    <td class="border-0 align-middle"><strong>@art.quantite</strong></td>
+                                                    <td class="border-0 align-middle"><a class="text-dark" href="#"><i class="fa fa-trash"></i></a></td>
+                                                </tr>
+                                                i++;
+                                                sousTotal += art.prix;
+                                            }
+                                            total = sousTotal + 10 + (sousTotal * 15) / 100;
                                         }
-                                        total = sousTotal + 10 + (sousTotal * 15) / 100;
+                                        else
+                                        {
+                                            <tr class="small fw-bold">
+                                               Aucun article disponible
+                                            </tr>
+                                        }
+
                                        
                                     }
                                     else
                                     {
                                         <tr>
-                                            Aucun article disponible
+                                            Chargement...
                                         </tr>
                                     }
 
@@ -73,7 +82,7 @@
                     <div class="col-lg-6">
                         <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Résumé de la commande </div>
                         <div class="p-4">
-                            <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
+                            <p class="font-italic mb-4 small fw-bold">Les frais d'expédition et les coûts supplémentaires sont calculés en fonction des valeurs des produits ajouté au panier.</p>
                             <ul class="list-unstyled mb-4">
                                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">SousTotal </strong><strong>$@sousTotal</strong></li>
                                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Frais de livraison</strong><strong>$10.00</strong></li>

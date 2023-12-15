@@ -119,13 +119,16 @@
 
                         <span class="mx-3" style="color: rgba(224,217,217,0.9);">|</span>
 
-                        <a class=" dropdown @showPanier " @onclick="MouseOverDropDownPanier">
-                            <NavLink class="nav-link text-dark dropdown-toggle" id="navbarDropdownPanier" data-toggle="dropdown"
+                        <a class=" dropdown @showPanier "  href="/cart">
+                            @* <NavLink class="nav-link text-dark dropdown-toggle" id="navbarDropdownPanier" data-toggle="dropdown"
                                      aria-haspopup="true" aria-expanded="@DropDownValuePanier" href="javascript:void(0)">
 
                                 <img src="/images_Accueil/panier2.jpg" style="border-radius:100px; width:30px; height:30px;" class="img_profile" />
 
-                            </NavLink>
+                            </NavLink> *@
+                          
+                                <img src="/images_Accueil/panier2.jpg" style="border-radius:100px; width:30px; height:30px;" class="img_profile" />
+
 
                           @*   <div class="dropdown-menu @showPanier" aria-labelledby="navbarDropdown" style="border-radius:10px; min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
 
@@ -142,7 +145,7 @@
 
                                 
                             </div> *@
-                            <div class="container dropdown-menu @showPanier shadow bg-light" aria-labelledby="navbarDropdown" style="border-radius:10px; min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+@*                             <div class="container dropdown-menu @showPanier shadow bg-light" aria-labelledby="navbarDropdown" style="border-radius:10px; min-width:300px;min-height:300px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
                                 <div class="shopping-cart">
                                     <div class="shopping-cart-header">
                                         <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">3</span>
@@ -178,7 +181,7 @@
                                     <a href="#" class="btn btn-primary">Acheter</a>
                                 </div> <!--end shopping-cart -->
                             </div>
-                        </a>
+ *@                        </a>
                     </p>
                 </Authorized>
 
