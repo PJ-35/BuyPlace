@@ -31,7 +31,7 @@ namespace BuyPlace.Client.Pages
         HttpClient httpClient { get; set; }
 
         [Inject]
-        JSRuntime ijs { get; set; }
+        IJSRuntime ijs { get; set; }
 
         [Inject]
         NavigationManager navmanager { get; set; }

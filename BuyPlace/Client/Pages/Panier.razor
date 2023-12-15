@@ -29,7 +29,7 @@
                                     
                                     @if(lstArticles is not null)
                                     {
-                                        if ( lstArticles.Count() > 0)
+                                        if ( lstArticles.Count > 0)
                                         {
                                             int i = 0;
                                             string cat = "";
@@ -90,7 +90,7 @@
                                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">total</strong>
                                     <h5 class="font-weight-bold">$@total</h5>
                                 </li>
-                            </ul><a class="btn btn-dark rounded-pill py-2 btn-block" @onclick="paiement" href="#">Procéder au paiement</a>
+                            </ul><button class="btn btn-dark rounded-pill py-2 btn-block" @onclick="paiement" >Procéder au paiement</button>
                         </div>
                     </div>
                 </div>
