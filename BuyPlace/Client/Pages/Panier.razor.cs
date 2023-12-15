@@ -6,6 +6,7 @@ using System.Net;
 using Microsoft.AspNetCore.Components.Authorization;
 using BuyPlace.Client.Authentication;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.JSInterop;
 
 namespace BuyPlace.Client.Pages
 {
@@ -28,6 +29,9 @@ namespace BuyPlace.Client.Pages
 
         [Inject]
         HttpClient httpClient { get; set; }
+
+        [Inject]
+        JSRuntime ijs { get; set; }
 
         [Inject]
         NavigationManager navmanager { get; set; }
@@ -90,6 +94,26 @@ namespace BuyPlace.Client.Pages
         //    base.OnAfterRender(firstRender);
         //    CalculerTotal();
         //}
+
+        private async void paiement()
+        {
+            List<string> lstId=new List<string>();
+            lstId[0] = userSession.Id;
+            for (int i = 1; i < lstArticles.Count+1; i++)
+            {
+                lstId[i] = lstArticles[i - 1].Id;
+            }
+            var reponse = await httpClient.PostAsJsonAsync($"api/Factures/{total}", lstId);
+            if(reponse.IsSuccessStatusCode)
+            {
+               await ijs.InvokeVoidAsync("alert","Paiement avec succès");
+            }
+            else
+            {
+                await ijs.InvokeVoidAsync("alert", "Une erreur s'est produite");
+
+            }
+        }
 
 
         private async void chargement()

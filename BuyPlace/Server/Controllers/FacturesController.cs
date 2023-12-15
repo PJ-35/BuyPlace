@@ -45,14 +45,6 @@ namespace BuyPlace.Server.Controllers
                     RelationsUserArticles = fact.RelationsUserArticles,
                     
                 };
-
-                
-
-                // je charge ma liste d'idArticle
-                //foreach (string Id in fact.IdArticles)
-                //{
-                //    factureSession.IdArticles.Add(Id);
-                //}
                 lstFactSession.Add(factureSession);
             }
 
@@ -61,6 +53,29 @@ namespace BuyPlace.Server.Controllers
             return lstFactSession;
         }
 
+        [HttpPost]
+        [Route("{montant}")]
+        public ActionResult FaireFacture([FromBody] List<string> lstidArticle, double montant)
+        {
+            try
+            {
+                if (lstidArticle.Count == 1)
+                    return BadRequest();
+                Factures facture = new Factures { Date = DateTime.Now, UserId = lstidArticle[0], Montant = montant };
+                for (int i = 1; i < lstidArticle.Count; i++)
+                    facture.RelationsUserArticles.Add(lstidArticle[i]);
+                if (_factService.AddFacture(facture))
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            catch 
+            {
+
+                return BadRequest();
+            }
+
+        }
 
 
         [HttpGet]
