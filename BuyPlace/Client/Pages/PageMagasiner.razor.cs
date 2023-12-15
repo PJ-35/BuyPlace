@@ -134,7 +134,13 @@ namespace BuyPlace.Client.Pages
                 {
 
                         byte[] imageBytes = await httpClient.GetByteArrayAsync($"api/article/{lstArticles[i].Id}?timestamp={DateTime.UtcNow.Ticks}");
-                        lstImages[i] = $"data:image/jpg;base64,{Convert.ToBase64String(imageBytes)}";
+                    //string image = $"https://picsum.photos/800/600?category={categories[i].nom}&id={imageId}";
+                    //lstImages[i] = $"data:image/jpg;base64,{Convert.ToBase64String(imageBytes)}";
+                    if (lstImages[i] == null)
+                    {
+                        lstImages[i]= $"https://picsum.photos/800/600?category=watch&id={lstArticles[i].Id}";
+                    }
+
                 }
             }
 

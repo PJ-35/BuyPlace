@@ -3,27 +3,28 @@
 
 
 <PageTitle>Accueil</PageTitle>
-<div class="masthead firstsiv" style="">
-    <div class="container">
-        <div class="intro-text">
-            <div class="intro-lead-in"><span>Welcome To Our Studio!</span></div>
-            <div class="intro-heading text-uppercase"><span>It&#39;s Nice To Meet You</span></div><a class="btn btn-primary btn-xl text-uppercase" role="button" href="#portfolio">Catégorie</a>
+<div class="masthead firstsiv shadow " style="  background-image:url(/header-bg.jpg); ">
+    <div class="">
+        <div class="intro-text" >
+            <div class="intro-lead-in" ><span >Bienvenue à BuyPlace</span></div>
+            <div class="intro-heading text-uppercase"><span id="wel">C&#39;est bien de vous rencontrer</span></div>
+            <a class="btn btn-primary btn-xl text-uppercase" href="#categories">Catégorie</a>
         </div>
     </div>
 </div>
-<div id="carouselExampleControls" class="carousel slide h-auto mb-3 " data-bs-ride="carousel">
-    <div class="carousel-inner text-white ">
+<div id="carouselExampleControls" class="carousel shadow slide h-auto  " data-bs-ride="carousel" >
+    <div class="carousel-inner text-white" >
         @if(categories is not null)
         {
             @for (int i = 0; i < categories.Count; i++)
             {
                 string image = categories[i].nom + "2.jpg";
+               
+            
                 @if (i == 0)
                 {
-                    <div class="carousel-item p-5 active align-items-center masthead" style="background-image:url(../images_Accueil/@image);">
-                       @*  <h2 class="text-center text-decoration-underline fw-bold">@categories[i].nom</h2>
-                        <p class="text-center">Nouvelle collection <br><br> <a href="/magasiner/@categories[i].Id" class="btn btn-danger rounded-pill">Magasiner</a></p> *@
-
+                    <div class="carousel-item p-5 active align-items-center masthead" style=" background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(../images_Accueil/@image);  background-size: cover; ">
+                       
                         <div class="container ">
                             <div class="intro-text">
 
@@ -36,9 +37,8 @@
                 }
                 else
                 {
-                    <div class="carousel-item p-5 pt-5 masthead" style="background-image:url(../images_Accueil/@image);">
-                       @*  <h2 class="text-center text-decoration-underline fw-bold">@categories[i].nom</h2>
-                        <p class="text-center">Nouvelle collection <br><br> <a href="/magasiner/@categories[i].Id" class="btn btn-danger rounded-pill">Acheter</a></p> *@
+                    <div class="carousel-item p-5 pt-5 masthead" style="background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url(../images_Accueil/@image);  background-size: cover;">
+                      
                         <div class="container">
                             <div class="intro-text">
 
@@ -49,14 +49,7 @@
                         </div>
                     </div>
                 }
-@* 
-                <div class="container">
-                    <div class="intro-text">
-                        <div class="intro-lead-in"><span>Welcome To Our Studio!</span></div>
-                        <div class="intro-heading text-uppercase"><span>It&#39;s Nice To Meet You</span></div>
-                        <a class="btn btn-primary btn-xl text-uppercase" role="button" href="#services">Tell mE more</a>
-                    </div>
-                </div> *@
+
             }
         }
 
@@ -106,26 +99,29 @@
 
 </div>
  *@
-<section id="portfolio" class="bg-light">
-    <div class="container">
+<section id="categories" class="bg-light row">
+ @*    <div class="col-3 " style="background-color:#4d5250;">
+        msd
+    </div> *@
+    <div class="my-5 container" style="max-width:1200px">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2 class="text-uppercase section-heading">Catégorie</h2>
                 <h3 class="text-muted section-subheading">Magaziner par catégorie</h3>
             </div>
         </div>
-        <div class="row">
+        <div class="row w-75 mx-auto">
             @if (categories is not null)
             {
 
                 @foreach (var categorie in categories)
                 {
                     string image = categorie.nom + ".jpg";
-                    <div class="col-sm-6 col-md-4 portfolio-item">
+                    <div class="col-sm-6 col-md-4 portfolio-item ">
                         <a class="portfolio-link" href="/magasiner/@categorie.Id" >
                             <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
-                            </div><img class="img-fluid" src="images_Accueil/@image" />
+                                <div class="portfolio-hover-content"></div>
+                            </div><img class="img-fluid w-100 " src="images_Accueil/@image" />
                         </a>
                         <div class="portfolio-caption">
                             <h4>@categorie.nom</h4>
@@ -139,5 +135,6 @@
             
         </div>
     </div>
+
 </section>
 

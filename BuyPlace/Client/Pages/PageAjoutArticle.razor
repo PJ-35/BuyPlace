@@ -1,6 +1,6 @@
 ﻿@page "/ajout/article"
 
-<div class="login-card-container logRegis d-flex align-items-center justify-content-center ">
+@* <div class="login-card-container logRegis d-flex align-items-center justify-content-center ">
 
     <div class="login-card my-4 align-content-center">
 
@@ -36,7 +36,7 @@
             </div>
             <div class="form-item">
                 <span class="form-item-icon material-symbols-rounded">lock</span>
-                <InputText @bind-Value="article.description" type="text" class="input" placeholder="Entrer la description" required />
+                <InputText @bind-Value="article.description" type="text"  placeholder="Entrer la description" required />
                 <ValidationMessage For="@(() => article.description)" />
             </div>
 
@@ -68,4 +68,89 @@
     </div>
 
 
-</div>
+</div> *@
+
+
+@* <section class="ajout row" style="min-height:90vh">
+
+    <div class="col-md-6" style="min-height:90vh; background-color:#9DDBDD">
+
+    </div>
+
+    <div class="col-md-6">
+
+    </div>
+
+
+</section> *@
+
+<section class="about">
+
+     <div class="container-fluid">
+          <div class="row mh-100vh ajout">
+              <div class="col-10 col-sm-8 col-md-6 col-lg-6 offset-1 offset-sm-2 offset-md-3 offset-lg-0 align-self-center d-lg-flex align-items-lg-center align-self-lg-stretch bg-white p-5 rounded rounded-lg-0 my-5 my-lg-0" id="login-block">
+                  <div class="m-auto w-lg-75 w-xl-50">
+                      <h2 class="text-info fw-light mb-5"><i class="fa fa-diamond"></i>&nbsp;BuyPlace</h2>
+                      <EditForm Model="@article" OnSubmit="HandleAjout" novalidate>
+                        <DataAnnotationsValidator />
+                      
+                          <div class="form-group mb-3">
+                                <label class="form-label text-secondary" for=" nom"> Nom</label>
+                                <InputText @bind-Value="article.nom" type="text" name="nom" id="nom" class="form-control" placeholder="Entrer le nom de l'article" />
+                            <ValidationMessage For="@(() => article.nom)" />
+                          </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label text-secondary" for=" prix"> Prix</label>
+                            <InputNumber @bind-Value="article.prix" type="decimal" placeholder="Entrer le prix" required min="1"class="form-control"  />
+                            <ValidationMessage For="@(() => article.prix)" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label text-secondary" for=" Quantite"> Quantité</label>
+                            <InputNumber @bind-Value="article.quantite" type="number" placeholder="Entrer la quantité" required min="1" class="form-control"  />
+                            <ValidationMessage For="@(() => article.quantite)" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label text-secondary" for=" description"> Description</label>
+                            <InputText @bind-Value="article.description" type="text"  placeholder="Entrer la description" required class="form-control"  />
+                            <ValidationMessage For="@(() => article.description)" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label text-secondary" for=" nom"> Nom</label>
+                            <InputSelect @bind-Value="article.id_categorie" class="form-control" placeholder="Entrer la catégorie" required>
+                                <option value="" selected>----Faites un choix-----</option>
+
+                                @foreach (var categorie in categories)
+                                {
+                                    <option value="@categorie.Id">@categorie.nom</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            
+                            <InputFile unique class="form-control" @onclick="OnClick" OnChange="@OnChange" accept=".jpg" />
+
+                        </div>
+                        @if (image is not null)
+                        {
+                            <div class="shadow ">
+                                <img src="data:@image.contenttype;base64,@image.base64" class="w-75" style=""  />
+                            </div>
+                        }
+                      
+                         
+                         <button class="btn btn-info mt-2" type="submit">Ajouter</button>
+                      </EditForm>
+                    
+                  </div>
+              </div>
+              <div class="col-lg-6 d-flex align-items-end" id="bg-block" style="">
+                  
+              </div>
+          </div>
+      </div>
+</section>

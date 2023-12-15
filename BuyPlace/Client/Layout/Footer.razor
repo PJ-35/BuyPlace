@@ -1,4 +1,44 @@
-﻿<footer class=" bg-black text-white py-2 text-center  mt-5">
+﻿@* <footer class=" bg-black text-white py-2 text-center  mt-5">
     <p>Mis sur pied par <strong><em>Pierre-Junior && Wily Tatow</em></strong><br>© Copyright 2023</p>
+</footer> *@
+
+<footer id="myFooter">
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-12 col-sm-6 col-md-3">
+                <h1 class="logo" style="margin-top: 30px;"><a href="/"> BuyPlace </a></h1>
+            </div>
+            <div class="col-12 col-sm-6 col-md-2">
+                <h5>Nos Services</h5>
+                <ul>
+                    <li><a href="/">accueil</a></li>
+                    <li><a href="magasiner">Magasiner<br /></a></li>
+                <AuthorizeView>
+                        <Authorized>
+                            <li><a href="/vendre">Vendre</a></li>
+                        </Authorized>
+                    <NotAuthorized>
+                            <li><a href="/inscription">S'inscrire</a></li>
+                           
+                    </NotAuthorized>
+                    
+                </AuthorizeView>
+                </ul>
+            </div>
+           
+            <div class="col-md-3 social-networks">
+                <div></div>
+                <a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
+                <a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
+                <a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                <button class="btn btn-primary" onclick="window.location.href='tel:+15819094101'" target="_blank" style="margin-top: 20px;" type="button">Nous joindre</button>
+            </div>
+        </div>
+        <div class=" footer-copyright">
+            <div class="col">
+                <p>Mis sur pied par <strong><em>Pierre-Junior && Wily Tatow</em></strong><br>© Copyright 202</p>
+            </div>
+        </div>
+    </div>
 </footer>
 
