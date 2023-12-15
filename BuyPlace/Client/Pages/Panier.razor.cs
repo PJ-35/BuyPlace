@@ -96,7 +96,7 @@ namespace BuyPlace.Client.Pages
         {
             lstArticles = await httpClient.GetFromJsonAsync<List<ArticleSession>>($"api/userArticle/articleUserPanier?userId={userSession.Id}" );
 
-            if (lstArticles is not null)
+            if (lstArticles != null && lstArticles.Count() > 0)
             {
                 lstImages = new string[lstArticles.Count];
                 for (int i = 0; i < lstArticles.Count; i++)
@@ -130,16 +130,17 @@ namespace BuyPlace.Client.Pages
 
         private void CalculerTotal()
         {
-            if(lstArticles is not null)
+            if(lstArticles != null && lstArticles.Count() > 0)
             {
 
                 foreach(var session in lstArticles)
                 {
                     sousTotal += session.prix;
                 }
-                total = sousTotal + 10 + (sousTotal * 15) / 100;
+                total = (decimal)1.15*sousTotal + 10 ;
                 
             }
+            else { total = 0; }
             
         }
         //private async void GetImageArticle()
