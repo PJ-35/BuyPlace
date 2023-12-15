@@ -1,8 +1,11 @@
 ﻿using BuyPlace.Server.Authentication;
 using BuyPlace.Server.Service;
 using BuyPlace.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using MongoDB.Bson.IO;
 
 namespace BuyPlace.Server.Controllers
 {
@@ -12,10 +15,14 @@ namespace BuyPlace.Server.Controllers
     {
 
         private MongoServiceRelationUserArticles _userArticles;
+        private UsersService _usersService;
+        private MongoServiceArticle _articleService;
 
-        public UserArticleController(MongoServiceRelationUserArticles userArticles)
+        public UserArticleController(MongoServiceRelationUserArticles userArticles, UsersService usersService,MongoServiceArticle articleService)
         {
-            _userArticles = userArticles; 
+            _userArticles = userArticles;
+            _usersService = usersService;
+            _articleService = articleService;
         }
 
         [HttpGet]
@@ -46,6 +53,40 @@ namespace BuyPlace.Server.Controllers
                 lstUserArticleSession.Add(userArtSession);
             }
             return lstUserArticleSession;
+        }
+
+
+
+        [HttpPost("{idArticle}")]
+        [AllowAnonymous]
+        public ActionResult SaveUserArt([FromBody] string idUser, string idArticle)
+        {
+            string message = "Requête invalide";
+            try
+            {
+                if(_usersService.GetUserById(idUser) is null)
+                    return BadRequest(message);
+                Article art = _articleService.GetArticleById(idArticle);
+                if (art is null)
+                    return BadRequest(message);
+                RelationUserArticle relationUserArticle = new RelationUserArticle
+                {
+                    ArticleId = new ObjectId(idArticle),
+                    UserId = new ObjectId(idUser),
+                    PrixUnitaire=art.prix,
+                    IsBuy = false,
+                    Quantite = 1
+                };
+                if (_userArticles.AddUserArticle(relationUserArticle))
+                    return Ok();
+                else
+                    return BadRequest(message);
+            }
+            catch
+            {
+                return BadRequest("Une erreur s'est produite. Veuillez réessayer");
+            }
+
         }
     }
 }

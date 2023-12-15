@@ -55,6 +55,17 @@ namespace BuyPlace.Client.Pages
                 await ijsruntime.InvokeVoidAsync("localStorage.setItem", "sharedInformation", article.Id);
             navigationManager.NavigateTo("connexion", true);
         }
+
+        private async void ajoutPanier()
+        {
+            if(article.quantite>0 && article.id_user != userSession.Id)
+            {
+                var panier = await httpClient.PostAsJsonAsync($"api/UserArticle/{article.Id}", userSession.Id);
+                if(panier.IsSuccessStatusCode)
+                    await ijsruntime.InvokeVoidAsync("alert", $"{article.nom} a bien été ajouté au panier");
+
+            }
+        }
         private async void chargement()
         {
 

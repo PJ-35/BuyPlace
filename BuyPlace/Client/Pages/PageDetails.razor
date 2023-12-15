@@ -34,7 +34,7 @@
                                 @if (article.quantite > 0)
                                 {
                                     <p class="text-success">en stock</p>
-                                    <button class="btn btn-success">Ajouter au panier</button>
+                                    <button class="btn btn-success" @onclick="ajoutPanier">Ajouter au panier</button>
 
                                 }
                                 else

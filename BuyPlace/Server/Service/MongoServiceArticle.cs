@@ -61,11 +61,11 @@ namespace BuyPlace.Server.Service
         }
 
         /// <summary>
-        /// Obtient un article avec le nom
+        /// Obtient un article avec l'id
         /// </summary>
         /// <param name="id">L'id d'un article</param>
         /// <returns>Un article</returns>
-        public Article GetArticle(string id)
+        public Article GetArticleById(string id)
         {
             return _articlesTable.Find(u => u.Id.ToString() == id).SingleOrDefault();
         }
@@ -88,7 +88,7 @@ namespace BuyPlace.Server.Service
         /// <returns>retourne un état</returns>
         public bool UpdateArticle(Article article)
         {
-            Article art = GetArticle(article.Id.ToString());
+            Article art = GetArticleById(article.Id.ToString());
             if (art != null)
             {
                 _articlesTable.ReplaceOne(u => u.Id == art.Id, article);
@@ -106,7 +106,7 @@ namespace BuyPlace.Server.Service
         /// <returns>Retourne un état</returns>
         public bool DeleteArticle(ObjectId id)
         {
-            Article art = GetArticle(id.ToString());
+            Article art = GetArticleById(id.ToString());
             if (art != null)
             {
                 _articlesTable.DeleteOne(u => u.Id == id);

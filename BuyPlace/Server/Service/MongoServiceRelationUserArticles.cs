@@ -22,18 +22,37 @@ namespace BuyPlace.Server.Service
         }
 
         public List<RelationUserArticle> GetRelationUserArticle(List<string> listId)
-        {
-
-            //var filter = Builders<RelationUserArticle>.Filter.And(
-            //       Builders<RelationUserArticle>.Filter.In(x => x.Id.ToString(), listId),
-            //       Builders<RelationUserArticle>.Filter.Eq(x => x.IsBuy, false)
-            //   );
-
-
-            //List<Article> articles = 
-
-            
+        {   
             return _relationUsArtTable.Find(a => listId.Contains(a.Id.ToString())).ToList();
+        }
+
+        /// <summary>
+        /// Ici je vérifie que l'article n'existe pas encore alors j'ajoute ou j'update la quantité dépendamment de la situation
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
+        public bool AddUserArticle(RelationUserArticle article)
+        {
+            try
+            {
+                RelationUserArticle relationUser = _relationUsArtTable.Find(u => u.ArticleId.ToString() == article.ArticleId.ToString() && u.UserId.ToString() == article.UserId.ToString()
+                && u.IsBuy == false).SingleOrDefault();
+                 if(relationUser is null)
+                {
+                    _relationUsArtTable.InsertOne(article);
+                }
+                else
+                {
+                    relationUser.Quantite++;
+                    _relationUsArtTable.ReplaceOne(u => u.Id == relationUser.Id, relationUser);
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
         }
 
     }

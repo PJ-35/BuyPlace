@@ -62,7 +62,7 @@ namespace BuyPlace.Server.Controllers
         {
             try
             {
-                Article article = _artService.GetArticle(idArticle);
+                Article article = _artService.GetArticleById(idArticle);
 
                 if (article is not null)
                 {
@@ -130,6 +130,7 @@ namespace BuyPlace.Server.Controllers
                 return BadRequest();
 
         }
+
 
         [HttpGet]
         [Route("articleUser")]
