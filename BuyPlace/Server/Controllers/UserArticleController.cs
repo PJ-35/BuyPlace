@@ -55,6 +55,49 @@ namespace BuyPlace.Server.Controllers
             return lstUserArticleSession;
         }
 
+        /// <summary>
+        /// récupère la liste d'article pour le panier
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>ArticleSession</returns>
+        [HttpGet]
+        [Route("articleUserPanier")]
+        public ActionResult<List<ArticleSession>> GetPanier([FromQuery] string userId)
+        {
+
+            List<RelationUserArticle> lstUserArticle = new List<RelationUserArticle>();
+            List<Article> lstArticle = new List<Article>();
+            List<ArticleSession> lstSession = new List<ArticleSession>();
+            List<string> lstIdArticle = new List<string>();
+
+            lstUserArticle = _userArticles.GetRelationUserArticleIsNotBuy(userId);
+            foreach (RelationUserArticle Article in lstUserArticle)
+            {
+                lstIdArticle.Add(Article.ArticleId.ToString());
+            }
+
+            lstArticle = _articleService.GetArticlesForFacture(lstIdArticle);
+            int i = 0;
+            foreach (Article article in lstArticle)
+            {
+                ArticleSession session = new ArticleSession
+                {
+                    Id=article.Id.ToString(),
+                    nom=article.nom.ToString(),
+                    quantite = lstUserArticle[i].Quantite,
+                    description=article.description,
+                    id_user=article.id_user,
+                    prix = lstUserArticle[i].PrixUnitaire,
+                    id_categorie=article.id_categorie,
+
+                };
+
+                lstSession.Add(session);
+                i++;
+            }
+
+            return lstSession;
+        }
 
 
         [HttpPost("{idArticle}")]

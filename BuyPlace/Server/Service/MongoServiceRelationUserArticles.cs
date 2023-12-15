@@ -26,6 +26,14 @@ namespace BuyPlace.Server.Service
             return _relationUsArtTable.Find(a => listId.Contains(a.Id.ToString())).ToList();
         }
 
+
+        public List<RelationUserArticle> GetRelationUserArticleIsNotBuy(string userId)
+        {
+            return _relationUsArtTable.Find(u => u.UserId.ToString() == userId && u.IsBuy == false).ToList();
+
+        }
+
+
         /// <summary>
         /// Ici je vérifie que l'article n'existe pas encore alors j'ajoute ou j'update la quantité dépendamment de la situation
         /// </summary>
