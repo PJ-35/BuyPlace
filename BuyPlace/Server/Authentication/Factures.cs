@@ -16,7 +16,7 @@ namespace BuyPlace.Server.Authentication
 
 
         
-        public List<string> RelationsUserArticles {  get; set; }
+        public List<string> RelationsUserArticles {  get; set; }=new List<string>();
 
 
 

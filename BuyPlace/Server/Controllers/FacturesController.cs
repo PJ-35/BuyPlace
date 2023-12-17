@@ -4,6 +4,7 @@ using BuyPlace.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using AspNetCore.ReportingServices.ReportProcessing.ReportObjectModel;
 
 namespace BuyPlace.Server.Controllers
 {
@@ -15,13 +16,11 @@ namespace BuyPlace.Server.Controllers
         private MongoServiceFacture _factService;
 
         private MongoServiceRelationUserArticles _userArtService;
-       //private MongoServiceArticle _articleService;
 
         public FacturesController(MongoServiceFacture factService, MongoServiceRelationUserArticles uaService, MongoServiceArticle article)
         {
             _factService = factService;
             _userArtService = uaService;
-            //_articleService = article;
         }
 
 
@@ -54,18 +53,23 @@ namespace BuyPlace.Server.Controllers
         }
 
         [HttpPost]
-        [Route("{montant}")]
-        public ActionResult FaireFacture([FromBody] List<string> lstidArticle, double montant)
+        [Route("{idUser}")]
+        public ActionResult FaireFacture([FromBody] double montant,string idUser)
         {
             try
             {
-                if (lstidArticle.Count == 1)
+                List<RelationUserArticle> lstUserArticle = _userArtService.GetRelationUserArticleIsNotBuy(idUser);
+                Factures facture = new Factures { Date = DateTime.Now, UserId = idUser, Montant = montant };
+                foreach (RelationUserArticle item in lstUserArticle)
+                {
+                    facture.RelationsUserArticles.Add(item.Id.ToString());
+                }
+                if (lstUserArticle.Count <= 0)
                     return BadRequest();
-                Factures facture = new Factures { Date = DateTime.Now, UserId = lstidArticle[0], Montant = montant };
-                for (int i = 1; i < lstidArticle.Count; i++)
-                    facture.RelationsUserArticles.Add(lstidArticle[i]);
-                if (_factService.AddFacture(facture))
+                if (_factService.AddFacture(facture) && _userArtService.UpdateArticlePanier(idUser))
+                {
                     return Ok();
+                }
                 else
                     return BadRequest();
             }

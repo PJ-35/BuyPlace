@@ -33,6 +33,33 @@ namespace BuyPlace.Server.Service
 
         }
 
+        public RelationUserArticle FindArticle(string articleId)
+        {
+            return _relationUsArtTable.Find(u => u.ArticleId.ToString() == articleId && u.IsBuy == false).SingleOrDefault();
+
+        }
+
+        /// <summary>
+        /// Met à jour une article
+        /// </summary>
+        /// <param name="article">L'article à ajouter</param>
+        /// <returns>retourne un état</returns>
+        public bool UpdateArticlePanier(string idUser)
+        {
+            List<RelationUserArticle> lstR = GetRelationUserArticleIsNotBuy(idUser);
+            if (lstR != null)
+            {
+                foreach (RelationUserArticle article in lstR)
+                {
+                    article.IsBuy = true;
+                    _relationUsArtTable.ReplaceOne(u => u.Id == article.Id, article);
+
+                }
+                return true;
+            }
+            return false;
+        }
+
 
         /// <summary>
         /// Ici je vérifie que l'article n'existe pas encore alors j'ajoute ou j'update la quantité dépendamment de la situation
@@ -61,6 +88,17 @@ namespace BuyPlace.Server.Service
                 return false;
             }
 
+        }
+
+        public bool RemoveUserArticle(string id)
+        {
+            try
+            {
+                _relationUsArtTable.DeleteOne(u => u.Id.ToString() == id);
+                return true;
+            }catch {
+                return false;
+            }
         }
 
     }

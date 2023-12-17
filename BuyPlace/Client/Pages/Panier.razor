@@ -47,7 +47,7 @@
                                                     </th>
                                                     <td class="border-0 align-middle"><strong>$@art.prix</strong></td>
                                                     <td class="border-0 align-middle"><strong>@art.quantite</strong></td>
-                                                    <td class="border-0 align-middle"><a class="text-dark" href="#"><i class="fa fa-trash"></i></a></td>
+                                                    <td class="border-0 align-middle"><button class="text-dark" @onclick="()=>supprimerArticle(art.Id)"><i class="fa fa-trash"></i></button></td>
                                                 </tr>
                                                 i++;
                                                 sousTotal += art.prix;
@@ -85,7 +85,14 @@
                             <p class="font-italic mb-4 small fw-bold">Les frais d'expédition et les coûts supplémentaires sont calculés en fonction des valeurs des produits ajouté au panier.</p>
                             <ul class="list-unstyled mb-4">
                                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">SousTotal </strong><strong>$@sousTotal</strong></li>
-                                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Frais de livraison</strong><strong>$10.00</strong></li>
+                                @if (sousTotal == 0)
+                                {
+                                    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Frais de livraison</strong><strong>$0</strong></li>
+                                }
+                                else
+                                {
+                                    <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Frais de livraison</strong><strong>$10.00</strong></li>
+                                }
                                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Taxe</strong><strong>$@(sousTotal*15/100)</strong></li>
                                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">total</strong>
                                     <h5 class="font-weight-bold">$@total</h5>

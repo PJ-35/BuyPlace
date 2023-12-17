@@ -118,18 +118,6 @@ namespace BuyPlace.Server.Service
 
         public List<Article> GetArticlesForFacture(List<string> idArticles)
         {
-            //ObjectId factureObjectId = new ObjectId(factureId);
-            //Facture facture = _factureCollection.Find(f => f.Id == factureObjectId).FirstOrDefault();
-
-            //if (facture != null)
-            //{
-            //    List<Article> articles = _articlesTable.Find(a => idArticles.Contains(a.Id)).ToList();
-            //    return articles;
-            //}
-
-            //// Si la facture n'est pas trouvée, renvoyez une liste vide ou une valeur par défaut
-            // return new List<Article>();
-
             List<Article> articles = _articlesTable.Find(a => idArticles.Contains(a.Id.ToString())).ToList();
             return articles;
         }

@@ -55,6 +55,26 @@ namespace BuyPlace.Server.Controllers
             return lstUserArticleSession;
         }
 
+        [HttpDelete]
+        [Route("deleteArticle")]
+        public ActionResult DeleteArticle([FromQuery] string articleId)
+        {
+            try
+            {
+                RelationUserArticle relationUserArticle = _userArticles.FindArticle(articleId);
+                if (relationUserArticle is null)
+                    return BadRequest();
+                if (!_userArticles.RemoveUserArticle(relationUserArticle.Id.ToString()))
+                    return BadRequest();
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+        }
+
         /// <summary>
         /// récupère la liste d'article pour le panier
         /// </summary>
@@ -65,12 +85,12 @@ namespace BuyPlace.Server.Controllers
         public ActionResult<List<ArticleSession>> GetPanier([FromQuery] string userId)
         {
 
-            List<RelationUserArticle> lstUserArticle = new List<RelationUserArticle>();
+            List<RelationUserArticle> lstUserArticle = _userArticles.GetRelationUserArticleIsNotBuy(userId);
             List<Article> lstArticle = new List<Article>();
             List<ArticleSession> lstSession = new List<ArticleSession>();
             List<string> lstIdArticle = new List<string>();
 
-            lstUserArticle = _userArticles.GetRelationUserArticleIsNotBuy(userId);
+            
             foreach (RelationUserArticle Article in lstUserArticle)
             {
                 lstIdArticle.Add(Article.ArticleId.ToString());

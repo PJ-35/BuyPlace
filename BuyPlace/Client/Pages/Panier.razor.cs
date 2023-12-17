@@ -82,43 +82,45 @@ namespace BuyPlace.Client.Pages
                 sousTotal = 0;
                 chargement();
               
-                InvokeAsync(StateHasChanged);
+                await InvokeAsync(StateHasChanged);
             };
             timer.Start();
-            //CalculerTotal();
-            //}
-        }
 
-        //protected override void OnAfterRender(bool firstRender)
-        //{
-        //    base.OnAfterRender(firstRender);
-        //    CalculerTotal();
-        //}
+        }
 
         private async void paiement()
         {
-            List<string> lstId=new List<string>();
-            lstId[0] = userSession.Id;
-            for (int i = 1; i < lstArticles.Count+1; i++)
-            {
-                lstId[i] = lstArticles[i - 1].Id;
-            }
-            var reponse = await httpClient.PostAsJsonAsync($"api/Factures/{total}", lstId);
-            if(reponse.IsSuccessStatusCode)
-            {
-               await ijs.InvokeVoidAsync("alert","Paiement avec succès");
-            }
-            else
-            {
-                await ijs.InvokeVoidAsync("alert", "Une erreur s'est produite");
 
+            if (lstArticles is not null)
+            {
+            var reponse = await httpClient.PostAsJsonAsync($"api/Factures/{userSession.Id}", total);
+                if (reponse.IsSuccessStatusCode)
+                {
+                    lstArticles.Clear();
+                    await InvokeAsync(StateHasChanged);
+                    await ijs.InvokeVoidAsync("alert", "Paiement avec succès");
+                }
+                else
+                {
+                    await ijs.InvokeVoidAsync("alert", total);
+
+                }
             }
+
         }
 
+        private async void supprimerArticle(string id)
+        {
+            var response = await httpClient.DeleteAsync($"api/UserArticle/deleteArticle?articleId={id}");
+            if (response.IsSuccessStatusCode)
+                await ijs.InvokeVoidAsync("alert", "Article supprimé avec succès");
+            else
+                await ijs.InvokeVoidAsync("alert","Une erreur s'est produite");
+        }
 
         private async void chargement()
         {
-            lstArticles = await httpClient.GetFromJsonAsync<List<ArticleSession>>($"api/userArticle/articleUserPanier?userId={userSession.Id}" );
+            lstArticles = await httpClient.GetFromJsonAsync<List<ArticleSession>>($"api/UserArticle/articleUserPanier?userId={userSession.Id}" );
 
             if (lstArticles != null && lstArticles.Count() > 0)
             {
@@ -184,10 +186,5 @@ namespace BuyPlace.Client.Pages
         //        }
         //    }
         //}
-
-        private async void Payer()
-        {
-
-        }
     }
 }
