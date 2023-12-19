@@ -63,14 +63,14 @@ namespace BuyPlace.Server.Controllers
             {
                 RelationUserArticle relationUserArticle = _userArticles.FindArticle(articleId);
                 if (relationUserArticle is null)
-                    return BadRequest();
+                    return BadRequest("");
                 if (!_userArticles.RemoveUserArticle(relationUserArticle.Id.ToString()))
-                    return BadRequest();
+                    return BadRequest("");
                 return Ok();
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("");
             }
 
         }
